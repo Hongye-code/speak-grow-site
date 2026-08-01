@@ -1,0 +1,770 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="theme-color" content="#151a1d">
+  <title>SPEAK / GROW - 口语训练驾驶舱</title>
+  <script src="https://unpkg.com/lucide@0.468.0/dist/umd/lucide.min.js"></script>
+  <style>
+    :root {
+      --ink: #151a1d;
+      --ink-raised: #1d2428;
+      --ink-soft: #273137;
+      --paper: #f2f3ed;
+      --mist: #b7c0bc;
+      --muted: #78847f;
+      --acid: #c9f65a;
+      --acid-ink: #1d2a07;
+      --coral: #ff826a;
+      --blue: #8ec5e8;
+      --line: rgba(242, 243, 237, 0.14);
+      --line-strong: rgba(201, 246, 90, 0.42);
+      --radius: 7px;
+      --mono: "SFMono-Regular", "Cascadia Mono", "PingFang SC", "Noto Sans SC", monospace;
+      --sans: -apple-system, BlinkMacSystemFont, "SF Pro Display", "PingFang SC", "Noto Sans SC", sans-serif;
+    }
+
+    * { box-sizing: border-box; }
+
+    html { background: var(--ink); }
+
+    body {
+      margin: 0;
+      min-width: 320px;
+      color: var(--paper);
+      background-color: var(--ink);
+      font-family: var(--sans);
+      letter-spacing: 0;
+    }
+
+    button, input, textarea, select { font: inherit; }
+
+    button { cursor: pointer; }
+
+    .app-shell {
+      width: min(1500px, calc(100% - 40px));
+      margin: 20px auto;
+      min-height: calc(100vh - 40px);
+      display: grid;
+      grid-template-columns: 276px minmax(0, 1fr);
+      background: var(--ink-raised);
+      border: 1px solid var(--line);
+      border-radius: 10px;
+      overflow: hidden;
+      box-shadow: 0 24px 70px rgba(0, 0, 0, 0.26);
+    }
+
+    .sidebar {
+      padding: 26px 18px;
+      background: #171d20;
+      border-right: 1px solid var(--line);
+      display: flex;
+      flex-direction: column;
+      gap: 28px;
+    }
+
+    .brand {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      color: var(--paper);
+      font-family: var(--mono);
+      font-size: 16px;
+      font-weight: 800;
+      letter-spacing: 0.5px;
+    }
+
+    .brand-mark {
+      display: grid;
+      place-items: center;
+      width: 30px;
+      height: 30px;
+      color: var(--acid-ink);
+      background: var(--acid);
+      border-radius: 5px;
+    }
+
+    .brand small {
+      display: block;
+      margin-top: 3px;
+      color: var(--muted);
+      font-size: 9px;
+      font-weight: 600;
+      letter-spacing: 1.2px;
+    }
+
+    .nav-label, .eyebrow, .section-label, .field-label {
+      color: var(--muted);
+      font-family: var(--mono);
+      font-size: 10px;
+      font-weight: 700;
+      letter-spacing: 1.4px;
+      text-transform: uppercase;
+    }
+
+    .nav-list { display: grid; gap: 4px; }
+
+    .nav-item {
+      width: 100%;
+      min-height: 46px;
+      display: flex;
+      align-items: center;
+      gap: 11px;
+      padding: 0 12px;
+      border: 0;
+      border-radius: 6px;
+      color: var(--mist);
+      background: transparent;
+      text-align: left;
+      transition: background-color 160ms ease, color 160ms ease;
+    }
+
+    .nav-item:hover, .nav-item.active { color: var(--paper); background: var(--ink-soft); }
+    .nav-item.active { box-shadow: inset 3px 0 0 var(--acid); }
+    .nav-item i { width: 18px; height: 18px; }
+
+    .sidebar-bottom { margin-top: auto; }
+
+    .privacy-note {
+      padding: 13px;
+      border: 1px solid var(--line);
+      border-radius: var(--radius);
+      color: var(--mist);
+      font-size: 12px;
+      line-height: 1.65;
+    }
+
+    .privacy-note i { color: var(--acid); width: 16px; height: 16px; vertical-align: -3px; margin-right: 5px; }
+
+    main { min-width: 0; }
+
+    .topbar {
+      min-height: 78px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 20px;
+      padding: 16px 30px;
+      border-bottom: 1px solid var(--line);
+    }
+
+    .topbar-title { margin: 3px 0 0; color: var(--paper); font-size: 17px; font-weight: 650; }
+
+    .status-chip {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 9px 11px;
+      color: var(--acid);
+      background: rgba(201, 246, 90, 0.08);
+      border: 1px solid rgba(201, 246, 90, 0.22);
+      border-radius: 99px;
+      font-family: var(--mono);
+      font-size: 11px;
+      font-weight: 700;
+    }
+
+    .status-dot { width: 7px; height: 7px; border-radius: 50%; background: var(--acid); }
+
+    .view { display: none; padding: 28px 30px 36px; }
+    .view.active { display: block; }
+
+    .workspace-grid {
+      display: grid;
+      grid-template-columns: minmax(0, 1.2fr) minmax(330px, 0.8fr);
+      gap: 20px;
+    }
+
+    .stack { display: grid; gap: 20px; }
+
+    .panel {
+      position: relative;
+      padding: 20px;
+      overflow: hidden;
+      background: #20282c;
+      border: 1px solid var(--line);
+      border-radius: var(--radius);
+    }
+
+    .panel h2, .panel h3 { margin: 0; color: var(--paper); }
+    .panel h2 { margin-top: 4px; font-size: 22px; line-height: 1.25; }
+    .panel h3 { font-size: 15px; }
+
+    .focus-panel { min-height: 230px; display: grid; grid-template-columns: minmax(0, 1fr) 178px; gap: 22px; }
+
+    .focus-panel::after {
+      content: "";
+      position: absolute;
+      right: -24px;
+      bottom: -34px;
+      width: 150px;
+      height: 150px;
+      border: 1px solid rgba(201, 246, 90, 0.22);
+      border-radius: 50%;
+      box-shadow: 0 0 0 22px rgba(201, 246, 90, 0.04), 0 0 0 46px rgba(201, 246, 90, 0.025);
+      pointer-events: none;
+    }
+
+    .focus-panel p { margin: 14px 0 0; max-width: 580px; color: var(--mist); font-size: 14px; line-height: 1.75; }
+
+    .timer-wrap { display: grid; place-items: center; align-content: center; z-index: 1; }
+
+    .timer-ring {
+      width: 144px;
+      height: 144px;
+      display: grid;
+      place-items: center;
+      position: relative;
+      border: 1px solid rgba(201, 246, 90, 0.35);
+      border-radius: 50%;
+      background: #1a2124;
+    }
+
+    .timer-ring::before {
+      content: "";
+      position: absolute;
+      inset: 9px;
+      border: 1px solid rgba(242, 243, 237, 0.12);
+      border-radius: 50%;
+    }
+
+    .timer-value { z-index: 1; color: var(--acid); font-family: var(--mono); font-size: 31px; font-weight: 800; }
+    .timer-caption { z-index: 1; margin-top: -6px; color: var(--muted); font-family: var(--mono); font-size: 9px; letter-spacing: 1px; }
+
+    .field-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+    .field { display: grid; gap: 7px; }
+    .field.full { grid-column: 1 / -1; }
+
+    .field-label { font-size: 9px; }
+
+    input, textarea, select {
+      width: 100%;
+      color: var(--paper);
+      background: #161c1f;
+      border: 1px solid rgba(242, 243, 237, 0.13);
+      border-radius: 5px;
+      outline: none;
+      transition: border-color 150ms ease, box-shadow 150ms ease;
+    }
+
+    input, select { min-height: 42px; padding: 0 11px; }
+    textarea { min-height: 210px; padding: 13px; resize: vertical; line-height: 1.75; }
+    input:focus, textarea:focus, select:focus { border-color: var(--acid); box-shadow: 0 0 0 3px rgba(201, 246, 90, 0.1); }
+
+    select { appearance: none; background-image: none; }
+
+    .knowledge-card {
+      display: grid;
+      gap: 11px;
+      padding: 16px;
+      background: #182023;
+      border: 1px solid var(--line);
+      border-radius: 6px;
+    }
+
+    .knowledge-card h3 { color: var(--acid); }
+    .knowledge-card p { margin: 0; color: var(--mist); font-size: 13px; line-height: 1.75; }
+    .knowledge-card .application { color: var(--blue); font-size: 12px; }
+
+    .button-row { display: flex; flex-wrap: wrap; gap: 10px; margin-top: 14px; }
+
+    .button {
+      min-height: 42px;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      padding: 0 14px;
+      border: 1px solid transparent;
+      border-radius: 5px;
+      color: var(--paper);
+      background: #303b40;
+      font-size: 13px;
+      font-weight: 700;
+      transition: transform 150ms ease, background-color 150ms ease, border-color 150ms ease;
+    }
+
+    .button:hover { transform: translateY(-1px); background: #39464b; }
+    .button.primary { color: var(--acid-ink); background: var(--acid); }
+    .button.primary:hover { background: #dbff82; }
+    .button.outline { border-color: var(--line); background: transparent; }
+    .button.danger { color: var(--coral); border-color: rgba(255, 130, 106, 0.4); background: transparent; }
+    .button i { width: 16px; height: 16px; }
+
+    .step-list { display: grid; gap: 0; }
+    .step { display: grid; grid-template-columns: 32px 1fr; gap: 12px; padding: 13px 0; border-bottom: 1px solid var(--line); }
+    .step:last-child { border-bottom: 0; padding-bottom: 0; }
+    .step-number { color: var(--acid); font-family: var(--mono); font-size: 12px; font-weight: 800; }
+    .step strong { display: block; color: var(--paper); font-size: 13px; }
+    .step span { display: block; margin-top: 4px; color: var(--muted); font-size: 12px; line-height: 1.55; }
+
+    .recording-state { min-height: 24px; margin-top: 10px; color: var(--muted); font-size: 12px; }
+    .recording-state.live { color: var(--coral); }
+
+    .feedback-empty, .feedback-result { min-height: 310px; }
+    .feedback-empty { display: grid; place-items: center; text-align: center; }
+    .feedback-empty p { max-width: 220px; margin: 10px 0 0; color: var(--muted); font-size: 13px; line-height: 1.65; }
+    .feedback-empty i { width: 34px; height: 34px; color: var(--acid); }
+
+    .score-grid { display: grid; gap: 12px; margin-top: 20px; }
+    .score-row { display: grid; grid-template-columns: 64px 1fr 28px; align-items: center; gap: 9px; color: var(--mist); font-size: 12px; }
+    .score-track { height: 7px; overflow: hidden; border-radius: 20px; background: #13191b; }
+    .score-fill { height: 100%; background: var(--acid); border-radius: inherit; transition: width 450ms ease; }
+    .score-value { color: var(--paper); font-family: var(--mono); text-align: right; }
+
+    .coach-note { margin-top: 20px; padding: 14px; color: var(--paper); background: rgba(201, 246, 90, 0.08); border: 1px solid rgba(201, 246, 90, 0.25); border-radius: 5px; font-size: 13px; line-height: 1.7; }
+    .coach-note strong { color: var(--acid); }
+    .analysis-meta { margin-top: 12px; color: var(--muted); font-family: var(--mono); font-size: 10px; line-height: 1.7; }
+
+    .page-intro { max-width: 720px; margin-bottom: 26px; }
+    .page-intro h1 { margin: 6px 0 8px; color: var(--paper); font-size: 31px; line-height: 1.25; }
+    .page-intro p { margin: 0; color: var(--mist); line-height: 1.75; }
+
+    .knowledge-grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 14px; }
+    .knowledge-item { padding: 18px; background: #20282c; border: 1px solid var(--line); border-radius: 6px; }
+    .knowledge-item.active { border-color: var(--line-strong); }
+    .knowledge-item h3 { margin: 7px 0 8px; color: var(--paper); font-size: 16px; }
+    .knowledge-item p { min-height: 48px; margin: 0; color: var(--mist); font-size: 13px; line-height: 1.7; }
+    .knowledge-item button { margin-top: 14px; }
+
+    .records-list { display: grid; gap: 10px; }
+    .record-item { display: grid; grid-template-columns: 1fr auto; align-items: center; gap: 14px; padding: 15px; background: #20282c; border: 1px solid var(--line); border-radius: 6px; }
+    .record-item h3 { margin: 0; color: var(--paper); font-size: 14px; }
+    .record-item p { margin: 4px 0 0; color: var(--muted); font-size: 12px; }
+    .record-score { color: var(--acid); font-family: var(--mono); font-size: 17px; font-weight: 800; }
+    .empty-record { padding: 42px 16px; color: var(--muted); background: #20282c; border: 1px dashed var(--line); border-radius: 6px; text-align: center; }
+    .experience-feedback { margin-top: 18px; display: grid; grid-template-columns: minmax(0, 1fr) auto; align-items: center; gap: 18px; background: #20282c; }
+    .experience-feedback h2 { margin-top: 4px; font-size: 18px; }
+    .experience-feedback p { margin: 7px 0 0; color: var(--mist); font-size: 13px; line-height: 1.65; }
+
+    .toast {
+      position: fixed;
+      right: 24px;
+      bottom: 24px;
+      z-index: 10;
+      transform: translateY(130px);
+      padding: 13px 15px;
+      color: var(--ink);
+      background: var(--acid);
+      border-radius: 5px;
+      box-shadow: 0 12px 30px rgba(0, 0, 0, 0.25);
+      font-size: 13px;
+      font-weight: 750;
+      transition: transform 220ms ease;
+    }
+
+    .toast.show { transform: translateY(0); }
+
+    @media (max-width: 980px) {
+      .app-shell { grid-template-columns: 1fr; }
+      .sidebar { padding: 14px 18px; border-right: 0; border-bottom: 1px solid var(--line); flex-direction: row; align-items: center; gap: 16px; overflow-x: auto; }
+      .nav-label, .sidebar-bottom { display: none; }
+      .nav-list { display: flex; gap: 4px; }
+      .nav-item { width: auto; min-height: 38px; padding: 0 10px; white-space: nowrap; }
+      .workspace-grid { grid-template-columns: 1fr; }
+    }
+
+    @media (max-width: 640px) {
+      .app-shell { width: 100%; margin: 0; min-height: 100vh; border: 0; border-radius: 0; }
+      .brand { min-width: max-content; }
+      .nav-item span { display: none; }
+      .topbar { min-height: 68px; padding: 13px 18px; }
+      .status-chip { padding: 7px 9px; font-size: 10px; }
+      .view { padding: 20px 16px 28px; }
+      .focus-panel { grid-template-columns: 1fr; min-height: auto; }
+      .timer-wrap { justify-items: start; }
+      .timer-ring { width: 122px; height: 122px; }
+      .field-grid, .knowledge-grid { grid-template-columns: 1fr; }
+      .page-intro h1 { font-size: 26px; }
+      .button { flex: 1 1 auto; }
+      .experience-feedback { grid-template-columns: 1fr; }
+    }
+  </style>
+</head>
+<body>
+  <div class="app-shell">
+    <aside class="sidebar">
+      <div class="brand">
+        <span class="brand-mark"><i data-lucide="audio-lines"></i></span>
+        <span>SPEAK / GROW<small>CLARITY IS TRAINABLE</small></span>
+      </div>
+      <div>
+        <p class="nav-label">Training system</p>
+        <nav class="nav-list" aria-label="主导航">
+          <button class="nav-item active" data-view-target="practice" aria-label="训练驾驶舱"><i data-lucide="gauge"></i><span>训练驾驶舱</span></button>
+          <button class="nav-item" data-view-target="knowledge" aria-label="知识视角"><i data-lucide="library-big"></i><span>知识视角</span></button>
+          <button class="nav-item" data-view-target="records" aria-label="练习记录"><i data-lucide="history"></i><span>练习记录</span></button>
+        </nav>
+      </div>
+      <div class="sidebar-bottom">
+        <div class="privacy-note"><i data-lucide="shield-check"></i>你的转写稿与记录只保存在当前浏览器。</div>
+      </div>
+    </aside>
+
+    <main>
+      <header class="topbar">
+        <div>
+          <div class="eyebrow">Voice training / 01</div>
+          <p class="topbar-title" id="topbarTitle">三分钟主题表达</p>
+        </div>
+        <div class="status-chip"><span class="status-dot"></span><span id="roundStatus">准备第 1 轮</span></div>
+      </header>
+
+      <section class="view active" id="practice" data-screen-label="训练驾驶舱">
+        <div class="workspace-grid">
+          <div class="stack">
+            <section class="panel focus-panel">
+              <div>
+                <div class="section-label">今日训练</div>
+                <h2 id="focusHeadline">用一个清晰的观点，讲完一件真正有用的事。</h2>
+                <p>开场给出听众收益，主体只讲一个观点，用一个具体例子支撑，再给出能被记住的结尾。</p>
+              </div>
+              <div class="timer-wrap">
+                <div class="timer-ring"><span class="timer-value" id="timerValue">03:00</span><span class="timer-caption">FIRST TAKE</span></div>
+              </div>
+            </section>
+
+            <section class="panel">
+              <div class="section-label">训练设定</div>
+              <div class="field-grid" style="margin-top: 14px;">
+                <label class="field"><span class="field-label">场景</span><select id="scenario"><option value="主题表达">主题表达</option><option value="工作汇报">工作汇报</option><option value="求职面试">求职面试</option></select></label>
+                <label class="field"><span class="field-label">知识视角</span><select id="knowledgeSelect"></select></label>
+                <label class="field full"><span class="field-label">你要讲的主题</span><input id="topicInput" type="text" value="AI 工具为何反而降低了我的效率？" maxlength="80"></label>
+                <label class="field full"><span class="field-label">本轮只练一件事</span><input id="goalInput" type="text" value="开场先承诺听众能获得什么" maxlength="80"></label>
+              </div>
+            </section>
+
+            <section class="panel">
+              <div class="section-label">第一轮原稿</div>
+              <textarea id="transcript" placeholder="说完后，把语音转写稿或手动记录贴在这里。重点不是完美，而是得到可以改进的原始材料。"></textarea>
+              <div class="button-row">
+                <button class="button primary" id="timerButton"><i data-lucide="play"></i>开始 3 分钟</button>
+                <button class="button outline" id="recordButton"><i data-lucide="mic"></i>录制音频</button>
+                <button class="button outline" id="analyzeButton"><i data-lucide="scan-search"></i>诊断表达</button>
+              </div>
+              <div class="recording-state" id="recordingState">录音是可选项。浏览器会在你点击后请求麦克风权限。</div>
+              <div class="button-row" id="audioActions" hidden><button class="button outline" id="downloadAudio"><i data-lucide="download"></i>下载本轮音频</button></div>
+            </section>
+
+            <section class="panel">
+              <div class="section-label">第二轮复练</div>
+              <div class="step-list" style="margin-top: 8px;">
+                <div class="step"><span class="step-number">01</span><div><strong>只改一个重点</strong><span id="practiceFocus">先完成第一轮诊断，系统会给出最值得修正的一处。</span></div></div>
+                <div class="step"><span class="step-number">02</span><div><strong>60 秒重讲</strong><span>不必重写全文，只把这一个变化讲得更清楚。</span></div></div>
+              </div>
+              <div class="button-row"><button class="button primary" id="saveSession"><i data-lucide="save"></i>保存本次训练</button><button class="button outline" id="copyPrompt"><i data-lucide="copy"></i>复制 AI 教练提示词</button></div>
+            </section>
+          </div>
+
+          <div class="stack">
+            <section class="panel">
+              <div class="section-label">本轮知识卡</div>
+              <div class="knowledge-card" style="margin-top: 14px;">
+                <h3 id="cardTitle">深度工作</h3>
+                <p id="cardConcept">把需要高质量判断的任务，留给一段不被打断的专注时间。</p>
+                <p class="application" id="cardApplication">创作者应用：解释为什么工具越多，越要先保护内容判断时间。</p>
+              </div>
+              <button class="button outline" style="margin-top: 13px; width: 100%;" data-view-target="knowledge"><i data-lucide="book-open-check"></i>切换知识视角</button>
+            </section>
+
+            <section class="panel feedback-result" id="feedbackPanel">
+              <div class="section-label">即时诊断</div>
+              <div class="feedback-empty" id="feedbackEmpty"><div><i data-lucide="radar"></i><p>贴入第一轮原稿后，获得结构化的表达诊断和一项复练重点。</p></div></div>
+              <div id="feedbackContent" hidden>
+                <h3 style="margin-top: 6px;">表达仪表盘</h3>
+                <div class="score-grid" id="scoreGrid"></div>
+                <div class="coach-note" id="coachNote"></div>
+                <div class="analysis-meta" id="analysisMeta"></div>
+              </div>
+            </section>
+          </div>
+        </div>
+      </section>
+
+      <section class="view" id="knowledge" data-screen-label="知识视角">
+        <div class="page-intro"><div class="eyebrow">Personal growth knowledge</div><h1>让知识成为你讲清问题的支点。</h1><p>每张卡只保留一个可用的表达视角：概念、适用问题和创作者场景。它们不是书籍摘要，也不替代原著。</p></div>
+        <div class="knowledge-grid" id="knowledgeGrid"></div>
+      </section>
+
+      <section class="view" id="records" data-screen-label="练习记录">
+        <div class="page-intro"><div class="eyebrow">Local practice history</div><h1>每一次复练，都留下能回看的证据。</h1><p>记录只留在这个浏览器。保存的不是“我练过”，而是主题、原稿、诊断和下一次要改的一件事。</p></div>
+        <div class="records-list" id="recordsList"></div>
+        <section class="panel experience-feedback">
+          <div>
+            <div class="section-label">体验反馈</div>
+            <h2>完成后，留下 30 秒反馈。</h2>
+            <p>复制后直接粘贴到发给你链接的人即可。无需注册，也不会上传你的练习内容。</p>
+          </div>
+          <button class="button primary" id="copyExperienceFeedback"><i data-lucide="message-square-share"></i>复制体验反馈</button>
+        </section>
+      </section>
+    </main>
+  </div>
+  <div class="toast" id="toast" role="status"></div>
+
+  <script>
+    const knowledgeCards = [
+      { id: "thinking", title: "思考，快与慢", concept: "用一个判断偏差，解释人为什么会在看似高效的选择里走偏。", application: "创作者应用：讲清为什么不停换 AI 工具会制造“我很忙”的错觉。" },
+      { id: "flow", title: "心流", concept: "把挑战放在能力边缘，人才会持续投入，而不是麻木或放弃。", application: "创作者应用：讲清如何给学习任务设定刚好够难的门槛。" },
+      { id: "practice", title: "刻意练习", concept: "练习要有明确目标、及时反馈，并反复修正具体弱点。", application: "创作者应用：讲清为什么录一次口播不如重讲一个关键段落。" },
+      { id: "habits", title: "原子习惯", concept: "改变不是靠一次爆发，而是让行动小到当下能开始。", application: "创作者应用：讲清如何把持续输出变成可启动的最小动作。" },
+      { id: "habits7", title: "高效能人士的七个习惯", concept: "先判断什么真正重要，再决定把时间和注意力放在哪里。", application: "创作者应用：讲清优先级不是做更多，而是主动放弃不重要的事。" },
+      { id: "gtd", title: "搞定 I", concept: "把悬而未决的事情外化、澄清，并落实为下一步行动。", application: "创作者应用：讲清为什么待办堆积的关键不是更努力，而是没有下一步。" },
+      { id: "deepwork", title: "深度工作", concept: "把需要高质量判断的任务，留给一段不被打断的专注时间。", application: "创作者应用：解释为什么工具越多，越要先保护内容判断时间。" },
+      { id: "energy", title: "精力管理", concept: "持续产出依赖恢复与节律，而不是无限延长工作时长。", application: "创作者应用：讲清如何安排创作、沟通和恢复的顺序。" },
+      { id: "learning", title: "学习之道", concept: "学习要在专注与放松之间切换，并主动提取而非反复浏览。", application: "创作者应用：讲清如何把看过的资料变成能讲出来的观点。" },
+      { id: "principles", title: "原则", concept: "把反复出现的判断写成可复盘的规则，减少每次从零决定。", application: "创作者应用：讲清个人系统为什么不是工具堆，而是一套选择规则。" }
+    ];
+
+    const state = { seconds: 180, timerId: null, selectedKnowledge: "deepwork", mediaRecorder: null, audioUrl: null, currentScores: null, currentFocus: "" };
+    const $ = (selector) => document.querySelector(selector);
+    const $$ = (selector) => [...document.querySelectorAll(selector)];
+
+    function showToast(message) {
+      const toast = $("#toast");
+      toast.textContent = message;
+      toast.classList.add("show");
+      window.clearTimeout(showToast.timeout);
+      showToast.timeout = window.setTimeout(() => toast.classList.remove("show"), 2300);
+    }
+
+    function formatTime(seconds) {
+      const mins = String(Math.floor(seconds / 60)).padStart(2, "0");
+      const secs = String(seconds % 60).padStart(2, "0");
+      return `${mins}:${secs}`;
+    }
+
+    function updateTimer() {
+      $("#timerValue").textContent = formatTime(state.seconds);
+      const percent = Math.max(0, state.seconds / 180);
+      $(".timer-ring").style.boxShadow = `inset 0 0 0 ${Math.round(10 * (1 - percent))}px rgba(201, 246, 90, 0.06)`;
+    }
+
+    function toggleTimer() {
+      const button = $("#timerButton");
+      if (state.timerId) {
+        window.clearInterval(state.timerId);
+        state.timerId = null;
+        button.innerHTML = '<i data-lucide="play"></i>继续计时';
+        $("#roundStatus").textContent = "暂停中";
+      } else {
+        if (state.seconds === 0) state.seconds = 180;
+        state.timerId = window.setInterval(() => {
+          state.seconds -= 1;
+          updateTimer();
+          if (state.seconds <= 0) {
+            window.clearInterval(state.timerId);
+            state.timerId = null;
+            button.innerHTML = '<i data-lucide="rotate-ccw"></i>重新开始';
+            $("#roundStatus").textContent = "第一轮完成";
+            showToast("三分钟结束。现在贴入原稿并诊断表达。");
+            if (navigator.vibrate) navigator.vibrate([120, 70, 120]);
+            refreshIcons();
+          }
+        }, 1000);
+        button.innerHTML = '<i data-lucide="pause"></i>暂停计时';
+        $("#roundStatus").textContent = "第一轮进行中";
+      }
+      refreshIcons();
+    }
+
+    function getSelectedCard() { return knowledgeCards.find((card) => card.id === state.selectedKnowledge); }
+
+    function updateKnowledgeCard() {
+      const card = getSelectedCard();
+      $("#cardTitle").textContent = card.title;
+      $("#cardConcept").textContent = card.concept;
+      $("#cardApplication").textContent = card.application;
+      $("#knowledgeSelect").value = card.id;
+      $$(".knowledge-item").forEach((item) => item.classList.toggle("active", item.dataset.id === card.id));
+    }
+
+    function renderKnowledge() {
+      $("#knowledgeSelect").innerHTML = knowledgeCards.map((card) => `<option value="${card.id}">${card.title}</option>`).join("");
+      $("#knowledgeGrid").innerHTML = knowledgeCards.map((card, index) => `
+        <article class="knowledge-item ${card.id === state.selectedKnowledge ? "active" : ""}" data-id="${card.id}">
+          <div class="eyebrow">${String(index + 1).padStart(2, "0")} / 10</div>
+          <h3>${card.title}</h3>
+          <p>${card.concept}</p>
+          <p class="application">${card.application}</p>
+          <button class="button outline" data-use-card="${card.id}">用作本轮视角 <i data-lucide="arrow-up-right"></i></button>
+        </article>`).join("");
+      updateKnowledgeCard();
+      refreshIcons();
+    }
+
+    function countMatches(text, expression) { return (text.match(expression) || []).length; }
+
+    function clamp(value, min, max) { return Math.max(min, Math.min(max, value)); }
+
+    function analyzeTranscript() {
+      const text = $("#transcript").value.trim();
+      if (text.length < 20) { showToast("先贴入至少一句完整的第一轮表达。"); return; }
+      const chars = text.replace(/\s/g, "").length;
+      const fillers = countMatches(text, /嗯|呃|然后|就是|其实|这个|那个/g);
+      const opening = /[？?]|今天|你是否|想象|如果|先说结论|我想先/.test(text.slice(0, 110));
+      const structureHits = countMatches(text, /第一|第二|第三|因为|所以|但是|例如|比如|结论|最后|总结/g);
+      const evidenceHits = countMatches(text, /例如|比如|一次|去年|今天|数据|用户|案例|经历/g);
+      const closing = /最后|所以|希望|现在就|从今天|记住|下一步/.test(text.slice(-120));
+      const scores = {
+        "开场": clamp(45 + (opening ? 32 : 0) + (chars > 110 ? 8 : 0), 30, 96),
+        "清晰度": clamp(72 - fillers * 4 + (structureHits >= 3 ? 12 : 0), 25, 96),
+        "说服力": clamp(42 + evidenceHits * 11 + (chars > 240 ? 8 : 0), 28, 95),
+        "结构": clamp(38 + structureHits * 8 + (chars > 300 ? 8 : 0), 25, 95),
+        "结尾": clamp(38 + (closing ? 38 : 0) + (chars > 180 ? 8 : 0), 25, 94)
+      };
+      let focus = "";
+      if (!opening) focus = "开场的前 20 秒先说清听众会得到什么，再进入你的观点。";
+      else if (evidenceHits < 1) focus = "保留核心观点，只补一个你亲历过的具体场景，让听众相信它与自己有关。";
+      else if (!closing) focus = "结尾不要停在解释，改用一句可执行的邀请收束：听众现在可以先做什么？";
+      else if (fillers > 4) focus = "第二轮刻意删掉“然后、就是、这个”等口头填充词，用停顿替代。";
+      else focus = "第二轮把核心观点在结尾换一种更短的说法重复一次，让听众记住它。";
+      state.currentScores = scores;
+      state.currentFocus = focus;
+      $("#feedbackEmpty").hidden = true;
+      $("#feedbackContent").hidden = false;
+      $("#scoreGrid").innerHTML = Object.entries(scores).map(([label, score]) => `<div class="score-row"><span>${label}</span><div class="score-track"><div class="score-fill" style="width: ${score}%"></div></div><span class="score-value">${score}</span></div>`).join("");
+      $("#coachNote").innerHTML = `<strong>本轮只改一件事：</strong>${focus}`;
+      $("#practiceFocus").textContent = focus;
+      $("#analysisMeta").textContent = `原稿 ${chars} 字 · 口头填充词 ${fillers} 个 · 结构信号 ${structureHits} 个`;
+      $("#roundStatus").textContent = "等待第二轮复练";
+      showToast("诊断完成。第二轮只聚焦一个变化。");
+    }
+
+    async function toggleRecording() {
+      const button = $("#recordButton");
+      const stateText = $("#recordingState");
+      if (state.mediaRecorder && state.mediaRecorder.state === "recording") {
+        state.mediaRecorder.stop();
+        return;
+      }
+      if (!navigator.mediaDevices || !navigator.mediaDevices.getUserMedia) {
+        stateText.textContent = "当前浏览器不支持直接录音。你仍可使用系统录音后保存本轮音频。";
+        return;
+      }
+      try {
+        const stream = await navigator.mediaDevices.getUserMedia({ audio: true });
+        const chunks = [];
+        state.mediaRecorder = new MediaRecorder(stream);
+        state.mediaRecorder.ondataavailable = (event) => chunks.push(event.data);
+        state.mediaRecorder.onstop = () => {
+          const audio = new Blob(chunks, { type: "audio/webm" });
+          if (state.audioUrl) URL.revokeObjectURL(state.audioUrl);
+          state.audioUrl = URL.createObjectURL(audio);
+          $("#audioActions").hidden = false;
+          stateText.textContent = "音频已准备好下载。请把转写稿贴入上方文本框后再诊断。";
+          stateText.classList.remove("live");
+          button.innerHTML = '<i data-lucide="mic"></i>录制音频';
+          stream.getTracks().forEach((track) => track.stop());
+          refreshIcons();
+        };
+        state.mediaRecorder.start();
+        stateText.textContent = "正在录音。再次点击即可停止并下载本轮音频。";
+        stateText.classList.add("live");
+        button.innerHTML = '<i data-lucide="square"></i>停止录音';
+        refreshIcons();
+      } catch (error) {
+        stateText.textContent = "没有获得麦克风权限。你仍可只使用文本训练。";
+      }
+    }
+
+    function getPrompt() {
+      const card = getSelectedCard();
+      const transcript = $("#transcript").value.trim() || "（尚未贴入原稿）";
+      return `你是一位严格但具体的中文口语表达教练。请只基于下面的原稿给出反馈，不要补造事实，不要泛泛鼓励。\n\n训练场景：${$("#scenario").value}\n主题：${$("#topicInput").value}\n本轮知识视角：${card.title}——${card.concept}\n本轮目标：${$("#goalInput").value}\n\n原稿：\n${transcript}\n\n请按以下格式作答：\n1. 五项评分（开场、清晰度、说服力、结构强化、结尾，各 0-100），每项引用原稿中的一句证据。\n2. 只选出一个最高杠杆问题，说明为什么优先改它。\n3. 给出一段 60 秒第二轮表达示范。保留原稿的真实观点，不虚构案例或数据。\n4. 用一句话写出第二轮唯一训练目标。`;
+    }
+
+    async function copyPrompt() {
+      try {
+        await navigator.clipboard.writeText(getPrompt());
+        showToast("AI 教练提示词已复制，可直接粘贴到你常用的大模型。");
+      } catch (error) {
+        showToast("复制失败，请手动从页面内容复制。浏览器可能限制了剪贴板权限。");
+      }
+    }
+
+    async function copyExperienceFeedback() {
+      const feedback = "SPEAK / GROW 体验反馈\n1. 我是否完成 3 分钟训练：是 / 否\n2. 我最卡住的步骤：\n3. 我愿不愿意再练第二轮：愿意 / 不愿意\n4. 设备和浏览器（可选）：";
+      try {
+        await navigator.clipboard.writeText(feedback);
+        showToast("体验反馈已复制，粘贴发送即可。感谢你的真实反馈。");
+      } catch (error) {
+        showToast("复制失败，请手动填写体验反馈。浏览器可能限制了剪贴板权限。");
+      }
+    }
+
+    function saveSession() {
+      const transcript = $("#transcript").value.trim();
+      if (!transcript) { showToast("先保存第一轮原稿，才能留下可回看的训练记录。"); return; }
+      const sessions = JSON.parse(localStorage.getItem("speakGrowSessions") || "[]");
+      const values = Object.values(state.currentScores || {});
+      const average = values.length ? Math.round(values.reduce((sum, score) => sum + score, 0) / values.length) : null;
+      sessions.unshift({
+        id: Date.now(),
+        date: new Date().toLocaleString("zh-CN", { month: "numeric", day: "numeric", hour: "2-digit", minute: "2-digit" }),
+        topic: $("#topicInput").value || "未命名主题",
+        scenario: $("#scenario").value,
+        knowledge: getSelectedCard().title,
+        transcript,
+        focus: state.currentFocus || $("#goalInput").value,
+        average
+      });
+      localStorage.setItem("speakGrowSessions", JSON.stringify(sessions.slice(0, 30)));
+      renderRecords();
+      showToast("本次训练已保存到当前浏览器。");
+    }
+
+    function renderRecords() {
+      const sessions = JSON.parse(localStorage.getItem("speakGrowSessions") || "[]");
+      const container = $("#recordsList");
+      if (!sessions.length) {
+        container.innerHTML = '<div class="empty-record">还没有练习记录。完成第一轮表达并保存后，它会出现在这里。</div>';
+        return;
+      }
+      container.innerHTML = sessions.map((session) => `<article class="record-item"><div><h3>${session.topic}</h3><p>${session.date} · ${session.scenario} · ${session.knowledge}<br>下次重点：${session.focus}</p></div>${session.average ? `<div class="record-score">${session.average}</div>` : '<div class="record-score">--</div>'}</article>`).join("");
+    }
+
+    function switchView(target) {
+      $$(".view").forEach((view) => view.classList.toggle("active", view.id === target));
+      $$(".nav-item").forEach((item) => item.classList.toggle("active", item.dataset.viewTarget === target));
+      const titles = { practice: "三分钟主题表达", knowledge: "个人成长知识视角", records: "本地练习记录" };
+      $("#topbarTitle").textContent = titles[target];
+      if (target === "knowledge") renderKnowledge();
+      if (target === "records") renderRecords();
+      window.scrollTo({ top: 0, behavior: "smooth" });
+    }
+
+    function refreshIcons() { if (window.lucide) window.lucide.createIcons(); }
+
+    $("#timerButton").addEventListener("click", toggleTimer);
+    $("#recordButton").addEventListener("click", toggleRecording);
+    $("#downloadAudio").addEventListener("click", () => {
+      if (!state.audioUrl) return;
+      const anchor = document.createElement("a");
+      anchor.href = state.audioUrl;
+      anchor.download = `speak-grow-${Date.now()}.webm`;
+      anchor.click();
+    });
+    $("#analyzeButton").addEventListener("click", analyzeTranscript);
+    $("#copyPrompt").addEventListener("click", copyPrompt);
+    $("#copyExperienceFeedback").addEventListener("click", copyExperienceFeedback);
+    $("#saveSession").addEventListener("click", saveSession);
+    $("#knowledgeSelect").addEventListener("change", (event) => { state.selectedKnowledge = event.target.value; updateKnowledgeCard(); });
+    $$("[data-view-target]").forEach((button) => button.addEventListener("click", () => switchView(button.dataset.viewTarget)));
+    document.addEventListener("click", (event) => {
+      const button = event.target.closest("[data-use-card]");
+      if (!button) return;
+      state.selectedKnowledge = button.dataset.useCard;
+      updateKnowledgeCard();
+      switchView("practice");
+      showToast("知识视角已带入本轮训练。");
+    });
+
+    renderKnowledge();
+    renderRecords();
+    updateTimer();
+    refreshIcons();
+  </script>
+</body>
+</html>
