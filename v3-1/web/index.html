@@ -1,0 +1,237 @@
+<!doctype html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="description" content="讲清楚 3.1 正式安全版" />
+    <title>讲清楚 | 表达档案</title>
+    <link rel="stylesheet" href="./speak.css" />
+    <link rel="stylesheet" href="./app.css" />
+  </head>
+  <body>
+    <div class="app-shell">
+      <header class="speak-topbar">
+        <button class="speak-brand" id="homeButton" type="button">
+          <span class="speak-brand-mark">说</span
+          ><span
+            >讲清楚<small class="speak-brand-meta"
+              >SPEAK WITH INTENTION</small
+            ></span
+          >
+        </button>
+        <div class="top-actions">
+          <button class="quiet-button" id="growthButton" type="button">
+            我的成长</button
+          ><button
+            class="speak-icon-button"
+            id="settingsButton"
+            aria-label="模型设置"
+            title="模型设置"
+            type="button"
+          >
+            ⚙
+          </button>
+        </div>
+      </header>
+      <main>
+        <section class="screen active" id="setupScreen">
+          <div class="archive-head">
+            <div>
+              <p class="speak-eyebrow">个人表达档案</p>
+              <h1>把重要的话，练成你的底气。</h1>
+              <p>从一个具体问题开始。先讲一遍，再只改一句，然后马上复练。</p>
+            </div>
+            <div class="score-pocket">
+              <strong id="points">1,240</strong><span>个人训练分</span>
+              <div class="progress"><i></i></div>
+              <small id="nextMilestone">距离“稳住边界”还差 760 分</small>
+            </div>
+          </div>
+          <div class="mode-grid" aria-label="训练板块">
+            <button data-mode="interview" type="button">
+              <span>01 / CAREER</span><strong>职场面试</strong
+              ><small>把做过的事讲成对方能理解的价值。</small></button
+            ><button class="active" data-mode="workplace" type="button">
+              <span>02 / DEFAULT</span><strong>职场表达</strong
+              ><small>在难开口的瞬间，说清立场，也守住关系。</small></button
+            ><button data-mode="speech" type="button">
+              <span>03 / IDEA</span><strong>深度演讲</strong
+              ><small>用一个有证据的观点讲清复杂问题。</small></button
+            ><button data-mode="topic" type="button">
+              <span>04 / CLARITY</span><strong>主题表达</strong
+              ><small>把脑中的想法说得短、准、能被记住。</small>
+            </button>
+          </div>
+          <div class="setup-grid">
+            <section class="speak-card composer">
+              <div class="label-row">
+                <label for="topic">你现在遇到了什么问题？</label
+                ><button class="link-button" id="randomButton" type="button">
+                  换一个场景
+                </button>
+              </div>
+              <textarea
+                class="speak-input"
+                id="topic"
+                maxlength="160"
+              ></textarea>
+              <div class="goal-chips" id="goals"></div>
+              <button
+                class="speak-button speak-button--primary full-width"
+                id="startButton"
+                type="button"
+              >
+                开始 60 秒练习
+              </button>
+            </section>
+            <aside class="speak-card toolkit">
+              <p class="speak-eyebrow">本轮力量动作</p>
+              <h2 id="toolTitle"></h2>
+              <p id="toolSummary"></p>
+              <ol id="toolList"></ol>
+            </aside>
+          </div>
+        </section>
+        <section class="screen" id="practiceScreen">
+          <div class="practice-grid">
+            <section class="speak-card practice-stage">
+              <button class="back-button" id="backButton" type="button">
+                ← 返回重新选题
+              </button>
+              <div class="chips">
+                <span class="speak-chip" id="modeName"></span
+                ><span class="speak-chip speak-chip--coral">第一轮</span>
+              </div>
+              <time id="timer">01:00</time>
+              <h1 id="question"></h1>
+              <p id="goal"></p>
+              <textarea
+                class="speak-input transcript"
+                id="transcript"
+                placeholder="开始实时转写后，识别到的文字会显示在这里；也可以直接输入或粘贴原稿。"
+              ></textarea>
+              <div class="transcript-meta">
+                <span id="transcriptState">准备开始转写</span
+                ><span id="wordCount">0 字</span>
+              </div>
+              <div class="practice-actions">
+                <button
+                  class="speak-button speak-button--secondary"
+                  id="recordButton"
+                  type="button"
+                >
+                  开始实时转写</button
+                ><button
+                  class="speak-button speak-button--primary"
+                  id="analyzeButton"
+                  type="button"
+                >
+                  生成 AI 训练报告
+                </button>
+              </div>
+              <p class="privacy-note">
+                实时转写使用浏览器语音识别；本网页不保存音频，浏览器会按其识别服务处理音频。AI
+                分析仅发送你确认提交的文字原稿。
+              </p>
+            </section>
+            <aside class="speak-card focus-card">
+              <p class="speak-eyebrow">这轮只练一件事</p>
+              <h2 id="focus"></h2>
+              <div class="focus-list">
+                <p><b>主张</b>先把你的判断说完整。</p>
+                <p><b>边界</b>说明影响，而不是只说“我很忙”。</p>
+                <p><b>下一步</b>把优先级交回需要做决定的人。</p>
+              </div>
+            </aside>
+          </div>
+        </section>
+        <section class="screen" id="reportScreen">
+          <div class="report-wrap">
+            <div class="report-head">
+              <div>
+                <p class="speak-eyebrow">AI 训练报告</p>
+                <h1 id="reportTitle">你已经把重点说出来了。</h1>
+                <p id="reportSummary"></p>
+              </div>
+              <div class="report-score">
+                <strong id="reportScore">--</strong><span>本轮训练分</span>
+              </div>
+            </div>
+            <section class="speak-card report-card">
+              <h2>本轮表达罗盘</h2>
+              <div class="compass" id="compass"></div>
+              <div class="rewrite">
+                <p>只改这一句</p>
+                <blockquote id="rewriteText"></blockquote>
+                <small id="rewriteReason"></small>
+              </div>
+              <div class="practice-actions">
+                <button
+                  class="speak-button speak-button--primary"
+                  id="retryButton"
+                  type="button"
+                >
+                  用加强句再练 60 秒</button
+                ><button
+                  class="speak-button speak-button--secondary"
+                  id="reportHome"
+                  type="button"
+                >
+                  回到训练首页
+                </button>
+              </div>
+            </section>
+          </div>
+        </section>
+      </main>
+      <span class="speak-watermark" aria-hidden="true">Chen Hongye</span>
+      <div class="dialog-backdrop" id="settingsDialog" hidden>
+        <section
+          class="dialog"
+          role="dialog"
+          aria-modal="true"
+          aria-labelledby="settingsTitle"
+        >
+          <header>
+            <h2 id="settingsTitle">模型设置</h2>
+            <button data-close="settingsDialog" aria-label="关闭" type="button">
+              ×
+            </button>
+          </header>
+          <div>
+            <p>模型由服务器环境变量配置，API Key 不进入浏览器。</p>
+            <dl>
+              <dt>分析服务</dt>
+              <dd id="modelStatus">正在检查</dd>
+              <dt>实时转写</dt>
+              <dd>浏览器语音识别</dd>
+            </dl>
+            <p class="muted">
+              正式部署必须使用 HTTPS；浏览器将自行请求麦克风权限。
+            </p>
+          </div>
+        </section>
+      </div>
+      <div class="dialog-backdrop" id="growthDialog" hidden>
+        <section
+          class="dialog"
+          role="dialog"
+          aria-modal="true"
+          aria-labelledby="growthTitle"
+        >
+          <header>
+            <h2 id="growthTitle">我的成长</h2>
+            <button data-close="growthDialog" aria-label="关闭" type="button">
+              ×
+            </button>
+          </header>
+          <div>
+            <p id="growthSummary">1,240 训练分 · 下一阶段：稳住边界</p>
+            <div class="badges" id="growthBadges"></div>
+          </div>
+        </section>
+      </div>
+    </div>
+    <script type="module" src="./app.js"></script>
+  </body>
+</html>
