@@ -1,9 +1,8 @@
 {
-  "name": "speak-grow-v3-1",
+  "name": "jiangqingchu-web",
   "private": true,
   "type": "module",
   "scripts": {
-    "start": "node server.mjs",
-    "check": "node --check server.mjs && node --check web/app.js"
+    "check": "node --check web/app.js && node --check web/modules/growth.js && node --check web/modules/model-settings.js && node --check web/modules/report.js && node --check web/modules/training.js && node --check web/modules/transcription.js"
   }
 }
