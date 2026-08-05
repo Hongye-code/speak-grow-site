@@ -5,8 +5,9 @@
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <meta name="description" content="讲清楚 3.1 正式安全版" />
     <title>讲清楚 | 表达档案</title>
-    <link rel="stylesheet" href="./speak.css" />
-    <link rel="stylesheet" href="./app.css" />
+    <link rel="stylesheet" href="./styles/tokens.css" />
+    <link rel="stylesheet" href="./styles/components.css" />
+    <link rel="stylesheet" href="./styles/pages.css" />
   </head>
   <body>
     <div class="app-shell">
@@ -115,13 +116,12 @@
                 ><span id="wordCount">0 字</span>
               </div>
               <div class="practice-actions">
+                <div class="recording-controls" aria-label="录制控制">
+                  <button class="speak-button speak-button--secondary" id="recordStartButton" type="button">开始录制</button>
+                  <button class="speak-button speak-button--secondary" id="recordPauseButton" type="button" hidden>暂停录制</button>
+                  <button class="speak-button speak-button--secondary" id="recordStopButton" type="button" hidden>结束录制</button>
+                </div>
                 <button
-                  class="speak-button speak-button--secondary"
-                  id="recordButton"
-                  type="button"
-                >
-                  开始实时转写</button
-                ><button
                   class="speak-button speak-button--primary"
                   id="analyzeButton"
                   type="button"
@@ -131,7 +131,7 @@
               </div>
               <p class="privacy-note">
                 实时转写使用浏览器语音识别；本网页不保存音频，浏览器会按其识别服务处理音频。AI
-                分析仅发送你确认提交的文字原稿。
+                分析仅发送你确认提交的文字原稿和本会话选择的模型服务。
               </p>
             </section>
             <aside class="speak-card focus-card">
@@ -156,6 +156,11 @@
               <div class="report-score">
                 <strong id="reportScore">--</strong><span>本轮训练分</span>
               </div>
+            </div>
+            <div class="report-stats" aria-label="本轮练习记录">
+              <div><span>训练目标</span><strong id="reportDuration">60 秒</strong></div>
+              <div><span>本轮字数</span><strong id="reportWords">0</strong></div>
+              <div><span>填充词</span><strong>暂未统计</strong></div>
             </div>
             <section class="speak-card report-card">
               <h2>本轮表达罗盘</h2>
@@ -198,17 +203,14 @@
               ×
             </button>
           </header>
-          <div>
-            <p>模型由服务器环境变量配置，API Key 不进入浏览器。</p>
-            <dl>
-              <dt>分析服务</dt>
-              <dd id="modelStatus">正在检查</dd>
-              <dt>实时转写</dt>
-              <dd>浏览器语音识别</dd>
-            </dl>
-            <p class="muted">
-              正式部署必须使用 HTTPS；浏览器将自行请求麦克风权限。
-            </p>
+          <div class="settings-body">
+            <label class="model-field" for="providerSelect"><span>AI 服务商</span><select id="providerSelect"><option value="DeepSeek">DeepSeek</option><option value="OpenAI">OpenAI</option><option value="Custom">自定义（OpenAI 兼容）</option></select></label>
+            <label class="model-field" for="apiKey"><span>API Key</span><input id="apiKey" type="password" autocomplete="off" placeholder="仅保存到当前浏览器会话" /></label>
+            <label class="model-field" for="modelInput"><span>模型</span><input id="modelInput" autocomplete="off" /></label>
+            <label class="model-field" for="baseUrlInput"><span>Base URL</span><input id="baseUrlInput" type="url" inputmode="url" autocomplete="off" placeholder="https://api.example.com/v1" /></label>
+            <p class="model-status" id="settingStatus" role="status"></p>
+            <div class="settings-actions"><button class="speak-button speak-button--secondary" id="testButton" type="button">测试连通性</button><button class="speak-button speak-button--primary" id="saveButton" type="button">保存本次会话</button></div>
+            <p class="muted">Key 只会随你的操作直接发送给所选模型服务，不会提交给讲清楚服务器；关闭浏览器后自动清除。</p>
           </div>
         </section>
       </div>
