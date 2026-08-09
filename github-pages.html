@@ -1,0 +1,2535 @@
+<!doctype html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="description" content="讲清楚 3.2 即兴表达训练版" />
+    <title>讲清楚 | 表达档案</title>
+    <style>/* 讲清楚当前视觉令牌与全局基础规则。 */
+:root {
+  --speak-ink: #101510;
+  --speak-ink-raised: #182018;
+  --speak-ink-soft: #243024;
+  --speak-paper: #f4f6f1;
+  --speak-mist: #ccd3c9;
+  --speak-muted: #8c988d;
+  --speak-line: rgba(244, 246, 241, .14);
+  --speak-acid: #c8ff45;
+  --speak-acid-ink: #162012;
+  --speak-coral: #ff846d;
+  --speak-coral-ink: #5d2118;
+  --speak-focus: rgba(200, 255, 69, .42);
+  --speak-shadow: 0 24px 60px rgba(0, 0, 0, .25);
+  --speak-radius: 8px;
+  --speak-space-1: 4px;
+  --speak-space-2: 8px;
+  --speak-space-3: 12px;
+  --speak-space-4: 16px;
+  --speak-space-5: 24px;
+  --speak-space-6: 32px;
+  --speak-sans: -apple-system, BlinkMacSystemFont, "SF Pro Display", "PingFang SC", "Noto Sans SC", sans-serif;
+  --speak-serif: Georgia, "Songti SC", "STSong", serif;
+  --speak-mono: "SFMono-Regular", "Cascadia Mono", "PingFang SC", monospace;
+}
+
+* { box-sizing: border-box; }
+html { background: var(--speak-ink); }
+body { min-width: 320px; margin: 0; color: var(--speak-paper); background: var(--speak-ink); font-family: var(--speak-sans); letter-spacing: 0; }
+.app-shell { position: relative; z-index: 1; padding-bottom: 40px; }
+button, input, textarea, select { font: inherit; }
+button { cursor: pointer; }
+button:focus-visible, input:focus-visible, textarea:focus-visible, select:focus-visible { outline: 3px solid var(--speak-focus); outline-offset: 3px; }
+[hidden] { display: none !important; }
+</style>
+    <style>.speak-topbar { width: min(1160px, calc(100% - 48px)); min-height: 84px; display: flex; align-items: center; justify-content: space-between; gap: var(--speak-space-4); margin: 0 auto; }
+.speak-brand { display: inline-flex; align-items: center; gap: 10px; border: 0; color: var(--speak-paper); background: transparent; font-size: 18px; font-weight: 820; }
+.speak-brand-mark { width: 29px; height: 29px; display: grid; place-items: center; border-radius: 7px; color: var(--speak-acid-ink); background: var(--speak-acid); font-family: var(--speak-serif); }
+.speak-brand-meta, .speak-eyebrow { color: var(--speak-acid); font-family: var(--speak-mono); font-size: 11px; font-weight: 800; letter-spacing: 1.1px; }
+
+.speak-button { min-height: 47px; display: inline-flex; align-items: center; justify-content: center; gap: var(--speak-space-2); padding: 0 var(--speak-space-4); border: 1px solid transparent; border-radius: 7px; font-size: 14px; font-weight: 820; transition: transform 160ms ease, background 160ms ease, border-color 160ms ease; }
+.speak-button--primary { color: var(--speak-acid-ink); background: var(--speak-acid); }
+.speak-button--primary:hover { background: #dcff83; transform: translateY(-1px); }
+.speak-button--secondary { border-color: var(--speak-line); color: var(--speak-paper); background: var(--speak-ink-soft); }
+.speak-button--secondary:hover { border-color: rgba(200, 255, 69, .55); }
+.speak-icon-button { width: 38px; min-height: 38px; display: grid; place-items: center; padding: 0; border: 1px solid var(--speak-line); border-radius: 6px; color: var(--speak-mist); background: rgba(244, 246, 241, .025); }
+
+.speak-card { border: 1px solid var(--speak-line); border-radius: var(--speak-radius); background: var(--speak-ink-raised); box-shadow: var(--speak-shadow); }
+.speak-input { width: 100%; border: 1px solid rgba(244, 246, 241, .2); border-radius: 6px; outline: 0; color: var(--speak-paper); background: #111711; }
+.speak-input:focus { border-color: var(--speak-acid); box-shadow: 0 0 0 3px rgba(200, 255, 69, .11); }
+.speak-chip { min-height: 25px; display: inline-flex; align-items: center; padding: 0 var(--speak-space-2); border-radius: 13px; color: var(--speak-acid); background: rgba(200, 255, 69, .1); font-size: 11px; font-weight: 800; }
+.speak-chip--coral { color: #ffc1b5; background: rgba(255, 132, 109, .15); }
+.speak-watermark { position: absolute; right: 18px; bottom: 14px; z-index: 1; color: rgba(244, 246, 241, .12); font-family: var(--speak-serif); font-size: 11px; letter-spacing: .3px; pointer-events: none; user-select: none; }
+.copyright-footer { padding: 0 24px 28px; color: var(--speak-muted); font-size: 12px; text-align: center; }
+.copyright-footer a { color: var(--speak-muted); text-underline-offset: 3px; }
+.copyright-footer a:hover { color: var(--speak-acid); }
+
+@media (max-width: 560px) {
+  .speak-topbar { width: min(100% - 28px, 1160px); min-height: 66px; }
+  .speak-button { width: 100%; }
+  .speak-watermark { right: 12px; bottom: 10px; font-size: 10px; }
+}
+</style>
+    <style>main { width:min(1160px,calc(100% - 48px)); margin:auto; padding:34px 0 68px; } .top-actions,.chips,.goal-chips,.practice-actions { display:flex; gap:8px; align-items:center; } .quiet-button,.link-button,.back-button { border:0; background:transparent; color:var(--speak-mist); font-weight:720; cursor:pointer; } .quiet-button { min-height:38px; padding:0 11px; border:1px solid var(--speak-line); border-radius:6px; } .screen { display:none; } .screen.active { display:block; } .archive-head { display:grid; grid-template-columns:1fr auto; gap:24px; align-items:start; margin-bottom:24px; } h1 { max-width:720px; margin:8px 0 10px; color:var(--speak-paper); font-family:var(--speak-serif); font-size:clamp(34px,5vw,52px); line-height:1.16; } .archive-head p:not(.speak-eyebrow),.toolkit p,.report-head p { color:var(--speak-mist); line-height:1.65; } .score-pocket { min-width:200px; padding:15px; border:1px solid var(--speak-line); border-radius:var(--speak-radius); } .score-pocket strong { display:block; font-family:var(--speak-mono); font-size:26px; } .score-pocket span,.score-pocket small { display:block; color:var(--speak-muted); font-size:11px; } .progress { height:5px; margin:9px 0 8px; overflow:hidden; border-radius:4px; background:rgba(244,246,241,.14); } .progress i { display:block; width:48%; height:100%; background:var(--speak-acid); } .mode-grid { display:grid; grid-template-columns:repeat(4,1fr); border-top:1px solid var(--speak-line); border-bottom:1px solid var(--speak-line); margin-bottom:18px; } .mode-grid button { min-height:122px; padding:16px; border:0; border-right:1px solid var(--speak-line); color:var(--speak-mist); background:transparent; text-align:left; } .mode-grid button:last-child { border-right:0; } .mode-grid button.active { color:var(--speak-paper); background:rgba(200,255,69,.055); box-shadow:inset 0 -3px 0 var(--speak-acid); } .mode-grid span { display:block; margin-bottom:19px; color:var(--speak-acid); font-family:var(--speak-mono); font-size:10px; font-weight:800; } .mode-grid strong,.mode-grid small { display:block; } .mode-grid small { margin-top:6px; color:var(--speak-muted); font-size:12px; line-height:1.5; } .setup-grid,.practice-grid { display:grid; grid-template-columns:minmax(0,1.55fr) minmax(260px,.75fr); gap:16px; } .composer,.toolkit,.practice-stage,.focus-card,.report-card { padding:24px; } .label-row { display:flex; justify-content:space-between; gap:12px; } label,.link-button { color:var(--speak-muted); font-size:12px; } .link-button { color:var(--speak-acid); } #topic { min-height:95px; margin:11px 0 16px; padding:15px; resize:vertical; } .goal-chips { flex-wrap:wrap; margin-bottom:20px; } .goal-chips button { min-height:34px; padding:0 10px; border:1px solid var(--speak-line); border-radius:17px; color:var(--speak-mist); background:transparent; } .goal-chips button.active { color:var(--speak-acid-ink); border-color:var(--speak-acid); background:var(--speak-acid); font-weight:780; } .full-width { width:100%; } .toolkit h2,.focus-card h2 { margin:8px 0; font-size:20px; } .toolkit ol { margin:18px 0 0; padding:0; list-style:none; border-top:1px solid var(--speak-line); } .toolkit li { padding:12px 0; border-bottom:1px solid var(--speak-line); color:var(--speak-muted); font-size:13px; } .toolkit li b { color:var(--speak-acid); margin-right:8px; } .practice-stage { min-height:580px; } .chips { margin:24px 0 30px; } time { display:block; color:var(--speak-acid); font-family:var(--speak-mono); font-size:72px; font-weight:840; } .practice-stage h1 { max-width:760px; font-family:var(--speak-sans); font-size:clamp(25px,3.3vw,32px); } .practice-stage > p { color:var(--speak-muted); } .transcript { min-height:190px; margin-top:18px; padding:14px; resize:vertical; line-height:1.68; } .transcript-meta { display:flex; justify-content:space-between; gap:12px; margin-top:8px; color:var(--speak-muted); font-size:11px; } .practice-actions { margin-top:20px; } .practice-actions .speak-button--primary { flex:1; } .speak-button:disabled { cursor:wait; opacity:.66; } .privacy-note { font-size:11px; line-height:1.55; } .focus-list p { padding:10px 11px; border-left:3px solid var(--speak-acid); background:rgba(200,255,69,.065); color:var(--speak-muted); font-size:12px; } .focus-list b { display:block; color:var(--speak-paper); margin-bottom:3px; } .report-wrap { width:min(900px,100%); margin:auto; } .report-head { display:flex; justify-content:space-between; gap:22px; margin-bottom:20px; } .report-score { min-width:118px; padding:15px 12px; border-radius:var(--speak-radius); color:var(--speak-acid-ink); background:var(--speak-acid); text-align:center; } .report-score strong { display:block; font-family:var(--speak-mono); font-size:38px; } .report-score span { font-size:10px; font-weight:760; } .report-card h2 { margin-top:0; } .compass { display:grid; grid-template-columns:repeat(5,1fr); gap:7px; } .compass div { padding:11px 7px; border:1px solid var(--speak-line); border-radius:6px; text-align:center; } .compass b { display:block; color:var(--speak-acid); font-family:var(--speak-mono); font-size:18px; } .compass span { color:var(--speak-muted); font-size:11px; } .rewrite { margin-top:18px; padding:18px; border:1px solid rgba(255,132,109,.48); border-radius:7px; background:rgba(255,132,109,.09); } .rewrite p { margin:0 0 8px; color:#ffc1b5; font-size:11px; font-weight:800; } blockquote { margin:0 0 8px; color:var(--speak-paper); font-size:15px; line-height:1.7; } .rewrite small { color:var(--speak-mist); line-height:1.6; } .dialog-backdrop { position:fixed; inset:0; z-index:10; display:grid; place-items:center; padding:20px; background:rgba(0,0,0,.62); } .dialog { width:min(560px,100%); border:1px solid rgba(200,255,69,.44); border-radius:8px; background:var(--speak-ink-raised); box-shadow:var(--speak-shadow); } .dialog header { display:flex; align-items:center; justify-content:space-between; padding:18px 21px; border-bottom:1px solid var(--speak-line); } .dialog h2 { margin:0; font-size:20px; } .dialog header button { width:32px; height:32px; border:0; border-radius:5px; color:var(--speak-muted); background:transparent; font-size:24px; } .dialog > div { padding:21px; color:var(--speak-mist); line-height:1.65; } dl { display:grid; grid-template-columns:110px 1fr; gap:10px; margin:18px 0; } dt { color:var(--speak-muted); } dd { margin:0; color:var(--speak-paper); } .muted { color:var(--speak-muted); font-size:12px; } .badges { display:grid; grid-template-columns:repeat(3,1fr); gap:8px; } .badges span { display:grid; gap:5px; padding:12px; border:1px solid var(--speak-line); border-radius:7px; color:var(--speak-acid); text-align:center; } .badges b,.badges small { color:var(--speak-paper); font-size:11px; } .badges small { color:var(--speak-muted); }
+@media (max-width:860px) { .setup-grid,.practice-grid { grid-template-columns:1fr; } .focus-card { display:grid; grid-template-columns:.8fr 1.2fr; gap:18px; } } @media (max-width:560px) { main { width:min(100% - 28px,1160px); padding-top:24px; } .archive-head,.report-head { display:block; } .score-pocket { margin-top:20px; } .mode-grid { grid-template-columns:1fr 1fr; } .mode-grid button:nth-child(2) { border-right:0; } .mode-grid button:nth-child(-n+2) { border-bottom:1px solid var(--speak-line); } .mode-grid button { min-height:112px; } .setup-grid,.practice-grid { grid-template-columns:1fr; } .composer,.toolkit,.practice-stage,.focus-card,.report-card { padding:17px; } .focus-card { display:block; } time { font-size:58px; } .practice-actions { flex-direction:column; } .practice-actions .speak-button { width:100%; } .compass { grid-template-columns:repeat(3,1fr); } .report-score { width:118px; margin-top:18px; } }
+
+/* 04 表达档案：让积分、档案索引与报告保持原提案的阅读节奏。 */
+.archive-head { grid-template-columns: .82fr 1.18fr; }
+.archive-head h1 { font-size: clamp(35px, 4.3vw, 48px); }
+.score-pocket { display: grid; grid-template-columns: auto 1fr; column-gap: 14px; align-items: center; min-width: 0; padding: 0; border: 0; }
+.score-pocket strong { grid-row: span 2; margin: 0; color: var(--speak-acid); font-size: 40px; }
+.score-pocket .progress { grid-column: 2; margin: 0; }
+.score-pocket small { grid-column: 2; margin-top: 6px; }
+.speak-card { box-shadow: none; }
+.report-stats { display: grid; grid-template-columns: repeat(3, 1fr); gap: 9px; margin-bottom: 16px; }
+.report-stats div { padding: 14px; border: 1px solid var(--speak-line); border-radius: var(--speak-radius); background: var(--speak-ink-raised); }
+.report-stats span, .report-stats strong { display: block; }
+.report-stats span { color: var(--speak-muted); font-size: 11px; }
+.report-stats strong { margin-top: 4px; color: var(--speak-paper); font-family: var(--speak-mono); font-size: 18px; }
+.settings-list { margin-bottom: 0; }
+
+@media (max-width: 860px) { .archive-head { grid-template-columns: 1fr; } .score-pocket { max-width: 380px; } }
+@media (max-width: 560px) { .report-stats { grid-template-columns: 1fr; } }
+
+/* 录制控制保持同一操作层级，窄屏时自动换行。 */
+.recording-controls { display: flex; flex-wrap: wrap; gap: 8px; }
+.recording-controls .speak-button { min-width: 92px; }
+.practice-actions { justify-content: space-between; }
+.practice-actions > .speak-button--primary { flex: 1; }
+.speak-button:disabled { cursor: not-allowed; opacity: .48; }
+
+@media (max-width: 560px) {
+  .practice-actions { flex-direction: column; align-items: stretch; }
+  .recording-controls { width: 100%; }
+  .recording-controls .speak-button { flex: 1 1 calc(50% - 4px); width: auto; min-width: 0; }
+  .practice-actions > .speak-button--primary { width: 100%; }
+}
+
+/* V3-2 板块注册表：桌面五列，窄屏两列且最后一项独占整行。 */
+.mode-grid { grid-template-columns: repeat(5, minmax(0, 1fr)); }
+.mode-grid button:nth-child(5n) { border-right: 0; }
+.capture-tools { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; margin-top: 18px; }
+.capture-tool { padding: 12px 0; border-top: 1px solid var(--speak-line); }
+.capture-label { display: block; margin-bottom: 8px; color: var(--speak-muted); font-family: var(--speak-mono); font-size: 10px; font-weight: 800; letter-spacing: 1px; }
+.audio-status { display: block; margin-top: 8px; color: var(--speak-muted); font-size: 11px; line-height: 1.5; }
+
+@media (max-width: 560px) {
+  .mode-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .mode-grid button { border-bottom: 1px solid var(--speak-line); }
+  .mode-grid button:nth-child(2n) { border-right: 0; }
+  .mode-grid button:last-child { border-bottom: 0; }
+  .mode-grid button:last-child:nth-child(odd) { grid-column: 1 / -1; border-right: 0; }
+  .capture-tools { grid-template-columns: 1fr; }
+}
+
+/* 板块索引：固定内容节奏，让五张卡在录屏中共享同一条顶部基线。 */
+.mode-grid { align-items: stretch; }
+.mode-grid button { display: flex; flex-direction: column; align-items: flex-start; justify-content: flex-start; min-height: 176px; height: 100%; padding: 17px 16px 19px; overflow: hidden; }
+.mode-grid button > span { flex: 0 0 auto; margin-bottom: 13px; }
+.mode-grid .mode-icon { display: grid; place-items: center; width: 34px; height: 34px; margin: 0 0 10px; border: 1px solid rgba(200,255,69,.42); border-radius: 50%; color: var(--speak-acid); font-size: 22px; font-style: normal; line-height: 1; transition: transform 180ms ease, background 180ms ease; }
+.mode-grid button:hover .mode-icon, .mode-grid button:focus-visible .mode-icon { transform: translateY(-3px) rotate(-6deg); background: rgba(200,255,69,.12); }
+.mode-grid button strong { min-height: 26px; color: var(--speak-paper); font-size: 18px; line-height: 1.35; }
+.mode-grid button small { margin-top: 6px; color: var(--speak-muted); font-size: 12px; line-height: 1.45; }
+.mode-grid button.active .mode-icon { background: rgba(200,255,69,.12); }
+.provider-status { display: grid; grid-template-columns: repeat(2, 1fr); gap: 8px; margin: 16px 0 10px; padding: 0; list-style: none; }
+.provider-status li { display: flex; align-items: center; justify-content: space-between; gap: 10px; padding: 10px 11px; border: 1px solid var(--speak-line); color: var(--speak-paper); font-size: 12px; }
+.provider-status b { color: var(--speak-muted); font-size: 11px; font-weight: 700; }
+.provider-status .provider-online { color: var(--speak-acid); }
+.provider-status .provider-offline { color: var(--speak-muted); }
+
+.settings-section { margin-top: 14px; padding-top: 14px; border-top: 1px solid var(--speak-line); }
+.model-field { display: grid; grid-template-columns: 118px minmax(0, 1fr); align-items: center; gap: 12px; margin-top: 12px; }
+.model-field > span { color: var(--speak-muted); font-size: 12px; }
+.model-field input, .model-field select { width: 100%; min-height: 42px; padding: 0 11px; border: 1px solid rgba(244, 246, 241, .2); border-radius: 6px; color: var(--speak-paper); background: #111711; }
+.model-field input:focus, .model-field select:focus { border-color: var(--speak-acid); outline: 0; box-shadow: 0 0 0 3px rgba(200, 255, 69, .11); }
+.settings-actions { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 16px; }
+.settings-actions .speak-button { flex: 1 1 180px; }
+
+@media (max-width: 560px) {
+  .mode-grid button { min-height: 156px; padding: 15px 13px 17px; }
+  .mode-grid button strong { font-size: 16px; }
+  .provider-status { grid-template-columns: 1fr; }
+  .model-field { grid-template-columns: 1fr; gap: 6px; }
+  .settings-actions { flex-direction: column; }
+  .settings-actions .speak-button { width: 100%; }
+}
+.quiet-button { white-space: nowrap; }
+.report-source { display: block; margin-top: 8px; color: var(--speak-acid); font-size: 11px; }
+
+/* 完整报告默认收起，让一处关键改进和复练仍是结果页的主线。 */
+.report-priority { margin-bottom: 22px; padding-bottom: 18px; border-bottom: 1px solid var(--speak-line); }
+.report-priority h2 { margin: 5px 0 9px; color: var(--speak-paper); font-size: 22px; }
+.report-priority blockquote { margin: 0 0 10px; color: var(--speak-acid); font-size: 17px; }
+.report-priority > p:not(.speak-eyebrow) { margin: 8px 0; color: var(--speak-mist); line-height: 1.7; }
+.priority-action { display: grid; grid-template-columns: 88px minmax(0, 1fr); gap: 10px; margin-top: 14px !important; padding-top: 13px; border-top: 1px solid var(--speak-line); }
+.priority-action b { color: var(--speak-paper); }
+.report-details-toggle { width: 100%; margin-top: 17px; }
+.report-details { margin-top: 16px; border-top: 1px solid var(--speak-line); }
+.analysis-section { padding: 21px 0; border-bottom: 1px solid var(--speak-line); }
+.analysis-section h3,.deep-coach h3 { margin: 0 0 11px; color: var(--speak-paper); font-size: 17px; }
+.analysis-section blockquote,.deep-coach blockquote { margin: 0 0 12px; color: var(--speak-acid); font-size: 13px; line-height: 1.6; }
+.analysis-section p,.deep-coach > p { margin: 0; color: var(--speak-mist); line-height: 1.82; white-space: pre-wrap; }
+.deep-coach { margin-top: 18px; padding: 20px; border: 1px solid rgba(200,255,69,.4); border-radius: var(--speak-radius); background: rgba(200,255,69,.045); }
+.deep-coach h2 { margin: 7px 0 12px; color: var(--speak-paper); font-size: 21px; }
+.deep-coach h3 { margin-top: 20px; }
+.deep-coach ul { display: grid; gap: 9px; margin: 0; padding: 0; list-style: none; }
+.deep-coach li { padding: 10px 11px; border-left: 3px solid var(--speak-acid); color: var(--speak-mist); background: rgba(244,246,241,.04); font-size: 13px; line-height: 1.6; }
+
+@media (max-width: 560px) {
+  .priority-action { grid-template-columns: 1fr; gap: 4px; }
+  .analysis-section { padding: 18px 0; }
+  .deep-coach { padding: 17px; }
+}
+</style>
+  </head>
+  <body>
+    <div class="app-shell">
+      <header class="speak-topbar">
+        <button class="speak-brand" id="homeButton" type="button">
+          <span class="speak-brand-mark">说</span
+          ><span
+            >讲清楚<small class="speak-brand-meta"
+              >SPEAK WITH INTENTION</small
+            ></span
+          >
+        </button>
+        <div class="top-actions">
+          <button class="quiet-button" id="growthButton" type="button">
+            我的成长</button
+          ><button
+            class="speak-icon-button"
+            id="settingsButton"
+            aria-label="AI 服务设置"
+            title="AI 服务设置"
+            type="button"
+          >
+            ⚙
+          </button>
+        </div>
+      </header>
+      <main>
+        <section class="screen active" id="setupScreen">
+          <div class="archive-head">
+            <div>
+              <p class="speak-eyebrow">个人表达档案</p>
+              <h1>把重要的话，练成你的底气。</h1>
+              <p>从一个具体问题开始。先讲一遍，再只改一句，然后马上复练。</p>
+            </div>
+            <div class="score-pocket">
+              <strong id="points">1,240</strong><span>个人训练分</span>
+              <div class="progress"><i></i></div>
+              <small id="nextMilestone">距离“稳住边界”还差 760 分</small>
+            </div>
+          </div>
+          <div class="mode-grid" id="modeGrid" aria-label="训练板块"></div>
+          <div class="setup-grid">
+            <section class="speak-card composer">
+              <div class="label-row">
+                <label for="topic">你现在遇到了什么问题？</label
+                ><button class="link-button" id="randomButton" type="button">
+                  换一个场景
+                </button>
+              </div>
+              <textarea
+                class="speak-input"
+                id="topic"
+                maxlength="160"
+              ></textarea>
+              <div class="goal-chips" id="goals"></div>
+              <button
+                class="speak-button speak-button--primary full-width"
+                id="startButton"
+                type="button"
+              >
+                开始 60 秒练习
+              </button>
+            </section>
+            <aside class="speak-card toolkit">
+              <p class="speak-eyebrow">本轮力量动作</p>
+              <h2 id="toolTitle"></h2>
+              <p id="toolSummary"></p>
+              <ol id="toolList"></ol>
+            </aside>
+          </div>
+        </section>
+        <section class="screen" id="practiceScreen">
+          <div class="practice-grid">
+            <section class="speak-card practice-stage">
+              <button class="back-button" id="backButton" type="button">
+                ← 返回重新选题
+              </button>
+              <div class="chips">
+                <span class="speak-chip" id="modeName"></span
+                ><span class="speak-chip speak-chip--coral">第一轮</span>
+              </div>
+              <time id="timer">01:00</time>
+              <h1 id="question"></h1>
+              <p id="goal"></p>
+              <textarea
+                class="speak-input transcript"
+                id="transcript"
+                placeholder="开始浏览器转写后，识别到的文字会显示在这里；也可以直接输入或粘贴原稿。"
+              ></textarea>
+              <div class="transcript-meta">
+                <span id="transcriptState">准备开始转写</span
+                ><span id="wordCount">0 字</span>
+              </div>
+              <div class="capture-tools">
+                <section class="capture-tool" aria-label="浏览器转写控制">
+                  <span class="capture-label">浏览器转写</span>
+                  <div class="recording-controls">
+                    <button class="speak-button speak-button--secondary" id="recordStartButton" type="button">开始浏览器转写</button>
+                    <button class="speak-button speak-button--secondary" id="recordPauseButton" type="button" hidden>暂停转写</button>
+                    <button class="speak-button speak-button--secondary" id="recordStopButton" type="button" hidden>结束转写</button>
+                  </div>
+                </section>
+                <section class="capture-tool audio-recorder" id="audioRecorder" aria-label="本地音频录制" hidden>
+                  <span class="capture-label">本地音频录制</span>
+                  <div class="recording-controls">
+                    <button class="speak-button speak-button--secondary" id="audioStartButton" type="button">开始本地录音</button>
+                    <button class="speak-button speak-button--secondary" id="audioPauseButton" type="button" hidden>暂停录音</button>
+                    <button class="speak-button speak-button--secondary" id="audioStopButton" type="button" hidden>结束录音</button>
+                    <button class="speak-button speak-button--secondary" id="audioDownloadButton" type="button" hidden>下载 WebM 音频</button>
+                  </div>
+                  <small class="audio-status" id="audioState" aria-live="polite">点击后才请求麦克风权限；音频仅保留在当前浏览器内存中。</small>
+                </section>
+              </div>
+              <div class="practice-actions">
+                <button
+                  class="speak-button speak-button--primary"
+                  id="analyzeButton"
+                  type="button"
+                >
+                  生成训练报告
+                </button>
+              </div>
+              <p class="privacy-note">
+                浏览器转写使用浏览器语音识别；即兴表达的本地录音只在当前浏览器内存中生成，需你主动下载。AI
+                默认报告只在当前浏览器内依据原稿生成，不调用外部 AI 或 API；只有你主动启用自己的模型时才会发送确认提交的文字原稿。音频不会上传。
+              </p>
+            </section>
+            <aside class="speak-card focus-card">
+              <p class="speak-eyebrow">这轮只练一件事</p>
+              <h2 id="focus"></h2>
+              <div class="focus-list">
+                <p><b>主张</b>先把你的判断说完整。</p>
+                <p><b>边界</b>说明影响，而不是只说“我很忙”。</p>
+                <p><b>下一步</b>把优先级交回需要做决定的人。</p>
+              </div>
+            </aside>
+          </div>
+        </section>
+        <section class="screen" id="reportScreen">
+          <div class="report-wrap">
+            <div class="report-head">
+              <div>
+                <p class="speak-eyebrow">训练报告</p>
+                <small class="report-source" id="reportSource"></small>
+                <h1 id="reportTitle">你已经把重点说出来了。</h1>
+                <p id="reportSummary"></p>
+              </div>
+              <div class="report-score" id="reportScorePanel">
+                <strong id="reportScore">--</strong><span>本轮训练分</span>
+              </div>
+            </div>
+            <div class="report-stats" aria-label="本轮练习记录">
+              <div><span>训练目标</span><strong id="reportDuration">60 秒</strong></div>
+              <div><span>本轮字数</span><strong id="reportWords">0</strong></div>
+              <div><span>填充词</span><strong id="reportFillers">暂未统计</strong></div>
+            </div>
+            <section class="speak-card report-card">
+              <section class="report-priority" aria-labelledby="priorityHeading">
+                <p class="speak-eyebrow" id="priorityHeading">这次先改一处</p>
+                <h2 id="priorityLabel"></h2>
+                <blockquote id="priorityQuote"></blockquote>
+                <p id="priorityImpact"></p>
+                <p class="priority-action"><b>下一轮动作</b><span id="priorityAction"></span></p>
+              </section>
+              <h2>本轮表达罗盘</h2>
+              <div class="compass" id="compass"></div>
+              <button class="speak-button speak-button--secondary report-details-toggle" id="detailsToggle" type="button" aria-expanded="false">展开完整五维分析</button>
+              <div class="report-details" id="reportDetails" hidden></div>
+              <section class="deep-coach" id="deepCoach" hidden aria-labelledby="deepCoachTitle">
+                <p class="speak-eyebrow">用户自带 API 专属</p>
+                <h2 id="deepCoachTitle">专属深度教练</h2>
+                <blockquote id="deepCoachQuote"></blockquote>
+                <p id="deepCoachAnalysis"></p>
+                <h3>第二轮 60 秒示范</h3>
+                <blockquote id="deepCoachSecondRound"></blockquote>
+                <h3>复练验收清单</h3>
+                <ul id="deepCoachChecklist"></ul>
+              </section>
+              <div class="rewrite">
+                <p>只改这一句</p>
+                <blockquote id="rewriteText"></blockquote>
+                <small id="rewriteReason"></small>
+              </div>
+              <div class="practice-actions">
+                <button
+                  class="speak-button speak-button--primary"
+                  id="retryButton"
+                  type="button"
+                >
+                  用加强句再练 60 秒</button
+                ><button class="speak-button speak-button--secondary" id="reportAudioDownload" type="button" hidden>
+                  下载本轮本地音频</button
+                ><button
+                  class="speak-button speak-button--secondary"
+                  id="reportHome"
+                  type="button"
+                >
+                  回到训练首页
+                </button>
+              </div>
+            </section>
+          </div>
+        </section>
+      </main>
+      <footer class="copyright-footer"><a href="https://creativecommons.org/licenses/by-nc/4.0/deed.zh-Hans">CC BY-NC 4.0</a></footer>
+      <span class="speak-watermark" aria-hidden="true">Chen Hongye</span>
+      <div class="dialog-backdrop" id="settingsDialog" hidden>
+        <section
+          class="dialog"
+          role="dialog"
+          aria-modal="true"
+          aria-labelledby="settingsTitle"
+        >
+          <header>
+            <h2 id="settingsTitle">AI 服务</h2>
+            <button data-close="settingsDialog" aria-label="关闭" type="button">
+              ×
+            </button>
+          </header>
+          <div class="settings-body">
+            <label class="model-field" for="reportMode"><span>报告生成方式</span><select id="reportMode"><option value="public">大众本地完整评估（不调用 AI）</option><option value="byok">使用我自己的模型（API Key）</option></select></label>
+            <section id="publicSettings" class="settings-section" aria-label="公共模型设置">
+              <p class="muted">所有用户默认在浏览器内获得训练分、五维罗盘和完整报告。本站不使用创作者的 API Key，也不会把原稿发送到外部模型。</p>
+              <label class="model-field" for="providerSelect" hidden><span>公共服务偏好</span><select id="providerSelect"><option value="auto">自动选择</option><option value="qwen">通义千问</option><option value="doubao">豆包</option><option value="deepseek">DeepSeek</option></select></label>
+              <ul class="provider-status" id="providerStatus" aria-label="AI 服务可用状态" hidden></ul>
+              <p class="model-status" id="quotaStatus" role="status" hidden></p>
+            </section>
+            <section id="byokSettings" class="settings-section" aria-label="用户自带模型设置" hidden>
+              <label class="model-field" for="byokProviderSelect"><span>AI 服务商</span><select id="byokProviderSelect"><option value="DeepSeek">DeepSeek</option><option value="OpenAI">OpenAI</option><option value="Custom">自定义（OpenAI 兼容）</option></select></label>
+              <label class="model-field" for="apiKey"><span>API Key</span><input id="apiKey" type="password" autocomplete="new-password" placeholder="仅用于当前浏览器会话" /></label>
+              <label class="model-field" for="modelInput"><span>模型名</span><input id="modelInput" autocomplete="off" /></label>
+              <label class="model-field" for="baseUrlInput"><span>Base URL</span><input id="baseUrlInput" type="url" inputmode="url" autocomplete="off" placeholder="https://api.example.com/v1" /></label>
+              <p class="muted">Key 只会从当前浏览器直接发送给你选择的模型服务，不会上传到讲清楚服务器；关闭浏览器后会话数据会清除。自定义接口需允许浏览器跨域。</p>
+            </section>
+            <p class="model-status" id="settingStatus" role="status"></p>
+            <div class="settings-actions"><button class="speak-button speak-button--secondary" id="testButton" type="button">刷新服务状态</button><button class="speak-button speak-button--primary" id="saveButton" type="button">保存本次偏好</button></div>
+            <p class="muted">默认路线不调用任何外部模型；你仍可保留 3.1 的自带 Key、模型名和 Base URL 设置。两条路径共用同一套训练和报告页面。</p>
+          </div>
+        </section>
+      </div>
+      <div class="dialog-backdrop" id="growthDialog" hidden>
+        <section
+          class="dialog"
+          role="dialog"
+          aria-modal="true"
+          aria-labelledby="growthTitle"
+        >
+          <header>
+            <h2 id="growthTitle">我的成长</h2>
+            <button data-close="growthDialog" aria-label="关闭" type="button">
+              ×
+            </button>
+          </header>
+          <div>
+            <p id="growthSummary">1,240 训练分 · 下一阶段：稳住边界</p>
+            <div class="badges" id="growthBadges"></div>
+          </div>
+        </section>
+      </div>
+    </div>
+    <script type="module">const modules = {};
+modules["data/interview-scenes.js"] = (() => { const exports = {}; ((exports) => { 
+const interviewScenes = [
+  "请用 90 秒介绍你自己，并说明你能为这个岗位带来什么。",
+  "你最突出的三个优势是什么？请各给一个证据。",
+  "你认为自己目前最需要改进的能力是什么？",
+  "为什么想加入这家公司？",
+  "为什么选择这个岗位，而不是相近岗位？",
+  "你为什么考虑转换职业方向？",
+  "讲一次你解决棘手问题的经历。",
+  "讲一次项目没有达到预期的经历，你如何处理？",
+  "讲一次你和同事意见冲突的经历。",
+  "你收到过最有价值的一条负面反馈是什么？",
+  "当项目方向突然改变时，你会怎么做？",
+  "请讲一次你在紧期限内交付结果的经历。",
+  "你如何在高压状态下保持判断力？",
+  "当任务很多时，你如何决定优先级？",
+  "讲一次你说服他人接受方案的经历。",
+  "讲一次跨部门协作推进不顺的经历。",
+  "资源不足时，你如何保证关键目标完成？",
+  "讲一次你用数据改变决策的经历。",
+  "信息不完整时，你会如何做决定？",
+  "讲一次你主动发现并解决问题的经历。",
+  "你怎样理解领导力？",
+  "没有管理权限时，你如何影响他人？",
+  "讲一次你帮助新人快速上手的经历。",
+  "讲一次你改进工作流程的经历。",
+  "你犯过什么影响较大的错误？如何补救？",
+  "当效率和原则发生冲突时，你会怎么选？",
+  "你最近刻意学习了什么新能力？",
+  "面对不认同你的批评，你如何回应？",
+  "讲一次你处理客户投诉的经历。",
+  "遇到要求很高的客户时，你会如何沟通？",
+  "你如何准备一次重要汇报？",
+  "面试结束前，你最想向面试官问什么？",
+  "如果入职，前 90 天你会优先做什么？",
+  "你的薪资期待基于什么？",
+  "如何解释一段职业空窗期？",
+  "被拒绝后，你通常如何复盘？",
+  "你的简历中最能代表你的一个项目是什么？",
+  "和同类候选人相比，你有什么不同？",
+  "你的长期职业目标是什么？",
+  "你喜欢什么样的管理方式？",
+  "远程协作中出现误解时，你会如何处理？",
+  "混合办公如何影响团队效率？",
+  "团队里两个人持续冲突，你会怎么做？",
+  "当你不同意上级决定时，如何表达？",
+  "讲一次你推动更好方案落地的经历。",
+  "项目范围不断增加时，你如何守住交付？",
+  "面对模糊任务，你从哪里开始？",
+  "同时负责多个项目时，你如何管理进度？",
+  "你怎样有边界地拒绝不合理请求？",
+  "讲一次你在组织外额外承担责任的经历。",
+  "谁曾在职业上帮助过你？你学到了什么？",
+  "讲一次你做了有风险决定的经历。",
+  "为什么你认为自己已经准备好承担这个岗位？",
+  "你如何适应新的团队文化？",
+  "你最近对工作方式做过什么调整？",
+  "你如何看待所在行业的一个变化？",
+  "你会如何定义这个岗位的成功？",
+  "入职第一周你最想了解什么？",
+  "讲一次你从零负责一个任务的经历。",
+  "讲一次你协调外部合作方的经历。",
+  "你最近做过一件有创新性的工作是什么？",
+  "面对持怀疑态度的利益相关方，你如何沟通？",
+  "你怎样向同事提出建设性反馈？",
+  "一封紧急邮件打乱计划时，你怎么处理？",
+  "发现一个长期存在的低效流程时，你会如何推动改变？",
+  "当竞争对手做得更快时，你如何调整策略？",
+  "如果发现自己过去的判断有误，你会怎么做？",
+  "会议上无人回应时，你如何推进讨论？",
+  "你如何管理和上级的沟通节奏？",
+  "预算被削减时，你会保留什么、放弃什么？",
+  "当数据与直觉相反时，你信什么？",
+  "团队士气低落时，你能做什么？",
+  "讲一次你处理复杂人际关系的经历。",
+  "你如何平衡战略思考和执行细节？",
+  "连续失败后，你如何恢复状态？",
+  "讲一次你为一个不受欢迎的决定辩护的经历。",
+  "你如何把过去的经验迁移到新领域？",
+  "你希望别人如何定义你的职业身份？",
+  "你理想中的工作日是什么样的？",
+  "岗位职责突然扩大时，你如何重新谈判目标？",
+  "讲一次你把错误流程纠正过来的经历。",
+  "如果只能用 30 天证明价值，你会怎么做？",
+  "你怎样确保自己持续进步？",
+  "进入一个更强调层级的组织，你会如何适应？",
+  "与经验比你少的人合作时，你如何建立信任？",
+  "职业中断后重新回归，你会怎么证明状态？",
+  "你如何让自己的工作可被他人接手？",
+  "讲一次你遵守规则但仍解决问题的经历。",
+  "你如何把客户洞察转化为行动？",
+  "怎样在速度和质量之间做选择？",
+  "你如何安排工作与个人生活的边界？",
+  "请用一个案例展示你的专业判断。",
+  "讲一次你的失误影响到他人的经历。",
+  "你做过一个后来后悔的承诺吗？",
+  "请讲一个最能代表你成长的故事。",
+  "如果今天就要决定，为什么我们应该选择你？",
+  "你如何处理自己不擅长但必须完成的工作？",
+  "在没有明确标准时，你怎样判断结果够好？",
+  "讲一次你在变化中保持团队稳定的经历。",
+  "你如何把复杂信息讲给非专业同事听？"
+];
+
+Object.assign(exports, { interviewScenes }); })(exports); return exports; })();
+modules["data/improv-scenes.js"] = (() => { const exports = {}; ((exports) => { 
+const improvScenes = [
+  { category: "structure", question: "用 60 秒介绍一项你每天都在用的工作工具：它是什么、为什么值得用、你会怎么用。" },
+  { category: "structure", question: "解释你理解的“优先级”：它是什么、为什么重要、今天你会怎么排。" },
+  { category: "structure", question: "向新同事说明一次有效复盘：它是什么、为什么要做、具体怎么开始。" },
+  { category: "structure", question: "介绍你所在团队本周最重要的目标：目标是什么、为什么排在第一、接下来怎么推进。" },
+  { category: "structure", question: "选一个常用 App 讲清它的价值：它解决什么、为什么适合你、你通常怎么用。" },
+  { category: "structure", question: "讲一个你最近学会的工作方法：方法是什么、为什么要学、你打算怎么应用。" },
+  { category: "structure", question: "解释“把事情讲清楚”对你意味着什么：是什么、为什么难、你会怎么练。" },
+  { category: "structure", question: "介绍一次你认可的会议规则：规则是什么、为什么有用、下次怎么执行。" },
+  { category: "structure", question: "说说你如何理解“高质量准备”：它包括什么、为什么省时间、你会怎么安排。" },
+  { category: "structure", question: "讲清一份好周报的标准：它是什么、为什么值得写、你会怎么组织。" },
+  { category: "structure", question: "介绍一个你想戒掉的工作习惯：习惯是什么、为什么要改、你准备怎么替换。" },
+  { category: "structure", question: "解释“主动沟通”：它是什么、为什么能减少误会、你今天能怎么做。" },
+  { category: "structure", question: "推荐一本对你有帮助的书：它讲什么、为什么值得读、你会怎么读。" },
+  { category: "structure", question: "解释你如何做任务拆分：拆分是什么、为什么能推进、第一步怎么做。" },
+  { category: "structure", question: "介绍一个你常用的记录方式：它是什么、为什么适合你、你会怎么坚持。" },
+  { category: "structure", question: "说明为什么团队需要共同目标：共同目标是什么、为什么必要、怎样对齐。" },
+  { category: "structure", question: "讲讲你理解的“可靠”：它体现在哪里、为什么重要、平时怎么做到。" },
+  { category: "structure", question: "解释一次好决策的要素：好决策是什么、为什么不容易、你会怎么判断。" },
+  { category: "structure", question: "介绍一个让你专注的小方法：方法是什么、为什么有效、你怎么安排到一天里。" },
+  { category: "structure", question: "说说你如何理解反馈：反馈是什么、为什么有价值、你会怎么接住。" },
+  { category: "structure", question: "解释一个你熟悉的行业概念：它是什么、为什么值得关注、普通人如何应用。" },
+  { category: "structure", question: "介绍你最近完成的一项小成果：成果是什么、为什么值得提、下一步怎么放大。" },
+  { category: "structure", question: "讲清“先做再优化”：这句话是什么意思、为什么适用、你会怎么实践。" },
+  { category: "structure", question: "说明你如何判断一件事是否值得开始：判断标准是什么、为什么这样看、第一步怎么验证。" },
+  { category: "structure", question: "介绍一个让协作更顺畅的约定：约定是什么、为什么能省事、如何落地。" },
+  { category: "structure", question: "解释“边界感”：它是什么、为什么保护合作、你会怎么表达。" },
+  { category: "structure", question: "分享一个你最近改变看法的问题：原来怎么想、为什么改变、以后怎么做。" },
+  { category: "structure", question: "介绍你处理复杂信息的办法：办法是什么、为什么能减轻压力、具体怎么执行。" },
+  { category: "structure", question: "讲讲什么是你眼中的好服务：好服务是什么、为什么难得、你会怎么提供。" },
+  { category: "structure", question: "解释一项你想培养的能力：能力是什么、为什么现在需要、你会怎么练。" },
+  { category: "structure", question: "说明你会怎样安排一个高效上午：核心原则是什么、为什么这样排、具体怎么做。" },
+  { category: "structure", question: "介绍一个你认为被低估的工作动作：它是什么、为什么重要、你会怎么提醒团队。" },
+  { category: "structure", question: "讲清“把话说短”这件事：它是什么、为什么更有力、你会怎么练习。" },
+  { category: "structure", question: "解释你如何为一次重要沟通做准备：准备什么、为什么不能省、你会怎么开始。" },
+
+  { category: "workplace", question: "领导临时问项目进度，请用 60 秒说明现在到哪一步、为什么是这个状态、接下来怎么推进。" },
+  { category: "workplace", question: "会议上有人问你为什么要改方案，请解释改什么、为什么现在改、下一步怎么验证。" },
+  { category: "workplace", question: "向跨部门同事说明一个延期：延期的内容是什么、为什么发生、你准备怎么补救。" },
+  { category: "workplace", question: "客户临时追问交付时间，请说明交付范围、为什么需要这个周期、你能怎么配合。" },
+  { category: "workplace", question: "同事让你立刻帮忙，请说明你能支持什么、为什么需要取舍、接下来怎么安排。" },
+  { category: "workplace", question: "在例会上介绍一个新流程：流程是什么、为什么要调整、大家接下来怎么做。" },
+  { category: "workplace", question: "老板问一个数据为什么变化，请说明变化是什么、可能原因是什么、下一步怎么确认。" },
+  { category: "workplace", question: "请为一个新同事介绍当前项目：项目在做什么、为什么重要、他可以先做什么。" },
+  { category: "workplace", question: "向团队申请额外资源：你需要什么、为什么现在需要、拿到后怎么使用。" },
+  { category: "workplace", question: "对方要求你今天给结论，请说明问题是什么、为什么还不能定、你准备怎么补齐信息。" },
+  { category: "workplace", question: "介绍一次客户反馈：反馈是什么、为什么值得重视、团队准备怎么回应。" },
+  { category: "workplace", question: "当方案被质疑成本太高时，请说明成本花在哪里、为什么值得、可以怎么控制。" },
+  { category: "workplace", question: "你被邀请临时分享经验，请说明经验是什么、为什么对大家有用、如何直接试一次。" },
+  { category: "workplace", question: "向主管复盘一次失误：发生了什么、为什么会发生、之后怎么避免。" },
+  { category: "workplace", question: "解释你为何建议先做一个小实验：实验测什么、为什么先小规模、结果出来后怎么决定。" },
+  { category: "workplace", question: "项目出现两个优先级冲突，请说明冲突是什么、为什么要现在决定、你建议怎么选。" },
+  { category: "workplace", question: "有人问你本周最需要协作的事项，请说明事项是什么、为什么需要他、你希望怎么配合。" },
+  { category: "workplace", question: "在会上说明一个风险：风险是什么、为什么可能发生、团队可以怎么预防。" },
+  { category: "workplace", question: "请为一个复杂任务争取更多时间：任务包括什么、为什么需要时间、你会如何分阶段交付。" },
+  { category: "workplace", question: "解释为什么这次不建议跟进一个机会：机会是什么、为什么暂缓、什么时候再看。" },
+  { category: "workplace", question: "向伙伴说明你负责的边界：你承担什么、为什么需要明确、遇到交叉时怎么处理。" },
+  { category: "workplace", question: "当被问到“这个方案的亮点是什么”时，请说明亮点、它解决的关键问题、如何落到用户身上。" },
+  { category: "workplace", question: "介绍一次你希望团队改进的协作问题：问题是什么、为什么影响效率、建议怎么改。" },
+  { category: "workplace", question: "请说明你为什么反对立刻上线：当前缺什么、为什么有风险、怎样才适合上线。" },
+  { category: "workplace", question: "领导让你马上做一项新任务，请说明现有承诺、为什么需要确认优先级、可如何调整。" },
+  { category: "workplace", question: "解释一项新指标：它衡量什么、为什么要看它、团队如何使用它。" },
+  { category: "workplace", question: "向客户解释一个无法满足的需求：需求是什么、为什么不能直接做、可以怎样替代。" },
+  { category: "workplace", question: "当团队意见不同，请说明分歧是什么、为什么各方都有道理、建议怎么决定。" },
+  { category: "workplace", question: "介绍一个你提出的效率改进：改进什么、为什么能省时间、第一步怎么试。" },
+  { category: "workplace", question: "请为一次重要汇报开场：你要讲什么、为什么现在值得听、接下来会怎么展开。" },
+  { category: "workplace", question: "说明某项工作完成后的价值：做成了什么、为什么这很重要、接下来怎么继续。" },
+  { category: "workplace", question: "你需要请同事帮忙补一个缺口，请说明缺口是什么、为什么影响结果、希望他怎么支持。" },
+  { category: "workplace", question: "面对突然变化的需求，请说明变化在哪里、为什么要响应、你会如何重新安排。" },
+
+  { category: "response", question: "同事说：“我担心这个方案太冒险。”请先接住他的担心，再说明你会怎样回应。" },
+  { category: "response", question: "领导说：“你这个想法听起来不错，但证据呢？”请回应他的追问，并说明下一步。" },
+  { category: "response", question: "客户说：“我们以前试过，效果一般。”请接住这句话，再继续展开对话。" },
+  { category: "response", question: "同事说：“最近事情太多，我实在排不过来。”请给出真诚回应并提出一个具体问题。" },
+  { category: "response", question: "有人在会上说：“我不太理解你刚才的意思。”请重新接住并讲清你的重点。" },
+  { category: "response", question: "伙伴说：“这个时间点是不是有点晚了？”请回应他的判断，说明你会怎么处理。" },
+  { category: "response", question: "新人说：“我怕自己做不好。”请先回应他的顾虑，再给一个可开始的小建议。" },
+  { category: "response", question: "同事说：“我觉得这个需求不合理。”请接住观点，并追问一个能推进讨论的问题。" },
+  { category: "response", question: "客户说：“你们的报价超出预算了。”请先回应预算压力，再说明可讨论的方向。" },
+  { category: "response", question: "领导说：“为什么现在才告诉我？”请接住情绪、说明事实，并说下一步如何避免。" },
+  { category: "response", question: "同事说：“我不同意这个优先级。”请先确认他的理由，再提出如何一起判断。" },
+  { category: "response", question: "朋友说：“我最近换工作很焦虑。”请不要急着给建议，先回应并问一个细节。" },
+  { category: "response", question: "合作方说：“这个交付物和我期待的不一样。”请回应落差，并说明你希望先确认什么。" },
+  { category: "response", question: "有人说：“这件事以前就是这么做的。”请接住历史做法，再邀请他一起看什么。" },
+  { category: "response", question: "同事说：“你刚才那句话让我有点不舒服。”请先回应感受，再说明你会怎么修正。" },
+  { category: "response", question: "领导问：“你有不同意见吗？”请在 60 秒内接住邀请，表达观点并给出依据。" },
+  { category: "response", question: "客户说：“我需要再考虑一下。”请回应他的犹豫，并提出一个不施压的下一步。" },
+  { category: "response", question: "同事说：“我没听懂数据代表什么。”请接住问题，用更简单的话继续解释。" },
+  { category: "response", question: "伙伴说：“这件事好像不是我的职责。”请回应边界，并寻找一个可合作的交点。" },
+  { category: "response", question: "有人问：“你是说我做错了吗？”请先澄清你的意图，再把话接住。" },
+  { category: "response", question: "同事说：“我已经尽力了，但结果还是不好。”请回应努力，并一起把焦点放到下一步。" },
+  { category: "response", question: "领导说：“给我一个更简单的说法。”请在 60 秒内重述你的结论、原因和建议。" },
+  { category: "response", question: "客户问：“这对我们到底有什么好处？”请接住问题，从对方角度说明价值和下一步。" },
+  { category: "response", question: "同事说：“我担心这样会增加大家的工作量。”请回应担心，并说明你会如何验证。" },
+  { category: "response", question: "朋友说：“我不知道该从哪里开始。”请先让他感到被听见，再给一个最小起点。" },
+  { category: "response", question: "有人在讨论中沉默，你想邀请他发言。请用一句真诚的开场把话递过去。" },
+  { category: "response", question: "同事说：“我觉得你忽略了一个风险。”请接住提醒，并说明你会怎样补充。" },
+  { category: "response", question: "合作方说：“我们需要内部确认。”请回应他的流程，并约定一个清楚的下一步。" },
+  { category: "response", question: "有人问：“你能不能说得更具体一点？”请接住追问，补上一个事实和一个行动。" },
+  { category: "response", question: "同事说：“这个问题不是一天能解决的。”请认可复杂性，并提出今天可先做的一步。" },
+  { category: "response", question: "领导说：“我还没有被说服。”请回应这句话，说明你愿意补什么证据。" },
+  { category: "response", question: "客户说：“我不希望再被反复打扰。”请尊重边界，并提出一次明确的后续联系安排。" },
+  { category: "response", question: "同事说：“这个方向听起来有机会。”请接住积极信号，并追问一个能让计划更具体的问题。" }
+];
+
+Object.assign(exports, { improvScenes }); })(exports); return exports; })();
+modules["data/moves.js"] = (() => { const exports = {}; ((exports) => { 
+const moves = [
+  {
+    "id": "pause",
+    "name": "停三秒再答",
+    "hint": "先把重点放稳，再开口。",
+    "prompt": "先停三秒，然后用一句结论开场。",
+    "challenge": "准备挑战：开始前完成 3 秒倒计时。",
+    "evidence": {}
+  },
+  {
+    "id": "clarify",
+    "name": "不替别人把话说完",
+    "hint": "先澄清问题，再给回应。",
+    "prompt": "先说一句澄清问法，再回应你的方案。",
+    "challenge": "本轮只要做到：先确认对方真正要解决的问题。",
+    "evidence": {}
+  },
+  {
+    "id": "silence",
+    "name": "不害怕沉默",
+    "hint": "留白不是失败，给对方回应的空间。",
+    "prompt": "说完核心诉求后，留出一句等待回应的空间。",
+    "challenge": "留白挑战：说完结论后停两秒，不急着补充解释。",
+    "evidence": {}
+  },
+  {
+    "id": "less",
+    "name": "不解释太多",
+    "hint": "说清决定和理由，不先替自己道歉。",
+    "prompt": "先说决定，再用一个事实说明原因。",
+    "challenge": "本轮只要做到：不以“抱歉、可能、我不太确定”开场。",
+    "evidence": {}
+  },
+  {
+    "id": "time",
+    "name": "尊重自己的时间",
+    "hint": "把时间、优先级或支持范围讲明白。",
+    "prompt": "说清你能支持什么、何时能完成，或需要谁决定优先级。",
+    "challenge": "本轮只要做到：给出一个时间、优先级或支持范围。",
+    "evidence": {}
+  },
+  {
+    "id": "disappoint",
+    "name": "允许别人失望",
+    "hint": "清楚地给边界，同时留下协作空间。",
+    "prompt": "练习“我能做 X，但不能承诺 Y”，再提出一个可协商的下一步。",
+    "challenge": "本轮只要做到：同时说出可支持范围和不能承诺的部分。",
+    "evidence": {}
+  },
+  {
+    "id": "fact",
+    "name": "不主动暴露脆弱点",
+    "hint": "用事实、需求和下一步代替自我否定。",
+    "prompt": "用一个事实说明现状，再提出你需要的支持或下一步。",
+    "challenge": "本轮只要做到：不说“我不行/我太笨”，改说事实和需要。",
+    "evidence": {}
+  }
+];
+
+Object.assign(exports, { moves }); })(exports); return exports; })();
+modules["data/speech-scenes.js"] = (() => { const exports = {}; ((exports) => { 
+const speechScenes = [
+  "为什么努力的人，也需要建立自己的系统？",
+  "AI 普及以后，什么能力反而更重要？",
+  "稳定输出靠的不是自律，而是什么？",
+  "如何判断一件事值得长期投入？",
+  "真正拉开差距的，是天赋还是反馈？",
+  "为什么忙碌不等于有效？",
+  "一个人如何建立可信赖的个人品牌？",
+  "为什么我们总在开始前过度准备？",
+  "比起目标，系统为什么更重要？",
+  "如何把复杂问题讲得人人都能听懂？",
+  "为什么很多会议没有产生真正的决定？",
+  "高质量工作到底长什么样？",
+  "为什么注意力正在成为稀缺资源？",
+  "AI 会让人变懒，还是让人更有创造力？",
+  "为什么真正的学习必须带一点不舒服？",
+  "如何让一个普通观点变得有说服力？",
+  "为什么我们需要定期给生活做减法？",
+  "如何判断一条建议是否适合自己？",
+  "为什么反复复盘比一次成功更有价值？",
+  "专业能力之外，普通人最该练什么？",
+  "为什么很多人知道很多道理，却没有改变？",
+  "如何从信息过载中找回判断力？",
+  "什么是一个人最值得长期投资的资产？",
+  "为什么好的提问比快速回答更重要？",
+  "如何理解真正的自律？",
+  "为什么小进步能带来大改变？",
+  "面对不确定性，我们应该如何行动？",
+  "如何在竞争中保持自己的节奏？",
+  "为什么说表达能力是一种底层能力？",
+  "如何把焦虑变成可执行的计划？",
+  "为什么越是重要的事，越需要留白？",
+  "一个人如何与长期主义和平相处？",
+  "为什么效率工具有时会制造更多忙碌？",
+  "如何把失败变成下一次的起点？",
+  "为什么人需要主动设计自己的环境？",
+  "如何分辨真正的问题和表面的症状？",
+  "为什么深度思考正在变得更难？",
+  "如何让团队从各自努力走向共同目标？",
+  "为什么承诺比热情更稀缺？",
+  "如何理解人生中的机会成本？",
+  "为什么决定一个人成长速度的是输入还是输出？",
+  "如何让一次分享真正改变听众？",
+  "为什么许多人在重要时刻说不清自己？",
+  "如何建立不依赖意志力的好习惯？",
+  "为什么休息不是浪费时间？",
+  "如何面对一个自己暂时解不开的问题？",
+  "为什么我们需要在年轻时建立自己的原则？",
+  "如何在变化很快的时代保持稳定？",
+  "为什么好的决策常常看起来不够激动人心？",
+  "如何让协作不只是更多人一起忙？",
+  "为什么说阅读不是为了记住更多？",
+  "如何让知识真正变成能力？",
+  "为什么很多计划从第一天就已经失败？",
+  "如何从别人的成功中有效学习？",
+  "为什么持续做一件小事很难？",
+  "如何在公开表达时克服紧张？",
+  "为什么我们需要拥有自己的判断？",
+  "如何处理想做很多事和精力有限的矛盾？",
+  "为什么结果导向不等于只看结果？",
+  "如何让一个团队愿意面对坏消息？",
+  "为什么复杂时代更需要简单原则？",
+  "如何找到属于自己的工作方式？",
+  "为什么善意的批评也值得被认真对待？",
+  "如何让一项新技术真正服务于人？",
+  "为什么人们会高估短期变化、低估长期积累？",
+  "如何把抽象愿景变成具体行动？",
+  "为什么最好的沟通先从理解对方开始？",
+  "如何判断自己是在坚持，还是在硬撑？",
+  "为什么内耗会吞掉一个人的创造力？",
+  "如何让生活更有掌控感？",
+  "为什么说选择比努力更难？",
+  "如何建立能够长期运行的个人系统？",
+  "为什么优秀的人也需要被看见？",
+  "如何在意见分歧中达成合作？",
+  "为什么我们总是低估开始的价值？",
+  "如何让学习不止停留在收藏？",
+  "为什么好故事比好道理更容易被记住？",
+  "如何让观点既坚定又不武断？",
+  "为什么人要练习在关键时刻说真话？",
+  "如何理解成长中的孤独感？",
+  "为什么比较会让人失去自己的节奏？",
+  "如何把不喜欢的任务做得不消耗？",
+  "为什么好的系统能减少人生中的后悔？",
+  "如何让一次失败不定义自己？",
+  "为什么真正的自由需要边界？",
+  "如何在时间碎片化的生活中保持专注？",
+  "为什么我们常常把问题想得太大？",
+  "如何让科技进步带来更好的生活？",
+  "为什么可信任的人总能降低协作成本？",
+  "如何找到值得反复练习的基本功？",
+  "为什么每个人都需要自己的表达风格？",
+  "如何在信息爆炸中做出独立判断？",
+  "为什么管理精力比管理时间更重要？",
+  "如何让一次沟通从解释走向共识？",
+  "为什么普通人也应该理解复利？",
+  "如何面对看不见结果的长期努力？",
+  "为什么一件事的意义常常在做完后才出现？",
+  "如何把个人成长从口号变成日常？",
+  "为什么我们需要定期重写自己的问题？",
+  "如何让自己成为一个更值得合作的人？"
+];
+
+Object.assign(exports, { speechScenes }); })(exports); return exports; })();
+modules["data/topic-scenes.js"] = (() => { const exports = {}; ((exports) => { 
+const topicScenes = [
+  "AI 工具越来越多，为什么你反而更忙？",
+  "为什么很多人收藏了很多资料，却没有真正学会？",
+  "如何让日常生活变得更有秩序？",
+  "效率工具到底是在帮你，还是在制造忙碌感？",
+  "为什么越想一次做好，越难真正开始？",
+  "你最近一次改变主意，是因为什么？",
+  "一个人怎样判断自己真的累了？",
+  "为什么早起不一定等于自律？",
+  "如何拒绝一个不想参加的邀请？",
+  "为什么手机总能打断我们的计划？",
+  "你如何看待下班后继续回复消息？",
+  "为什么我们总把重要的事拖到最后？",
+  "什么事情最容易让你失去耐心？",
+  "如何让周末真正起到恢复作用？",
+  "为什么有些朋友见面后让人更有能量？",
+  "你会如何描述一个理想的早晨？",
+  "为什么整理房间会让人感觉更平静？",
+  "怎样判断一件东西该不该买？",
+  "你最近学会放弃的一件事是什么？",
+  "为什么旅行有时比休息更累？",
+  "你如何面对别人对你的误解？",
+  "为什么成年人的友谊需要主动维护？",
+  "怎样给自己安排一个不被打扰的晚上？",
+  "为什么我们总在比较中感到不够好？",
+  "你认为什么算是有质量的独处？",
+  "如何让一个坏情绪不毁掉整天？",
+  "为什么有些计划写下来就更容易完成？",
+  "你会怎样向朋友解释自己的工作？",
+  "什么情况下你会选择沉默？",
+  "为什么很多人害怕在公开场合提问？",
+  "如何让一次道歉真正被听见？",
+  "你最近做过最有成就感的小事是什么？",
+  "为什么我们会对陌生人的评价特别在意？",
+  "怎样度过一个没有安排的下午？",
+  "你如何理解生活中的仪式感？",
+  "为什么有时越努力解释，别人越听不懂？",
+  "如何面对一段渐渐疏远的关系？",
+  "什么是你一直想培养却没坚持下来的习惯？",
+  "为什么人需要偶尔离开熟悉的环境？",
+  "如何让自己在忙乱时迅速冷静下来？",
+  "你觉得什么事情最值得花钱外包？",
+  "为什么很多人明明不饿却想吃东西？",
+  "如何面对一个让你不舒服的决定？",
+  "你如何安排一天中最清醒的时间？",
+  "为什么有些承诺很难兑现？",
+  "怎样告诉别人你需要帮助？",
+  "你会如何处理一次尴尬的社交场面？",
+  "为什么有的人总喜欢把话说得很满？",
+  "如何判断一条新闻值不值得相信？",
+  "你最近一次被一句话打动是什么时候？",
+  "为什么我们需要给生活留出空白？",
+  "怎样在家庭期待和个人选择之间沟通？",
+  "你如何理解安全感？",
+  "为什么一些小决定也会消耗很多精力？",
+  "如何让一段普通对话更有意义？",
+  "你认为好邻居应该是什么样？",
+  "为什么我们会害怕被拒绝？",
+  "怎样给第一次见面的人留下舒服的印象？",
+  "你会如何处理朋友之间的秘密？",
+  "为什么人在深夜容易做冲动决定？",
+  "如何面对一个总是抱怨的人？",
+  "什么是你想重新开始的一件小事？",
+  "为什么记账会改变一个人的消费习惯？",
+  "如何把一个模糊愿望说得更具体？",
+  "你如何看待朋友圈里的展示？",
+  "为什么很多人不愿意承认自己不知道？",
+  "怎样在讨论中表达不同意见？",
+  "你会如何安慰一个正在低谷中的朋友？",
+  "为什么有些建议听起来正确却做不到？",
+  "如何让一次聚会不只是寒暄？",
+  "你最近一次真正专注是什么时候？",
+  "为什么有些人总在等完美时机？",
+  "怎样把一次争吵变成一次理解？",
+  "你如何看待在公共场合拍照分享？",
+  "为什么我们会对未来有很多不必要的担心？",
+  "如何给忙碌的自己一个暂停信号？",
+  "什么样的环境最能让你进入状态？",
+  "为什么好习惯常常败给临时诱惑？",
+  "怎样向家人解释一个他们不理解的选择？",
+  "你觉得什么叫做把日子过好？",
+  "为什么很多人总觉得时间不够用？",
+  "如何从一次失误中快速走出来？",
+  "你会怎样处理一件拖了很久的小事？",
+  "为什么人需要被认真倾听？",
+  "怎样在不伤害关系的前提下说不？",
+  "你如何定义一段关系里的边界？",
+  "为什么我们总在睡前想起没完成的事？",
+  "如何让自己不被碎片信息牵着走？",
+  "你最近改变的一个消费观念是什么？",
+  "为什么有些人越忙越有安全感？",
+  "怎样给一件小事赋予意义？",
+  "你会如何面对别人比你进步更快？",
+  "为什么公开承诺有时能帮助坚持？",
+  "如何在陌生环境里快速找到节奏？",
+  "你觉得哪些事情需要慢一点做？",
+  "为什么人会反复回想一件已经过去的事？",
+  "怎样判断自己是在休息还是在逃避？",
+  "你最近想感谢的人是谁？为什么？",
+  "如何让一次普通的选择更符合自己？",
+  "为什么生活需要一些可预测的秩序？"
+];
+
+Object.assign(exports, { topicScenes }); })(exports); return exports; })();
+modules["data/workplace-scenes.js"] = (() => { const exports = {}; ((exports) => { 
+const workplaceScenes = [
+  {
+    "question": "临时加活，我怎么拒绝才不吃亏？",
+    "context": "同事希望你立刻接手一件新任务，但你已有明确交付。",
+    "move": "time"
+  },
+  {
+    "question": "我不同意这个方案，但不想把气氛弄僵。",
+    "context": "会议已经快要定案，你看到了一个没有被说出的风险。",
+    "move": "silence"
+  },
+  {
+    "question": "领导要结果，我需要更多资源。",
+    "context": "交付时间没变，但人手和信息都还不够。",
+    "move": "clarify"
+  },
+  {
+    "question": "这不是我的职责，我该怎么把边界说清？",
+    "context": "请求并非不能帮，但完整接手会挤占你的核心工作。",
+    "move": "disappoint"
+  },
+  {
+    "question": "我做了很多，怎么让成果被看见？",
+    "context": "向上汇报时，你不想只说辛苦，也不想显得在邀功。",
+    "move": "fact"
+  },
+  {
+    "question": "对方一直拖，我怎么推进又不伤关系？",
+    "context": "关键依赖没有按时给到，你需要一个清楚的下一步。",
+    "move": "pause"
+  },
+  {
+    "question": "我需要拒绝，但总怕自己显得不够好相处。",
+    "context": "你知道这次不能再答应，却习惯先解释很多。",
+    "move": "less"
+  },
+  {
+    "question": "今天临时要一份材料，我手上已有截止任务。",
+    "context": "对方说很急，但没有确认哪件工作应该让位。",
+    "move": "time"
+  },
+  {
+    "question": "同事希望我周末处理工作，我不想默认答应。",
+    "context": "事情并非紧急故障，却被当作随时可响应的任务。",
+    "move": "time"
+  },
+  {
+    "question": "两个项目都说最优先，我该怎么请领导排序？",
+    "context": "你可以推进其中一项，但无法同时给出两个高质量结果。",
+    "move": "time"
+  },
+  {
+    "question": "客户临时提前交付时间，我需要重新谈范围。",
+    "context": "原定排期无法覆盖新增的工作量。",
+    "move": "time"
+  },
+  {
+    "question": "会议被塞进日程，我需要守住深度工作的时间。",
+    "context": "这场会没有明确议题，却占用了关键交付时段。",
+    "move": "time"
+  },
+  {
+    "question": "月底报表和新需求撞期，我怎么说明取舍？",
+    "context": "两件事都重要，但需要一位负责人决定先后。",
+    "move": "time"
+  },
+  {
+    "question": "产品要今晚上线，但测试还没有完成。",
+    "context": "你不想只说做不到，也要把风险和可支持范围说清。",
+    "move": "time"
+  },
+  {
+    "question": "别人把紧急任务直接丢给我，我想先确认优先级。",
+    "context": "你不是不配合，而是不想让已有承诺悄悄失效。",
+    "move": "time"
+  },
+  {
+    "question": "跨部门临时要数据，我需要给一个合理时间。",
+    "context": "数据需要核对，立刻给出会增加错误风险。",
+    "move": "time"
+  },
+  {
+    "question": "假期里收到工作消息，我想设定回复边界。",
+    "context": "对方没有说明紧急程度，你不想把随时在线变成惯例。",
+    "move": "time"
+  },
+  {
+    "question": "老板让我顺手做一份额外汇报，我需要明确截止时间。",
+    "context": "你愿意支持，但不能让它挤掉核心项目。",
+    "move": "time"
+  },
+  {
+    "question": "供应商临时改期，我要重新安排自己的工作。",
+    "context": "外部变化影响了原计划，需要把可交付时间讲清楚。",
+    "move": "time"
+  },
+  {
+    "question": "我被要求同时跟进太多群消息，注意力被打散。",
+    "context": "你需要说明固定响应时段，而不是每条都即时回复。",
+    "move": "time"
+  },
+  {
+    "question": "同事希望我当天帮她收尾，我只能支持一部分。",
+    "context": "你希望给出帮助，但不想默默接下完整责任。",
+    "move": "time"
+  },
+  {
+    "question": "大家都同意方案了，但我发现一个关键漏洞。",
+    "context": "你需要提出异议，也要让团队愿意继续听下去。",
+    "move": "silence"
+  },
+  {
+    "question": "预算被削减后，原目标可能完不成。",
+    "context": "会议里没人先说这个问题，你决定把它提出来。",
+    "move": "silence"
+  },
+  {
+    "question": "项目方向突然变了，我不确定是否真的必要。",
+    "context": "你想问出依据，而不是立刻附和。",
+    "move": "silence"
+  },
+  {
+    "question": "我被安排做负责人，但权限并不够。",
+    "context": "你需要在会上说出这个不匹配，而非会后抱怨。",
+    "move": "silence"
+  },
+  {
+    "question": "目标被定得很高，我认为缺少实现条件。",
+    "context": "你要指出差距，同时不把讨论变成情绪对立。",
+    "move": "silence"
+  },
+  {
+    "question": "方案看起来漂亮，但用户需求还没验证。",
+    "context": "同事很热情，你想补上一个必要的验证步骤。",
+    "move": "silence"
+  },
+  {
+    "question": "我看不懂这组数据的结论，但别人都没有发问。",
+    "context": "你担心问出来显得不专业，却不想带着疑问做决定。",
+    "move": "silence"
+  },
+  {
+    "question": "谈判时对方报价后沉默，我总想马上补条件。",
+    "context": "你需要练习给出回应空间，而不是替对方让步。",
+    "move": "silence"
+  },
+  {
+    "question": "复盘里有人把责任都推给外部，我有不同看法。",
+    "context": "你要让事实进入讨论，而不是攻击某个人。",
+    "move": "silence"
+  },
+  {
+    "question": "发生线上故障后，大家急着找人背锅。",
+    "context": "你想先把问题和下一步说清，避免仓促定性。",
+    "move": "silence"
+  },
+  {
+    "question": "同事总在会议上打断我，我想把话说完。",
+    "context": "你需要平静地拿回表达空间，不靠提高音量。",
+    "move": "silence"
+  },
+  {
+    "question": "团队决定沿用旧做法，但它已经不适合现在。",
+    "context": "你想提出替代方案，也留出让大家回应的停顿。",
+    "move": "silence"
+  },
+  {
+    "question": "老板说先试试，我需要确认试到什么程度。",
+    "context": "模糊试点可能让团队投入很多，却没有判断标准。",
+    "move": "silence"
+  },
+  {
+    "question": "领导说把方案做得更有感觉，我不知道具体指什么。",
+    "context": "模糊反馈会让你反复猜测，需要先问清标准。",
+    "move": "clarify"
+  },
+  {
+    "question": "同事说帮忙看一下，但没有说明希望我做什么。",
+    "context": "你不想直接接下整件事，先需要确认支持范围。",
+    "move": "clarify"
+  },
+  {
+    "question": "客户说页面再优化一下，我该怎么追问？",
+    "context": "这句话可能意味着视觉、文案或功能中的任何一项。",
+    "move": "clarify"
+  },
+  {
+    "question": "跨部门要我更新全部材料，但范围不明确。",
+    "context": "你需要确认哪些内容真正影响这次决策。",
+    "move": "clarify"
+  },
+  {
+    "question": "领导让我更主动，我想知道具体期待是什么。",
+    "context": "抽象要求无法直接行动，需要把它变成可观察的行为。",
+    "move": "clarify"
+  },
+  {
+    "question": "需求方说这里不对，但说不出哪里不对。",
+    "context": "你要引导对方描述使用场景和判断标准。",
+    "move": "clarify"
+  },
+  {
+    "question": "项目启动了，但谁拍板、谁执行还不清楚。",
+    "context": "责任不清会让后续推进不断回到原点。",
+    "move": "clarify"
+  },
+  {
+    "question": "对方说数据不好看，我想先问清他关心哪一项。",
+    "context": "不同指标对应不同动作，不能只凭一句评价就返工。",
+    "move": "clarify"
+  },
+  {
+    "question": "老板说这个项目先做着，我需要确认验收标准。",
+    "context": "没有完成定义，投入会持续膨胀。",
+    "move": "clarify"
+  },
+  {
+    "question": "合作方说有问题再找我，但关键联系人是谁？",
+    "context": "你需要确认沟通入口和响应机制。",
+    "move": "clarify"
+  },
+  {
+    "question": "同事让我把内容改得高级一点，我不知道从哪改。",
+    "context": "你要把审美判断转成可执行的参考或目标。",
+    "move": "clarify"
+  },
+  {
+    "question": "领导让我关注一下行业动态，但没有说明用途。",
+    "context": "你需要知道是做汇报、选题还是制定策略。",
+    "move": "clarify"
+  },
+  {
+    "question": "客户希望尽快看到效果，我想先确认他定义的效果。",
+    "context": "不同的成功标准会改变你的工作重点。",
+    "move": "clarify"
+  },
+  {
+    "question": "同事约我下班后改方案，我不想用长解释拒绝。",
+    "context": "你可以表达决定和可支持的时间，不必先道歉。",
+    "move": "less"
+  },
+  {
+    "question": "别人让我反复修改已经确认的内容，我想停止无休止返工。",
+    "context": "这次改动没有新依据，却正在挤占其他交付。",
+    "move": "less"
+  },
+  {
+    "question": "客户临时加了新功能，我不想先说不好意思。",
+    "context": "你需要先讲范围变化和对应的排期影响。",
+    "move": "less"
+  },
+  {
+    "question": "我被拉去做不属于自己的杂事，想简洁拒绝。",
+    "context": "你愿意说明边界，但不想写一大段自我辩护。",
+    "move": "less"
+  },
+  {
+    "question": "同事总让我帮她补漏，我想退出这个默认角色。",
+    "context": "你希望把支持变成一次明确协作，而非持续兜底。",
+    "move": "less"
+  },
+  {
+    "question": "旧项目已经结束，对方却不断追加小请求。",
+    "context": "你要把新的请求放回正式优先级里讨论。",
+    "move": "less"
+  },
+  {
+    "question": "领导临时让我在会上做汇报，我准备不充分。",
+    "context": "你需要给出一个可行替代，而不是慌忙答应全部。",
+    "move": "less"
+  },
+  {
+    "question": "群里有人把个人任务点名给我，我想当场说清范围。",
+    "context": "你不想私下消化，也不需要解释太多。",
+    "move": "less"
+  },
+  {
+    "question": "我不想再替别人润色所有材料，该怎么说？",
+    "context": "这项支持已变成固定期待，影响了你的主责工作。",
+    "move": "less"
+  },
+  {
+    "question": "项目临近上线才收到大改意见，我想要求重新排期。",
+    "context": "你要说明决定，而不是把风险都扛在自己身上。",
+    "move": "less"
+  },
+  {
+    "question": "同事请我帮她代班，我这周已经排满。",
+    "context": "你希望拒绝得清楚，又不把关系变冷。",
+    "move": "less"
+  },
+  {
+    "question": "我总在消息里先说抱歉，想改成直接表达需求。",
+    "context": "这次你需要催一个关键回复。",
+    "move": "less"
+  },
+  {
+    "question": "别人把自己的急事变成我的急事，我不想再被带着跑。",
+    "context": "你要把决定权交回给真正负责优先级的人。",
+    "move": "less"
+  },
+  {
+    "question": "这件事不是我的主责，我能帮到哪里为止？",
+    "context": "你愿意协作，但不想完整接手后续责任。",
+    "move": "disappoint"
+  },
+  {
+    "question": "项目出了问题，大家默认让我来收尾。",
+    "context": "你可以支持解决，但不能接受不清楚的责任归属。",
+    "move": "disappoint"
+  },
+  {
+    "question": "别人希望我承诺一个不可能的交付日期。",
+    "context": "你需要说出不能承诺的部分，并给出可行版本。",
+    "move": "disappoint"
+  },
+  {
+    "question": "团队成员没有完成任务，我要把责任还给他。",
+    "context": "你不想替他遮掩，也不想把话说成指责。",
+    "move": "disappoint"
+  },
+  {
+    "question": "合作方希望我做完整方案，我只能先给框架。",
+    "context": "你要清楚区分当前支持与完整交付。",
+    "move": "disappoint"
+  },
+  {
+    "question": "领导把一个模糊问题丢给我，我不能独自兜底。",
+    "context": "你需要提出需要谁共同决定的部分。",
+    "move": "disappoint"
+  },
+  {
+    "question": "客户要求免费追加服务，我想守住合作边界。",
+    "context": "你可以表达可支持的调整，而不是默认无限扩展。",
+    "move": "disappoint"
+  },
+  {
+    "question": "同事要我替她和领导解释，我不想替她承担沟通。",
+    "context": "你可以帮她准备，却不能代替她负责。",
+    "move": "disappoint"
+  },
+  {
+    "question": "我被要求接管一个烂摊子，但没有相应权限。",
+    "context": "你要说清条件不足，避免接手后被动背责。",
+    "move": "disappoint"
+  },
+  {
+    "question": "销售已经答应客户功能，我无法直接实现。",
+    "context": "你需要提出可支持方案，也明确不能承诺的部分。",
+    "move": "disappoint"
+  },
+  {
+    "question": "同事总把情绪问题交给我处理，我想退出调停角色。",
+    "context": "你可以关心，但不能长期承担本不属于你的工作。",
+    "move": "disappoint"
+  },
+  {
+    "question": "我被请去做免费咨询，但这会占用正常交付。",
+    "context": "你需要给出边界，同时保留未来合作的可能。",
+    "move": "disappoint"
+  },
+  {
+    "question": "领导让我接手离职同事的全部工作，我需要谈资源。",
+    "context": "你不能只说辛苦，要明确接手范围和支持条件。",
+    "move": "disappoint"
+  },
+  {
+    "question": "我的成果被当成团队自然产出，我该怎么汇报？",
+    "context": "你希望事实被看见，不想用情绪争取认可。",
+    "move": "fact"
+  },
+  {
+    "question": "有人说我执行力不够，但我想先摆出实际进度。",
+    "context": "你需要用已完成、阻塞和下一步回应评价。",
+    "move": "fact"
+  },
+  {
+    "question": "绩效沟通时，我不想只说自己很努力。",
+    "context": "你要把贡献转成具体结果和影响。",
+    "move": "fact"
+  },
+  {
+    "question": "项目延期了，我想解释事实而不是自责。",
+    "context": "你需要说明变化、影响和现在的解决动作。",
+    "move": "fact"
+  },
+  {
+    "question": "我想争取加薪，但不知道怎么说得有依据。",
+    "context": "你需要从承担范围、结果和市场价值开始。",
+    "move": "fact"
+  },
+  {
+    "question": "晋升机会来了，我想讲清自己准备好了什么。",
+    "context": "你要表达能力和成果，不必先贬低自己。",
+    "move": "fact"
+  },
+  {
+    "question": "别人拿走了我的想法，我想平静地补充贡献。",
+    "context": "你需要把时间线和具体工作放进记录。",
+    "move": "fact"
+  },
+  {
+    "question": "领导质疑我的判断，我要用数据和风险回应。",
+    "context": "你不需要防御性解释，而是清楚给出依据。",
+    "move": "fact"
+  },
+  {
+    "question": "我需要申请更多人手，怎么把缺口讲具体？",
+    "context": "你要说明当前容量、影响和需要的支持。",
+    "move": "fact"
+  },
+  {
+    "question": "汇报时我总说可能做得不够好，想换成事实表达。",
+    "context": "这次你需要介绍已经完成的关键节点。",
+    "move": "fact"
+  },
+  {
+    "question": "客户认为进展慢，我想说明真实依赖。",
+    "context": "你需要同时给出目前完成、外部阻塞和下一步。",
+    "move": "fact"
+  },
+  {
+    "question": "我想转到更核心的项目，如何提出自己的优势？",
+    "context": "你需要连接过去成果与新岗位需要。",
+    "move": "fact"
+  },
+  {
+    "question": "领导问我为什么值得更多资源，我需要准备证据。",
+    "context": "你要说明投入可以带来的具体回报。",
+    "move": "fact"
+  },
+  {
+    "question": "关键同事一直不回消息，我怎么推进下一步？",
+    "context": "依赖已经影响进度，你需要一次清楚的跟进。",
+    "move": "pause"
+  },
+  {
+    "question": "客户看完方案后没有反馈，我想催得不卑微。",
+    "context": "你要给出明确的回复期限和下一步安排。",
+    "move": "pause"
+  },
+  {
+    "question": "供应商承诺的资料没来，我要重新拉齐时间。",
+    "context": "你需要指出影响，而不是默默自己补上。",
+    "move": "pause"
+  },
+  {
+    "question": "会议定了行动项，但没人认领，我想推进。",
+    "context": "你要把下一步、负责人和时间带回到桌面上。",
+    "move": "pause"
+  },
+  {
+    "question": "有人在群里质疑我，我不想立刻情绪化回应。",
+    "context": "你需要先停一下，再给出事实和下一步。",
+    "move": "pause"
+  },
+  {
+    "question": "同事答应的内容总是拖延，我该怎样再次确认？",
+    "context": "你想让这次跟进有明确节点，而不是又一次空等。",
+    "move": "pause"
+  },
+  {
+    "question": "一封重要邮件发出后没有回复，我想继续推进。",
+    "context": "你需要把沉默变成一个具体可回应的问题。",
+    "move": "pause"
+  },
+  {
+    "question": "不同领导给了相反意见，我不知道先按谁的做。",
+    "context": "你需要把冲突摆出来，请他们共同确认优先级。",
+    "move": "pause"
+  },
+  {
+    "question": "项目风险已经出现，我想在变严重前升级处理。",
+    "context": "你要说明当前信号、可能后果和需要的决定。",
+    "move": "pause"
+  },
+  {
+    "question": "我汇报了进度，但对方没有给决定，我想追问。",
+    "context": "你需要一句能促成回应的话，而不是继续补充解释。",
+    "move": "pause"
+  },
+  {
+    "question": "合作陷入僵局，我想发起一次有效的对齐会。",
+    "context": "你要先说清这次会必须解决的关键问题。",
+    "move": "pause"
+  },
+  {
+    "question": "任务已经完成，但验收人迟迟不确认。",
+    "context": "你需要让对方明确验收、修改或给出反馈时间。",
+    "move": "pause"
+  },
+  {
+    "question": "我想让会议结论真正落地，而不是散会就忘。",
+    "context": "你需要提出负责人、截止时间和下一次检查点。",
+    "move": "pause"
+  },
+  {
+    "question": "对方说再看看，我想让合作继续往前走。",
+    "context": "你需要把模糊回应转成一个具体的下一步。",
+    "move": "pause"
+  }
+];
+
+Object.assign(exports, { workplaceScenes }); })(exports); return exports; })();
+modules["data/profiles.js"] = (() => { const exports = {}; ((exports, dependency0, dependency1, dependency2, dependency3, dependency4, dependency5) => { const { interviewScenes } = dependency0;
+const { improvScenes } = dependency1;
+const { moves } = dependency2;
+const { speechScenes } = dependency3;
+const { topicScenes } = dependency4;
+const { workplaceScenes } = dependency5;
+
+
+
+
+
+
+const moveById = new Map(moves.map((move) => [move.id, move]));
+
+const defaultProfileId = "workplace";
+
+const profileRegistry = [
+  { id: "interview", order: 1, code: "CAREER", name: "求职面试", icon: "◎", shortSummary: "结果 + 证据", title: "把价值讲具体", summary: "先给出结果，再用你的选择和证据证明价值。", goals: ["先讲结果", "说清自己的作用", "给出可验证证据"], steps: ["先说最后创造的变化。", "说明你的关键判断。", "留下一个可核验细节。"], scenes: interviewScenes, capabilities: { audioDownload: false } },
+  { id: "workplace", order: 2, code: "DEFAULT", name: "职场表达", icon: "↗", shortSummary: "范围 + 优先级", title: "尊重自己的时间", summary: "先讲清你已承诺的事，再给出你能支持的范围，让优先级回到该决定的人手里。", goals: ["先说可支持范围", "讲清已有承诺", "把优先级交回去"], steps: ["先说你能支持什么。", "说明完整接手会影响什么。", "请对方确认优先级。"], scenes: workplaceScenes, capabilities: { audioDownload: false } },
+  { id: "speech", order: 3, code: "IDEA", name: "深度演讲", icon: "✦", shortSummary: "观点 + 例子", title: "让观点站得住", summary: "用一个明确判断开场，再用熟悉例子把观点落到现实。", goals: ["先抛出观点", "用一个证据支撑", "留下可行动的结尾"], steps: ["第一句说判断。", "只选一个有力例子。", "留下今天能做的一步。"], scenes: speechScenes, capabilities: { audioDownload: false } },
+  { id: "topic", order: 4, code: "CLARITY", name: "主题表达", icon: "▣", shortSummary: "抽象 → 具体", title: "把复杂想法说简单", summary: "先把抽象概念换成身边场景，再给听众一句可复述结论。", goals: ["把主题说简单", "举一个具体例子", "形成清楚收束"], steps: ["先用真实小事起头。", "一次只说一个逻辑台阶。", "用一句可复述的话结尾。"], scenes: topicScenes, capabilities: { audioDownload: false } },
+  { id: "improv", order: 5, code: "IMPROV", name: "即兴表达", icon: "⚡", shortSummary: "结构 + 接话", title: "用结构接住临场表达", summary: "先说是什么，再说为什么，最后说怎么做；每次只改一个最影响清楚度的问题。", goals: ["讲出结构", "减少一个口头禅", "接住对方"], steps: ["先说它是什么。", "再解释为什么重要。", "最后给出怎么做。"], scenes: improvScenes, capabilities: { audioDownload: true } }
+].sort((left, right) => left.order - right.order);
+
+const profiles = Object.fromEntries(profileRegistry.map((profile) => [profile.id, profile]));
+
+for (const profile of Object.values(profiles)) {
+  const questions = profile.scenes.map((scene) => typeof scene === "string" ? scene : scene.question);
+  if (questions.length !== 100 || new Set(questions).size !== 100) throw new Error(`${profile.name} 场景库必须有 100 个不重复场景`);
+}
+
+function sceneQuestion(scene) { return typeof scene === "string" ? scene : scene.question; }
+function defaultScene(mode) { return profiles[mode].scenes[0]; }
+function findScene(mode, question) { return profiles[mode].scenes.find((scene) => sceneQuestion(scene) === question); }
+function randomScene(mode, currentQuestion) {
+  const choices = profiles[mode].scenes.filter((scene) => sceneQuestion(scene) !== currentQuestion);
+  return (choices.length ? choices : profiles[mode].scenes)[Math.floor(Math.random() * (choices.length || profiles[mode].scenes.length))];
+}
+function toolkitFor(mode, scene) {
+  const profile = profiles[mode];
+  const move = mode === "workplace" && scene && typeof scene !== "string" ? moveById.get(scene.move) : null;
+  return move ? { title: move.name, summary: move.hint, steps: [move.prompt, move.challenge, "完成后只复练一句更清楚的表达。"] } : profile;
+}
+
+Object.assign(exports, { sceneQuestion, defaultScene, findScene, randomScene, toolkitFor, defaultProfileId, profileRegistry, profiles }); })(exports, modules["data/interview-scenes.js"], modules["data/improv-scenes.js"], modules["data/moves.js"], modules["data/speech-scenes.js"], modules["data/topic-scenes.js"], modules["data/workplace-scenes.js"]); return exports; })();
+modules["modules/growth.js"] = (() => { const exports = {}; ((exports) => { 
+const milestones = [
+  { name: "敢于开口", score: 500 },
+  { name: "清晰表达", score: 1000 },
+  { name: "稳住边界", score: 2000 },
+  { name: "推进共识", score: 5000 },
+  { name: "职场表达影响力", score: 10000 }
+];
+
+const storageKey = "speak-grow-v3-1-growth";
+const defaultPoints = 1240;
+
+function savedPoints() {
+  try {
+    const value = Number.parseInt(window.localStorage.getItem(storageKey), 10);
+    return Number.isFinite(value) && value >= 0 ? value : defaultPoints;
+  } catch {
+    return defaultPoints;
+  }
+}
+
+const growth = { points: savedPoints(), milestones };
+
+function addTrainingScore(score) {
+  const points = Number.parseInt(score, 10);
+  if (!Number.isInteger(points) || points < 0 || points > 100) return growth.points;
+  growth.points += points;
+  try { window.localStorage.setItem(storageKey, String(growth.points)); } catch {}
+  return growth.points;
+}
+
+function nextMilestone(points = growth.points) { return milestones.find((item) => item.score > points) || milestones[milestones.length - 1]; }
+function renderBadges(container, points = growth.points) {
+  container.replaceChildren(...milestones.map((item) => {
+    const badge = document.createElement("span");
+    const unlocked = points >= item.score;
+    badge.innerHTML = `${unlocked ? "✦" : "◇"}<b>${item.name}</b><small>${item.score.toLocaleString("zh-CN")} 分</small>`;
+    return badge;
+  }));
+}
+
+Object.assign(exports, { addTrainingScore, nextMilestone, renderBadges, growth }); })(exports); return exports; })();
+modules["modules/model-settings.js"] = (() => { const exports = {}; ((exports) => { 
+const storageKey = "speak-grow-v3-2-model-session";
+const legacyStorageKey = "speak-grow-v3-1-model-session";
+const publicProviders = ["auto", "qwen", "doubao", "deepseek"];
+
+const providerDefaults = {
+  DeepSeek: { model: "deepseek-chat", baseUrl: "https://api.deepseek.com/v1" },
+  OpenAI: { model: "gpt-4.1-mini", baseUrl: "https://api.openai.com/v1" },
+  Custom: { model: "", baseUrl: "" }
+};
+
+function validBaseUrl(value) {
+  try { return new URL(value).protocol === "https:"; } catch { return false; }
+}
+
+function defaultsFor(provider) {
+  return providerDefaults[provider] || providerDefaults.Custom;
+}
+
+function readStoredValue() {
+  for (const key of [storageKey, legacyStorageKey]) {
+    const raw = window.sessionStorage.getItem(key);
+    if (!raw) continue;
+    try { return JSON.parse(raw); } catch { continue; }
+  }
+  return null;
+}
+
+function readModelConfiguration() {
+  try {
+    const stored = readStoredValue();
+    if (stored?.apiKey && stored?.model && validBaseUrl(stored.baseUrl)) {
+      return { mode: "byok", provider: stored.provider || "Custom", apiKey: stored.apiKey, model: stored.model, baseUrl: stored.baseUrl };
+    }
+    const provider = publicProviders.includes(stored?.provider) ? stored.provider : "auto";
+    return { mode: "public", provider };
+  } catch {
+    return { mode: "public", provider: "auto" };
+  }
+}
+
+function normalizeConfiguration(input = {}, existing = readModelConfiguration()) {
+  const provider = String(input.provider || existing?.provider || "Custom").trim();
+  const apiKey = String(input.apiKey || "").trim();
+  const model = String(input.model || "").trim();
+  const baseUrl = String(input.baseUrl || "").trim().replace(/\/$/, "");
+  if (!apiKey) {
+    if (!publicProviders.includes(provider.toLowerCase())) throw new Error("invalid_model_configuration");
+    return { mode: "public", provider: provider.toLowerCase() };
+  }
+  if (!model || !validBaseUrl(baseUrl)) throw new Error("invalid_model_configuration");
+  return { mode: "byok", provider: provider || "Custom", apiKey, model, baseUrl };
+}
+
+function saveModelConfiguration(configuration) {
+  const normalized = configuration.mode === "public"
+    ? { mode: "public", provider: configuration.provider }
+    : normalizeConfiguration(configuration);
+  window.sessionStorage.setItem(storageKey, JSON.stringify(normalized));
+}
+
+async function fetchProviderStatus() {
+  const response = await fetch("/api/providers", { headers: { Accept: "application/json" } });
+  let data;
+  try { data = await response.json(); } catch { throw new Error("provider_status_unavailable"); }
+  if (!response.ok) throw new Error(data.error || "provider_status_unavailable");
+  return data;
+}
+
+async function testPublicConnection() {
+  try {
+    const response = await fetch("/api/health", { headers: { Accept: "application/json" } });
+    if (!response.ok) throw new Error("provider_status_unavailable");
+    return await response.json();
+  } catch (error) {
+    throw new Error(error.message === "provider_status_unavailable" ? error.message : "provider_browser_unavailable");
+  }
+}
+
+async function testModelConnection(configuration) {
+  if (!configuration?.apiKey) return testPublicConnection();
+  try {
+    const response = await fetch(configuration.baseUrl + "/models", {
+      headers: { Authorization: "Bearer " + configuration.apiKey }
+    });
+    if (!response.ok) throw new Error("provider_connection_failed");
+  } catch (error) {
+    throw new Error(error.message === "provider_connection_failed" ? error.message : "provider_browser_unavailable");
+  }
+}
+
+Object.assign(exports, { defaultsFor, readModelConfiguration, normalizeConfiguration, saveModelConfiguration, fetchProviderStatus, testPublicConnection, testModelConnection }); })(exports); return exports; })();
+modules["modules/local-report.js"] = (() => { const exports = {}; ((exports) => { 
+const compassLabels = ["主张", "证据", "边界", "关系", "下一步"];
+const fillerWords = ["嗯", "那个", "然后", "就是", "其实", "可能", "我觉得"];
+const markerGroups = {
+  claim: ["我认为", "我的判断", "我建议", "结论", "应该", "需要", "核心", "关键", "是"],
+  evidence: ["因为", "比如", "例如", "数据", "事实", "案例", "结果", "具体", "一次", "用户", "项目"],
+  boundary: ["范围", "优先级", "影响", "不能", "可以", "条件", "如果", "负责", "风险", "限制"],
+  relation: ["你", "您", "我们", "对方", "团队", "同事", "听到", "理解", "确认", "谢谢"],
+  next: ["下一步", "先", "今天", "明天", "安排", "确认", "完成", "验证", "负责", "再"],
+  structure: ["第一", "第二", "第三", "先", "再", "最后", "因为", "所以", "但是", "同时"]
+};
+const profileGuidance = {
+  interview: { audience: "面试官", standard: "岗位价值、个人作用、项目结果和可核验的事实", firstAction: "先说结果，再补一句你亲自做了什么。" },
+  workplace: { audience: "正在协作的同事或负责人", standard: "判断、支持范围、优先级影响和明确下一步", firstAction: "先说可支持范围，再请对方确认优先级。" },
+  speech: { audience: "正在听分享的人", standard: "明确观点、理由、一个例子和收束", firstAction: "第一句先下判断，再只保留一个例子。" },
+  topic: { audience: "不熟悉这个主题的听众", standard: "抽象观点、具体事例和可复述结论", firstAction: "把一个抽象词换成身边正在发生的小事。" },
+  improv: { audience: "正在等待你回应的对方", standard: "是什么、为什么、怎么做；回应时先接住对方", firstAction: "第一句先说结论，再按是什么、为什么、怎么做表达。" }
+};
+
+function clamp(value, minimum = 0, maximum = 20) {
+  return Math.max(minimum, Math.min(maximum, value));
+}
+
+function compact(value) {
+  return String(value || "").replace(/\s/g, "");
+}
+
+function sentences(text) {
+  return String(text || "").split(/[。！？!?；;\n]/u).map((item) => item.trim()).filter((item) => item.length >= 4);
+}
+
+function countFillers(text) {
+  return fillerWords.reduce((count, word) => count + (String(text).split(word).length - 1), 0);
+}
+
+function markerHits(text, markers) {
+  return markers.filter((marker) => text.includes(marker));
+}
+
+function quoteFor(text, markers) {
+  const source = sentences(text);
+  return source.find((sentence) => markers.some((marker) => sentence.includes(marker))) || source[0] || String(text).trim().slice(0, 60);
+}
+
+function ensureLong(text, suffix) {
+  let result = text;
+  while (compact(result).length < 320) result += suffix;
+  return result;
+}
+
+function indicatorSentence(name, hits, missing) {
+  return hits.length ? `原稿里出现了“${hits.slice(0, 3).join("、")}”等信号，这说明“${name}”已经有可继续放大的基础。` : `原稿目前没有出现能稳定指向“${name}”的明确文字信号，这不是表达失败，而是下一轮最值得补足的空位。`;
+}
+
+function buildLocalReport({ transcript, scene = "", goal = "", focus = "", profileId = "workplace" } = {}) {
+  const text = String(transcript || "").trim();
+  const normalized = compact(text);
+  const guidance = profileGuidance[profileId] || profileGuidance.workplace;
+  const fillers = countFillers(text);
+  const claimHits = markerHits(text, markerGroups.claim);
+  const evidenceHits = markerHits(text, markerGroups.evidence);
+  const boundaryHits = markerHits(text, markerGroups.boundary);
+  const relationHits = markerHits(text, markerGroups.relation);
+  const nextHits = markerHits(text, markerGroups.next);
+  const structureHits = markerHits(text, markerGroups.structure);
+  const sentenceCount = sentences(text).length;
+  const scores = {
+    "主张": clamp(6 + (claimHits.length ? 7 : 0) + (sentenceCount >= 2 ? 2 : 0) + (normalized.length >= 80 ? 2 : 0)),
+    "证据": clamp(5 + Math.min(9, evidenceHits.length * 3) + (/\d/u.test(text) ? 2 : 0)),
+    "边界": clamp(5 + Math.min(10, boundaryHits.length * 3) + (profileId === "workplace" && text.includes("影响") ? 2 : 0)),
+    "关系": clamp(5 + Math.min(9, relationHits.length * 3) + (profileId === "improv" && /理解|听到/u.test(text) ? 2 : 0)),
+    "下一步": clamp(5 + Math.min(10, nextHits.length * 3) + (text.includes("确认") ? 2 : 0))
+  };
+  const compass = compassLabels.map((label) => ({
+    label,
+    score: scores[label],
+    evidence: indicatorSentence(label, label === "主张" ? claimHits : label === "证据" ? evidenceHits : label === "边界" ? boundaryHits : label === "关系" ? relationHits : nextHits, "")
+  }));
+  const priority = compass.reduce((lowest, item) => item.score < lowest.score ? item : lowest, compass[0]);
+  const quotes = {
+    scene: quoteFor(text, markerGroups.claim),
+    claim: quoteFor(text, markerGroups.claim),
+    evidence: quoteFor(text, markerGroups.evidence),
+    boundary: quoteFor(text, markerGroups.boundary),
+    next: quoteFor(text, markerGroups.next)
+  };
+  const currentScene = scene || "本轮练习场景";
+  const currentGoal = goal || "把重点说清楚";
+  const currentFocus = focus || guidance.firstAction;
+  const detailedSections = [
+    {
+      title: "场景判断",
+      quote: quotes.scene,
+      analysis: ensureLong(`这轮的场景是“${currentScene}”，目标是“${currentGoal}”。在这个场景里，${guidance.audience}不需要一段漂亮但泛泛的说明，而是需要快速知道你的判断与这件事的关系。原稿引用“${quotes.scene}”说明你已经给出了可以继续工作的真实表达材料；本地评估不会补造你没有说过的项目、数据或关系背景，只会检查这段原话是否足以让人接住重点。${indicatorSentence("主张", claimHits)} 从字数看，本轮共有 ${normalized.length} 个字、约 ${sentenceCount} 个完整句子，${fillers ? `并检测到 ${fillers} 个填充词。` : "没有检测到常见填充词。"} 下一轮先沿用当前原意，不必推翻全文；把“${currentFocus}”放在前两句完成，让对方在十秒内知道你要说明什么，再决定是否需要听更多背景。`, "复练时请把场景、判断和本轮目标连成一句完整的话；这能让后面的理由和行动有明确落点。")
+    },
+    {
+      title: "主张与结构",
+      quote: quotes.claim,
+      analysis: ensureLong(`主张维度当前是 ${scores["主张"]}/20。${indicatorSentence("主张", claimHits)} 被引用的原话“${quotes.claim}”是听众最先会抓住的部分；如果这句话先讲结论，后面的内容就会被理解成理由、边界或行动，而不是零散的背景。结构上，本轮检测到“${structureHits.length ? structureHits.slice(0, 4).join("、") : "没有明显的顺序连接词"}”，这意味着${structureHits.length ? "你已经在使用部分连接关系，但还可以让顺序更稳定。" : "听众可能需要自己猜测先后关系。"} 对于${guidance.audience}来说，最实用的结构不是堆更多信息，而是用“我的判断是……，因为……，所以接下来……”把三层关系讲完整。下一轮请先把结论缩短到一句，再只补一个最相关的理由；如果仍有时间，最后补一句行动。这样练习的重点是让原稿的逻辑更容易被听见，而不是把语气变得不像你自己。`, "复练后检查第一句能否独立成立；若删掉后文，听众仍应知道你的立场或请求。")
+    },
+    {
+      title: "证据与具体性",
+      quote: quotes.evidence,
+      analysis: ensureLong(`证据维度当前是 ${scores["证据"]}/20。${indicatorSentence("证据", evidenceHits)} 本轮引用“${quotes.evidence}”${evidenceHits.length ? "包含了可继续展开的具体线索。" : "目前主要承担了表达起点的作用，还没有形成可核验的支撑。"} 在“${currentScene}”里，具体不等于一定要报数字，也不等于临时编一个成功案例；更可靠的具体性来自你原稿已经提到的一个动作、一次观察、一个前后变化，或者一个明确限制。${/\d/u.test(text) ? "原稿中出现了数字，这是可检查的线索；下一轮要说明它代表什么。" : "原稿中没有数字也没有关系；你可以补一个真实的场景细节，而不是硬塞数据。"} 建议第二轮只选择一个证据，不要连续列举多个例子。先说发生了什么，再说你从中如何判断，最后回到当前的结论。这样听众能看见你的思路，也能区分事实、解释和建议，报告给出的评分才有可以回看的依据。`, "复练时问自己：这段内容中是否有一个别人能复述的真实细节；没有就补一个，不再扩写第二个。")
+    },
+    {
+      title: "边界与听众关系",
+      quote: quotes.boundary,
+      analysis: ensureLong(`边界维度是 ${scores["边界"]}/20，关系维度是 ${scores["关系"]}/20。${indicatorSentence("边界", boundaryHits)} ${indicatorSentence("关系", relationHits)} 原稿中的“${quotes.boundary}”是本轮可以直接保留的证据，但它还需要让${guidance.audience}明白：你在支持什么、暂时不能承诺什么、以及为什么这个范围对对方也有意义。边界不是生硬地拒绝，也不是把责任推回别人；它应该把影响、选择和确认点说清楚。关系也不是客气词越多越好，而是先承认对方正在面对的问题，再给出你能承担的部分。尤其在分歧、临时加活或即兴回应时，先接住对方再说判断，能避免你的重点被听成对抗。下一轮请保留一句对对方处境的回应，同时补一句清楚的范围或条件；两句就够，不需要解释所有背景。`, "复练结束后检查：听众是否同时听见了你的合作意图和你的实际限制；只出现其中一个，表达仍容易被误解。")
+    },
+    {
+      title: "下一轮行动",
+      quote: quotes.next,
+      analysis: ensureLong(`下一步维度当前是 ${scores["下一步"]}/20。${indicatorSentence("下一步", nextHits)} 这轮引用“${quotes.next}”说明你的原稿已经有一个可用于收束的位置；接下来要做的不是再加更多建议，而是让行动变得可以确认。对于“${currentScene}”，一个有效的结尾通常回答三个问题：谁需要做什么、什么时候确认、以及做完后如何知道事情往前走了。原稿${nextHits.length ? "已经出现了行动或时间相关信号，可以把它放到最后一句。" : "暂时没有明确行动信号，因此听众可能听完后仍不知道下一步。"} 第二轮请按固定顺序练习：第一句说判断；第二句补一个真实理由或细节；最后一句提出一个最小动作。你的本轮力量动作是“${currentFocus}”，请只检查这一件事是否做到，不要在同一轮同时追求更有感染力、更有逻辑和更少填充词。这样评分与复练才会形成真实的前后对照。`, "复练完成后用一句话自查：听众现在是否知道我希望发生什么；若不知道，只重写最后一句。")
+    }
+  ];
+  const improvement = {
+    "主张": "我的判断是先把重点说清楚，再补一个理由，最后确认下一步。",
+    "证据": "我先说结论，再补一个原稿中真实出现的细节，说明我为什么这样判断。",
+    "边界": "我可以先支持关键部分；完整接手会影响既有承诺，请一起确认优先级。",
+    "关系": "我理解你现在的处境；我先说我的判断，再一起确认最可行的做法。",
+    "下一步": "我的建议是先完成这一小步，请在今天确认负责人和完成时间。"
+  };
+  const score = Math.round(compass.reduce((sum, item) => sum + item.score, 0));
+  return {
+    score,
+    trainingPoints: score,
+    summary: `本地训练评估：围绕“${currentScene}”，优先补足“${priority.label}”。评分依据原稿结构与可检查信号，不调用 AI 模型。`,
+    priority: { label: priority.label, quote: quotes[priority.label === "主张" ? "claim" : priority.label === "证据" ? "evidence" : priority.label === "边界" ? "boundary" : priority.label === "下一步" ? "next" : "scene"], impact: `在“${currentScene}”里，${guidance.audience}可能还无法据此理解你的${priority.label === "下一步" ? "行动安排" : priority.label}。`, action: improvement[priority.label] },
+    compass,
+    detailedSections,
+    rewrite: { original: quotes[priority.label === "主张" ? "claim" : priority.label === "证据" ? "evidence" : priority.label === "边界" ? "boundary" : priority.label === "下一步" ? "next" : "scene"], improved: improvement[priority.label], reason: `先只练“${priority.label}”，让听众能从原稿中听见清楚的判断和可确认的下一步。` },
+    source: "local",
+    stats: { characters: normalized.length, fillerCount: fillers }
+  };
+}
+
+Object.assign(exports, { buildLocalReport }); })(exports); return exports; })();
+modules["modules/report-contract.js"] = (() => { const exports = {}; ((exports) => { 
+const compassLabels = ["主张", "证据", "边界", "关系", "下一步"];
+const detailedSectionTitles = ["场景判断", "主张与结构", "证据与具体性", "边界与听众关系", "下一轮行动"];
+
+const profileRubrics = {
+  interview: { name: "求职面试", focus: "岗位价值、项目结果、个人作用和可核验的证据。" },
+  workplace: { name: "职场表达", focus: "明确判断、支持范围、优先级影响和可执行的下一步。" },
+  speech: { name: "深度演讲", focus: "清楚观点、理由、一个有力例子和能够收束的结尾。" },
+  topic: { name: "主题表达", focus: "把抽象想法落到具体事例，并让听众复述你的结论。" },
+  improv: { name: "即兴表达", focus: "先说是什么、为什么、怎么做；回应场景先接住对方再表达判断。" }
+};
+
+function clean(value, limit) {
+  return String(value || "").trim().slice(0, limit);
+}
+
+function quoteFromTranscript(quote, transcript) {
+  const compactQuote = clean(quote, 80).replace(/\s/g, "");
+  const compactTranscript = clean(transcript, 8000).replace(/\s/g, "");
+  return compactQuote.length >= 4 && compactTranscript.includes(compactQuote);
+}
+
+function visibleLength(value) {
+  return clean(value, 2000).replace(/\s/g, "").length;
+}
+
+function parseJson(content) {
+  const match = String(content).match(/\{[\s\S]*\}/);
+  if (!match) throw new Error("invalid_model_response");
+  try { return JSON.parse(match[0]); } catch { throw new Error("invalid_model_response"); }
+}
+
+function buildReportContext(input = {}) {
+  const profileId = Object.hasOwn(profileRubrics, input.profileId) ? input.profileId : "workplace";
+  const profile = profileRubrics[profileId];
+  return {
+    profileId,
+    profileName: profile.name,
+    rubric: profile.focus,
+    scene: clean(input.scene, 160),
+    goal: clean(input.goal, 80),
+    focus: clean(input.focus, 120),
+    detailLevel: input.detailLevel === "advanced" ? "advanced" : "standard",
+    transcript: clean(input.transcript, 8000)
+  };
+}
+
+function buildReportPrompt(input) {
+  const context = buildReportContext(input);
+  return [
+    "你是严谨的中文表达教练。只依据原稿，不虚构经历、数据或事实，也不做职业能力认证。",
+    "当前训练板块：" + context.profileName,
+    "板块判断重点：" + context.rubric,
+    "具体场景：" + context.scene,
+    "本轮唯一目标：" + context.goal,
+    "当前力量动作：" + context.focus,
+    "原稿：",
+    context.transcript,
+    "评分锚点：每个维度 0-5 为未出现或妨碍理解，6-11 为隐约出现但模糊，12-16 为足以推进当前场景，17-20 为具体、可信且能帮助听众行动。",
+    "反馈规则：先从原稿选出一个最影响本轮目标的问题。priority.quote 必须逐字引用原稿中至少四个字的连续片段；impact 必须说明这会让当前听众哪里听不懂、犹豫或无法行动；action 只给下一轮最小动作。五维 evidence 必须引用原稿事实或明确说明缺口。rewrite 不得添加原稿没有的事实、数字或承诺。",
+    "完整报告规则：detailedSections 必须严格按“场景判断、主张与结构、证据与具体性、边界与听众关系、下一轮行动”顺序返回五段。每段 analysis 至少 300 个中文字符，必须围绕当前板块、场景、目标和力量动作分析，不能把泛泛模板换词重复。每段 quote 必须逐字引用原稿中的连续片段；可以重复引用同一句，但解释必须不同。",
+    context.detailLevel === "advanced" ? "这是用户自带 API 的专属深度教练模式：额外返回 deepCoach。它必须给出至少 300 个中文字符的个性化迁移分析、一段 160 至 360 个中文字符的第二轮 60 秒示范，以及 3 条可检查的复练清单；只可使用原稿已有事实。" : "这是公共完整报告模式：不要返回 deepCoach。",
+    "只返回合法 JSON：",
+    context.detailLevel === "advanced"
+      ? '{"score":0到100整数,"summary":"一句具体判断","priority":{"label":"主张/证据/边界/关系/下一步之一","quote":"原稿中的连续原话","impact":"当前场景中的具体影响","action":"下一轮只做的一步"},"compass":[{"label":"主张","score":0到20整数,"evidence":"原稿依据或具体缺口"},{"label":"证据","score":0到20整数,"evidence":"原稿依据或具体缺口"},{"label":"边界","score":0到20整数,"evidence":"原稿依据或具体缺口"},{"label":"关系","score":0到20整数,"evidence":"原稿依据或具体缺口"},{"label":"下一步","score":0到20整数,"evidence":"原稿依据或具体缺口"}],"detailedSections":[{"title":"场景判断","quote":"原稿连续原话","analysis":"至少300个中文字符"},{"title":"主张与结构","quote":"原稿连续原话","analysis":"至少300个中文字符"},{"title":"证据与具体性","quote":"原稿连续原话","analysis":"至少300个中文字符"},{"title":"边界与听众关系","quote":"原稿连续原话","analysis":"至少300个中文字符"},{"title":"下一轮行动","quote":"原稿连续原话","analysis":"至少300个中文字符"}],"rewrite":{"original":"原稿中要改的一句","improved":"保留原意的加强句","reason":"为什么更能推进当前场景"},"deepCoach":{"quote":"原稿连续原话","analysis":"至少300个中文字符的个性化迁移分析","secondRound":"160至360个中文字符的第二轮60秒示范","checklist":["可检查动作一","可检查动作二","可检查动作三"]}}'
+      : '{"score":0到100整数,"summary":"一句具体判断","priority":{"label":"主张/证据/边界/关系/下一步之一","quote":"原稿中的连续原话","impact":"当前场景中的具体影响","action":"下一轮只做的一步"},"compass":[{"label":"主张","score":0到20整数,"evidence":"原稿依据或具体缺口"},{"label":"证据","score":0到20整数,"evidence":"原稿依据或具体缺口"},{"label":"边界","score":0到20整数,"evidence":"原稿依据或具体缺口"},{"label":"关系","score":0到20整数,"evidence":"原稿依据或具体缺口"},{"label":"下一步","score":0到20整数,"evidence":"原稿依据或具体缺口"}],"detailedSections":[{"title":"场景判断","quote":"原稿连续原话","analysis":"至少300个中文字符"},{"title":"主张与结构","quote":"原稿连续原话","analysis":"至少300个中文字符"},{"title":"证据与具体性","quote":"原稿连续原话","analysis":"至少300个中文字符"},{"title":"边界与听众关系","quote":"原稿连续原话","analysis":"至少300个中文字符"},{"title":"下一轮行动","quote":"原稿连续原话","analysis":"至少300个中文字符"}],"rewrite":{"original":"原稿中要改的一句","improved":"保留原意的加强句","reason":"为什么更能推进当前场景"}}'
+  ].join("\n\n");
+}
+
+function parseModelReport(content, input) {
+  const context = buildReportContext(input);
+  const report = parseJson(content);
+  const validCompass = Array.isArray(report.compass) && report.compass.length === compassLabels.length && report.compass.every((item, index) =>
+    item?.label === compassLabels[index] && Number.isInteger(item.score) && item.score >= 0 && item.score <= 20 && clean(item.evidence, 180).length > 0
+  );
+  const priority = report.priority;
+  const validPriority = priority && compassLabels.includes(priority.label) && quoteFromTranscript(priority.quote, context.transcript) && clean(priority.impact, 180).length > 0 && clean(priority.action, 120).length > 0;
+  const rewrite = report.rewrite;
+  const validRewrite = rewrite && quoteFromTranscript(rewrite.original, context.transcript) && clean(rewrite.improved, 180).length > 0 && clean(rewrite.reason, 180).length > 0;
+  const validDetails = Array.isArray(report.detailedSections) && report.detailedSections.length === detailedSectionTitles.length && report.detailedSections.every((section, index) =>
+    section?.title === detailedSectionTitles[index] && quoteFromTranscript(section.quote, context.transcript) && visibleLength(section.analysis) >= 300
+  );
+  const coach = report.deepCoach;
+  const validCoach = context.detailLevel !== "advanced" || (coach && quoteFromTranscript(coach.quote, context.transcript) && visibleLength(coach.analysis) >= 300 && visibleLength(coach.secondRound) >= 160 && visibleLength(coach.secondRound) <= 360 && Array.isArray(coach.checklist) && coach.checklist.length === 3 && coach.checklist.every((item) => clean(item, 100).length >= 4));
+  if (!Number.isInteger(report.score) || report.score < 0 || report.score > 100 || clean(report.summary, 140).length < 4 || !validPriority || !validCompass || !validDetails || !validRewrite || !validCoach) {
+    throw new Error("invalid_model_schema");
+  }
+  return {
+    score: report.score,
+    trainingPoints: report.score,
+    summary: clean(report.summary, 140),
+    priority: { label: priority.label, quote: clean(priority.quote, 80), impact: clean(priority.impact, 180), action: clean(priority.action, 120) },
+    compass: report.compass.map((item) => ({ label: item.label, score: item.score, evidence: clean(item.evidence, 180) })),
+    detailedSections: report.detailedSections.map((section) => ({ title: section.title, quote: clean(section.quote, 80), analysis: clean(section.analysis, 1800) })),
+    rewrite: { original: clean(rewrite.original, 80), improved: clean(rewrite.improved, 180), reason: clean(rewrite.reason, 180) },
+    ...(context.detailLevel === "advanced" ? { deepCoach: { quote: clean(coach.quote, 80), analysis: clean(coach.analysis, 1800), secondRound: clean(coach.secondRound, 420), checklist: coach.checklist.map((item) => clean(item, 100)) } } : {}),
+    source: "model"
+  };
+}
+
+Object.assign(exports, { buildReportContext, buildReportPrompt, parseModelReport, compassLabels, detailedSectionTitles }); })(exports); return exports; })();
+modules["modules/report.js"] = (() => { const exports = {}; ((exports, dependency0, dependency1) => { const { buildLocalReport } = dependency0;
+const { buildReportPrompt, parseModelReport } = dependency1;
+
+
+async function requestBrowserReport(payload, configuration) {
+  try {
+    const response = await fetch(configuration.baseUrl + "/chat/completions", { method: "POST", headers: { Authorization: "Bearer " + configuration.apiKey, "Content-Type": "application/json" }, body: JSON.stringify({ model: configuration.model, temperature: 0.35, max_tokens: 3600, messages: [{ role: "system", content: "你是严谨的表达教练，只输出合法 JSON。" }, { role: "user", content: buildReportPrompt(payload) }] }) });
+    if (!response.ok) throw new Error("provider_analysis_failed");
+    const result = await response.json();
+    const content = Array.isArray(result.choices?.[0]?.message?.content) ? result.choices[0].message.content.map((item) => item.text || "").join("") : result.choices?.[0]?.message?.content;
+    return parseModelReport(content, payload);
+  } catch (error) {
+    throw new Error(error.message === "provider_analysis_failed" || error.message.startsWith("invalid_model_") ? error.message : "provider_browser_unavailable");
+  }
+}
+
+function markReport(report, source = "model") {
+  return { ...report, source, trainingPoints: source === "local" ? 0 : Number.isInteger(report.trainingPoints) ? report.trainingPoints : report.score };
+}
+
+async function requestPublicReport(payload, configuration) {
+  let response;
+  try {
+    response = await fetch("/api/report", {
+      method: "POST",
+      headers: { "Content-Type": "application/json", Accept: "application/json" },
+      body: JSON.stringify({ ...payload, provider: configuration?.provider || "auto" })
+    });
+  } catch {
+    throw new Error("analysis_unavailable");
+  }
+  let result;
+  try { result = await response.json(); } catch { throw new Error("analysis_unavailable"); }
+  if (!response.ok) {
+    const error = new Error(result.error || "analysis_unavailable");
+    error.remaining = result.remaining;
+    throw error;
+  }
+  if (!result.report) throw new Error("invalid_model_schema");
+  return markReport(result.report, result.source || "model");
+}
+
+async function requestReport(payload, configuration) {
+  if (configuration?.mode !== "byok" || !configuration.apiKey) return buildLocalReport(payload);
+  try {
+    const report = await requestBrowserReport(payload, configuration);
+    return markReport(report, report.source || "model");
+  } catch (error) {
+    if (error.message === "invalid_transcript") throw error;
+    return buildLocalReport(payload);
+  }
+}
+
+function renderReport(report, elements) {
+  const local = report.source === "local";
+  elements.scorePanel.hidden = false;
+  elements.score.textContent = report.score ?? "--";
+  elements.summary.textContent = report.summary;
+  if (elements.source) elements.source.textContent = local ? "本地完整训练评估 · 不调用 AI 或外部 API" : report.source === "mock" ? "本地测试报告" : report.deepCoach ? "用户自带 API · 完整报告 + 专属深度教练" : "模型辅助 · 完整训练报告";
+  if (elements.fillers) elements.fillers.textContent = report.stats?.fillerCount ?? "暂未统计";
+  elements.priorityHeading.textContent = "这次先改一处";
+  elements.priorityLabel.textContent = report.priority.label;
+  elements.priorityQuote.textContent = `“${report.priority.quote}”`;
+  elements.priorityImpact.textContent = report.priority.impact;
+  elements.priorityAction.textContent = report.priority.action;
+  elements.compass.replaceChildren(...report.compass.map((item) => {
+    const card = document.createElement("div");
+    card.title = item.evidence;
+    const score = document.createElement("b");
+    score.textContent = item.score ?? "—";
+    const label = document.createElement("span");
+    label.textContent = item.label;
+    card.append(score, label);
+    return card;
+  }));
+  elements.rewrite.textContent = `“${report.rewrite.improved}”`;
+  elements.reason.textContent = report.rewrite.reason;
+  elements.details.replaceChildren(...(report.detailedSections || []).map((section) => {
+    const article = document.createElement("article");
+    article.className = "analysis-section";
+    const title = document.createElement("h3");
+    title.textContent = section.title;
+    const quote = document.createElement("blockquote");
+    quote.textContent = `原稿证据：“${section.quote}”`;
+    const analysis = document.createElement("p");
+    analysis.textContent = section.analysis;
+    article.append(title, quote, analysis);
+    return article;
+  }));
+  elements.details.hidden = true;
+  elements.detailsToggle.hidden = false;
+  elements.detailsToggle.setAttribute("aria-expanded", "false");
+  elements.detailsToggle.textContent = "展开完整五维分析";
+  elements.deepCoach.hidden = !report.deepCoach;
+  if (report.deepCoach) {
+    elements.deepCoachQuote.textContent = `原稿证据：“${report.deepCoach.quote}”`;
+    elements.deepCoachAnalysis.textContent = report.deepCoach.analysis;
+    elements.deepCoachSecondRound.textContent = report.deepCoach.secondRound;
+    elements.deepCoachChecklist.replaceChildren(...report.deepCoach.checklist.map((item) => {
+      const listItem = document.createElement("li");
+      listItem.textContent = item;
+      return listItem;
+    }));
+  }
+}
+
+Object.assign(exports, { requestReport, renderReport }); })(exports, modules["modules/local-report.js"], modules["modules/report-contract.js"]); return exports; })();
+modules["modules/training.js"] = (() => { const exports = {}; ((exports) => { 
+function createTrainingSession(onTick) {
+  let timer = null;
+  let seconds = 60;
+
+  function emit() { onTick(seconds); }
+  function stop() { if (timer) window.clearInterval(timer); timer = null; }
+  function start() {
+    stop();
+    seconds = 60;
+    emit();
+    timer = window.setInterval(() => {
+      seconds = Math.max(0, seconds - 1);
+      emit();
+      if (seconds === 0) stop();
+    }, 1000);
+  }
+
+  return { start, stop, reset() { stop(); seconds = 60; emit(); } };
+}
+
+Object.assign(exports, { createTrainingSession }); })(exports); return exports; })();
+modules["modules/transcription.js"] = (() => { const exports = {}; ((exports) => { 
+function createTranscriber({ getText, onText, onState, onRecordingChange }) {
+  let recognition = null;
+  let finalText = "";
+  let interimText = "";
+  let status = "idle";
+
+  function stop(message = "转写已结束，可继续编辑原稿") {
+    status = "idle";
+    if (recognition) {
+      try { recognition.stop(); } catch {}
+      recognition = null;
+    }
+    onRecordingChange(status);
+    onState(message);
+  }
+
+  function start() {
+    if (status === "recording") return;
+    const Recognition = window.SpeechRecognition || window.webkitSpeechRecognition;
+    if (!Recognition) return onState("当前浏览器不支持语音识别，请直接输入或使用 Chrome。");
+    recognition = new Recognition();
+    recognition.lang = "zh-CN";
+    recognition.continuous = true;
+    recognition.interimResults = true;
+    if (status !== "paused") finalText = getText().trim();
+    interimText = "";
+    status = "recording";
+    onRecordingChange(status);
+    const activeRecognition = recognition;
+    activeRecognition.onstart = () => { onRecordingChange(status); onState("正在进行浏览器实时转写…"); };
+    activeRecognition.onresult = (event) => {
+      let finalChunk = "";
+      let interimChunk = "";
+      for (let index = event.resultIndex; index < event.results.length; index += 1) {
+        const text = event.results[index][0].transcript;
+        if (event.results[index].isFinal) finalChunk += text;
+        else interimChunk += text;
+      }
+      if (finalChunk) finalText += finalChunk;
+      interimText = interimChunk;
+      onText(`${finalText}${interimText}`);
+    };
+    activeRecognition.onerror = (event) => stop(`转写暂不可用：${event.error}。你仍可直接编辑原稿。`);
+    activeRecognition.onend = () => {
+      if (recognition !== activeRecognition) return;
+      if (status === "recording") {
+        try { activeRecognition.start(); } catch { stop(); }
+      } else {
+        recognition = null;
+      }
+    };
+    try { activeRecognition.start(); } catch { stop("转写暂不可用，请直接输入或稍后重试。"); }
+  }
+
+  function pause() {
+    if (status !== "recording") return;
+    status = "paused";
+    if (recognition) {
+      try { recognition.stop(); } catch {}
+    }
+    onRecordingChange(status);
+    onState("浏览器转写已暂停，已有文字已保留；可继续转写或结束。");
+  }
+
+  return { start, pause, stop, sync(value) { finalText = value; interimText = ""; } };
+}
+
+Object.assign(exports, { createTranscriber }); })(exports); return exports; })();
+modules["modules/recording.js"] = (() => { const exports = {}; ((exports) => { 
+const WEBM_TYPES = ["audio/webm;codecs=opus", "audio/webm"];
+
+function timestamp() {
+  return new Date().toISOString().replace(/[:.]/g, "-").slice(0, 19);
+}
+
+function createAudioRecorder({ onState }) {
+  let recorder = null;
+  let stream = null;
+  let chunks = [];
+  let audioBlob = null;
+  let status = "idle";
+  let generation = 0;
+
+  function emit(message) {
+    onState({ status, message, canDownload: Boolean(audioBlob) });
+  }
+
+  function stopTracks() {
+    stream?.getTracks().forEach((track) => track.stop());
+    stream = null;
+  }
+
+  function webmOptions() {
+    if (typeof window.MediaRecorder === "undefined") return null;
+    const mimeType = WEBM_TYPES.find((type) => window.MediaRecorder.isTypeSupported?.(type));
+    return mimeType ? { mimeType } : null;
+  }
+
+  function supported() {
+    return Boolean(navigator.mediaDevices?.getUserMedia && webmOptions());
+  }
+
+  function complete(activeRecorder, recordingGeneration) {
+    if (recordingGeneration !== generation) return;
+    const type = activeRecorder.mimeType || "audio/webm";
+    audioBlob = chunks.length ? new Blob(chunks, { type }) : null;
+    chunks = [];
+    recorder = null;
+    stopTracks();
+    status = audioBlob ? "completed" : "error";
+    emit(audioBlob ? "本地音频已生成。下载前不会上传或保存到网站。" : "没有生成可下载的音频，请重新录制或直接编辑原稿。");
+  }
+
+  async function start() {
+    if (status === "recording" || status === "requesting" || status === "stopping") return;
+    if (status === "paused" && recorder) {
+      try {
+        recorder.resume();
+        status = "recording";
+        emit("正在本地录音，结束后可主动下载 WebM 文件。");
+      } catch {
+        status = "error";
+        emit("无法继续本地录音；你仍可直接编辑原稿。");
+      }
+      return;
+    }
+    if (!supported()) {
+      status = "unavailable";
+      emit("当前浏览器无法生成可下载的 WebM 音频；你仍可使用浏览器转写或手动原稿。");
+      return;
+    }
+
+    const recordingGeneration = ++generation;
+    status = "requesting";
+    emit("正在请求麦克风权限…");
+    let capturedStream;
+    try {
+      capturedStream = await navigator.mediaDevices.getUserMedia({ audio: true });
+    } catch (error) {
+      if (recordingGeneration !== generation) return;
+      status = error?.name === "NotAllowedError" || error?.name === "SecurityError" ? "denied" : "error";
+      emit(status === "denied" ? "麦克风权限未授权；你仍可直接输入或使用浏览器转写。" : "无法使用麦克风；你仍可直接编辑原稿。");
+      return;
+    }
+    if (recordingGeneration !== generation) {
+      capturedStream.getTracks().forEach((track) => track.stop());
+      return;
+    }
+    stream = capturedStream;
+
+    try {
+      chunks = [];
+      audioBlob = null;
+      const activeRecorder = new MediaRecorder(stream, webmOptions());
+      recorder = activeRecorder;
+      activeRecorder.addEventListener("dataavailable", (event) => {
+        if (event.data.size) chunks.push(event.data);
+      });
+      activeRecorder.addEventListener("stop", () => complete(activeRecorder, recordingGeneration), { once: true });
+      activeRecorder.start();
+      status = "recording";
+      emit("正在本地录音。结束后会在当前浏览器内存中生成 WebM 文件。");
+    } catch {
+      if (recordingGeneration !== generation) return;
+      stopTracks();
+      recorder = null;
+      status = "error";
+      emit("本地录音无法启动；你仍可直接编辑原稿。");
+    }
+  }
+
+  function pause() {
+    if (status !== "recording" || !recorder) return;
+    try {
+      recorder.pause();
+      status = "paused";
+      emit("本地录音已暂停，继续或结束均不会影响原稿。");
+    } catch {
+      status = "error";
+      emit("无法暂停本地录音；你仍可结束录音或直接编辑原稿。");
+    }
+  }
+
+  function stop() {
+    if (!recorder || !["recording", "paused"].includes(status)) return;
+    status = "stopping";
+    emit("正在生成本地 WebM 音频…");
+    try {
+      recorder.stop();
+    } catch {
+      stopTracks();
+      recorder = null;
+      status = "error";
+      emit("无法结束本地录音；原稿没有丢失。");
+    }
+  }
+
+  function getDownloadFile() {
+    return audioBlob;
+  }
+
+  function download() {
+    if (!audioBlob) return;
+    const url = URL.createObjectURL(audioBlob);
+    const anchor = document.createElement("a");
+    anchor.href = url;
+    anchor.download = `jiangqingchu-improv-${timestamp()}.webm`;
+    anchor.click();
+    window.setTimeout(() => URL.revokeObjectURL(url), 0);
+  }
+
+  function cleanup(message = "本地录音只保留在当前浏览器内存中。") {
+    generation += 1;
+    if (recorder && recorder.state !== "inactive") {
+      recorder.ondataavailable = null;
+      recorder.onstop = null;
+      try { recorder.stop(); } catch {}
+    }
+    recorder = null;
+    stopTracks();
+    chunks = [];
+    audioBlob = null;
+    status = "idle";
+    emit(message);
+  }
+
+  return { start, pause, stop, download, getDownloadFile, cleanup, isActive: () => ["recording", "paused", "requesting", "stopping"].includes(status) };
+}
+
+Object.assign(exports, { createAudioRecorder }); })(exports); return exports; })();
+modules["app.js"] = (() => { const exports = {}; ((exports, dependency0, dependency1, dependency2, dependency3, dependency4, dependency5, dependency6) => { const { defaultProfileId, defaultScene, findScene, profileRegistry, profiles, randomScene, sceneQuestion, toolkitFor } = dependency0;
+const { addTrainingScore, growth, nextMilestone, renderBadges } = dependency1;
+const { defaultsFor, fetchProviderStatus, normalizeConfiguration, readModelConfiguration, saveModelConfiguration, testModelConnection } = dependency2;
+const { renderReport, requestReport } = dependency3;
+const { createTrainingSession } = dependency4;
+const { createTranscriber } = dependency5;
+const { createAudioRecorder } = dependency6;
+
+
+
+
+
+
+
+const $ = (selector) => document.querySelector(selector);
+const $$ = (selector) => [...document.querySelectorAll(selector)];
+const publicProviderIds = ["auto", "qwen", "doubao", "deepseek"];
+const state = { mode: defaultProfileId, goal: "", scene: defaultScene(defaultProfileId) };
+
+function profile() { return profiles[state.mode]; }
+function screen(id) { $$(".screen").forEach((item) => item.classList.toggle("active", item.id === id)); window.scrollTo({ top: 0, behavior: "smooth" }); }
+function updateWordCount() { $("#wordCount").textContent = `${$("#transcript").value.replace(/\s/g, "").length} 字`; }
+function setTranscript(value) { $("#transcript").value = value; updateWordCount(); }
+function currentScene() { return findScene(state.mode, $("#topic").value.trim()) || state.scene; }
+
+function renderToolkit(scene) {
+  const toolkit = toolkitFor(state.mode, scene);
+  $("#toolTitle").textContent = toolkit.title;
+  $("#toolSummary").textContent = toolkit.summary;
+  $("#toolList").replaceChildren(...toolkit.steps.map((step, index) => {
+    const item = document.createElement("li");
+    const number = document.createElement("b");
+    number.textContent = `0${index + 1}`;
+    item.append(number, step);
+    return item;
+  }));
+}
+
+function renderGoals() {
+  const container = $("#goals");
+  container.replaceChildren(...profile().goals.map((goal, index) => {
+    const button = document.createElement("button");
+    button.type = "button";
+    button.textContent = goal;
+    button.classList.toggle("active", state.goal === goal);
+    button.addEventListener("click", () => { state.goal = goal; renderGoals(); });
+    if (index === 0 && !state.goal) state.goal = goal;
+    return button;
+  }));
+}
+
+function renderProfile() {
+  state.scene = defaultScene(state.mode);
+  state.goal = profile().goals[0];
+  $("#topic").value = sceneQuestion(state.scene);
+  renderGoals();
+  renderToolkit(state.scene);
+}
+
+function selectProfile(mode) {
+  state.mode = mode;
+  renderModeGrid();
+  renderProfile();
+}
+
+function renderModeGrid() {
+  const container = $("#modeGrid");
+  container.replaceChildren(...profileRegistry.map((item) => {
+    const button = document.createElement("button");
+    button.type = "button";
+    button.dataset.mode = item.id;
+    button.title = item.summary;
+    button.classList.toggle("active", item.id === state.mode);
+    const code = document.createElement("span");
+    code.textContent = `${String(item.order).padStart(2, "0")} / ${item.code}`;
+    const icon = document.createElement("i");
+    icon.className = "mode-icon";
+    icon.textContent = item.icon || "•";
+    icon.setAttribute("aria-hidden", "true");
+    const name = document.createElement("strong");
+    name.textContent = item.name;
+    const summary = document.createElement("small");
+    summary.textContent = item.shortSummary || item.summary;
+    button.append(code, icon, name, summary);
+    button.addEventListener("click", () => selectProfile(item.id));
+    return button;
+  }));
+}
+
+function renderGrowth() {
+  $("#points").textContent = growth.points.toLocaleString("zh-CN");
+  const next = nextMilestone();
+  $("#nextMilestone").textContent = `距离“${next.name}”还差 ${Math.max(0, next.score - growth.points).toLocaleString("zh-CN")} 分`;
+  $("#growthSummary").textContent = `${growth.points.toLocaleString("zh-CN")} 训练分 · 下一阶段：${next.name}`;
+  renderBadges($("#growthBadges"));
+}
+
+const training = createTrainingSession((seconds) => {
+  const minutes = Math.floor(seconds / 60);
+  $("#timer").textContent = `${String(minutes).padStart(2, "0")}:${String(seconds % 60).padStart(2, "0")}`;
+});
+const transcriber = createTranscriber({
+  getText: () => $("#transcript").value,
+  onText: setTranscript,
+  onState: (message) => { $("#transcriptState").textContent = message; },
+  onRecordingChange: (status) => {
+    const recording = status === "recording";
+    const paused = status === "paused";
+    $("#recordStartButton").hidden = recording;
+    $("#recordStartButton").textContent = paused ? "继续浏览器转写" : "开始浏览器转写";
+    $("#recordPauseButton").hidden = !recording;
+    $("#recordStopButton").hidden = status === "idle";
+  }
+});
+
+function renderAudioRecorder({ status, message, canDownload }) {
+  const enabled = profile().capabilities.audioDownload;
+  $("#audioRecorder").hidden = !enabled;
+  if (!enabled) return;
+  const recording = status === "recording";
+  const paused = status === "paused";
+  const busy = status === "requesting" || status === "stopping";
+  $("#audioStartButton").hidden = recording || busy;
+  $("#audioStartButton").disabled = busy;
+  $("#audioStartButton").textContent = paused ? "继续录音" : canDownload ? "重新录音" : "开始本地录音";
+  $("#audioPauseButton").hidden = !recording;
+  $("#audioStopButton").hidden = !recording && !paused;
+  $("#audioDownloadButton").hidden = !canDownload;
+  $("#audioState").textContent = message;
+}
+
+const audioRecorder = createAudioRecorder({ onState: renderAudioRecorder });
+
+function stopPractice(message) { transcriber.stop(message); training.stop(); }
+function leavePractice(message) { stopPractice(message); audioRecorder.cleanup(); }
+function prepareAudioRecorder() {
+  audioRecorder.cleanup(profile().capabilities.audioDownload ? "点击后才请求麦克风权限；音频仅保留在当前浏览器内存中。" : "");
+}
+
+$("#startButton").addEventListener("click", () => {
+  const scene = currentScene();
+  prepareAudioRecorder();
+  $("#modeName").textContent = profile().name;
+  $("#question").textContent = $("#topic").value.trim() || sceneQuestion(scene);
+  $("#goal").textContent = `本轮只练：${state.goal}`;
+  $("#focus").textContent = toolkitFor(state.mode, scene).steps[0];
+  $("#transcriptState").textContent = "准备开始浏览器转写或直接编辑原稿";
+  screen("practiceScreen");
+  training.start();
+});
+
+$("#randomButton").addEventListener("click", () => {
+  state.scene = randomScene(state.mode, $("#topic").value.trim());
+  $("#topic").value = sceneQuestion(state.scene);
+  renderToolkit(state.scene);
+});
+
+$("#recordStartButton").addEventListener("click", () => transcriber.start());
+$("#recordPauseButton").addEventListener("click", () => transcriber.pause());
+$("#recordStopButton").addEventListener("click", () => transcriber.stop());
+$("#audioStartButton").addEventListener("click", () => audioRecorder.start());
+$("#audioPauseButton").addEventListener("click", () => audioRecorder.pause());
+$("#audioStopButton").addEventListener("click", () => audioRecorder.stop());
+$("#audioDownloadButton").addEventListener("click", () => audioRecorder.download());
+$("#reportAudioDownload").addEventListener("click", () => audioRecorder.download());
+$("#detailsToggle").addEventListener("click", () => {
+  const details = $("#reportDetails");
+  const expanded = details.hidden;
+  details.hidden = !expanded;
+  $("#detailsToggle").setAttribute("aria-expanded", String(expanded));
+  $("#detailsToggle").textContent = expanded ? "收起完整五维分析" : "展开完整五维分析";
+});
+$("#transcript").addEventListener("input", () => { transcriber.sync($("#transcript").value); updateWordCount(); });
+$("#analyzeButton").addEventListener("click", async () => {
+  if (audioRecorder.isActive()) {
+    $("#transcriptState").textContent = "请先结束本地录音，并按需下载后再生成报告。";
+    return;
+  }
+  const transcript = $("#transcript").value.trim();
+  if (transcript.replace(/\s/g, "").length < 12) {
+    $("#transcriptState").textContent = "至少保留一句完整原稿后再生成报告。";
+    $("#transcript").focus();
+    return;
+  }
+  stopPractice("已提交原稿，正在生成训练报告…");
+  const button = $("#analyzeButton");
+  button.disabled = true;
+  button.textContent = "正在分析…";
+  try {
+    const configuration = readModelConfiguration();
+    const report = await requestReport({ transcript, scene: $("#topic").value, goal: state.goal, focus: $("#focus").textContent, profileId: state.mode, detailLevel: configuration?.mode === "byok" ? "advanced" : "standard" }, configuration);
+    renderReport(report, { scorePanel: $("#reportScorePanel"), score: $("#reportScore"), summary: $("#reportSummary"), source: $("#reportSource"), fillers: $("#reportFillers"), priorityHeading: $("#priorityHeading"), priorityLabel: $("#priorityLabel"), priorityQuote: $("#priorityQuote"), priorityImpact: $("#priorityImpact"), priorityAction: $("#priorityAction"), compass: $("#compass"), detailsToggle: $("#detailsToggle"), details: $("#reportDetails"), deepCoach: $("#deepCoach"), deepCoachQuote: $("#deepCoachQuote"), deepCoachAnalysis: $("#deepCoachAnalysis"), deepCoachSecondRound: $("#deepCoachSecondRound"), deepCoachChecklist: $("#deepCoachChecklist"), rewrite: $("#rewriteText"), reason: $("#rewriteReason") });
+    $("#reportWords").textContent = transcript.replace(/\s/g, "").length;
+    $("#reportAudioDownload").hidden = !profile().capabilities.audioDownload || !audioRecorder.getDownloadFile();
+    addTrainingScore(report.trainingPoints);
+    renderGrowth();
+    screen("reportScreen");
+  } catch (error) {
+    const messages = { model_not_configured: "当前还没有可用的 AI 服务，请在设置中选择公共服务或填写自己的模型。", provider_unavailable: "这个模型暂时不可用，请切换“自动选择”或稍后重试。", quota_exhausted: "今天的免费报告次数已用完，明天再来练习。", invalid_transcript: "原稿长度不符合分析要求。", analysis_unavailable: "模型暂时不可用，原稿已保留，请稍后重试。", provider_analysis_failed: "模型服务暂时拒绝了分析请求，原稿已保留。", provider_browser_unavailable: "报告服务暂时无法连接，原稿已保留。", invalid_model_configuration: "模型配置不完整，请检查 API Key、模型和 HTTPS Base URL。", invalid_model_response: "模型未返回可用报告，原稿已保留。", invalid_model_schema: "模型报告格式不完整，原稿已保留。" };
+    $("#transcriptState").textContent = messages[error.message] || "报告生成失败，原稿已保留。";
+  } finally {
+    button.disabled = false;
+    button.textContent = "生成训练报告";
+  }
+});
+
+$("#backButton").addEventListener("click", () => { leavePractice(); screen("setupScreen"); });
+$("#retryButton").addEventListener("click", () => { prepareAudioRecorder(); screen("practiceScreen"); training.start(); });
+$("#reportHome").addEventListener("click", () => { leavePractice(); screen("setupScreen"); });
+$("#homeButton").addEventListener("click", () => { leavePractice(); screen("setupScreen"); });
+
+function openDialog(id) { $("#" + id).hidden = false; }
+function configurationFromFields() {
+  if ($("#reportMode").value === "byok") {
+    return normalizeConfiguration({
+      provider: $("#byokProviderSelect").value,
+      apiKey: $("#apiKey").value,
+      model: $("#modelInput").value,
+      baseUrl: $("#baseUrlInput").value
+    });
+  }
+  return normalizeConfiguration({ provider: $("#providerSelect").value });
+}
+function renderSettingsMode() {
+  const byok = $("#reportMode").value === "byok";
+  $("#publicSettings").hidden = byok;
+  $("#byokSettings").hidden = !byok;
+  $("#testButton").textContent = byok ? "测试连通性" : "刷新服务状态";
+  $("#saveButton").textContent = byok ? "保存本次会话" : "保存本次偏好";
+}
+function renderProviderStatuses(data) {
+  const list = $("#providerStatus");
+  if (!list) return;
+  const labels = { auto: "自动选择", qwen: "通义千问", doubao: "豆包", deepseek: "DeepSeek" };
+  list.replaceChildren(...(data.providers || []).map((provider) => {
+    const item = document.createElement("li");
+    const name = document.createElement("span");
+    name.textContent = labels[provider.id] || provider.label;
+    const status = document.createElement("b");
+    status.textContent = provider.available ? "可用" : "暂不可用";
+    status.className = provider.available ? "provider-online" : "provider-offline";
+    item.append(name, status);
+    return item;
+  }));
+  $("#quotaStatus").textContent = `今日还可生成 ${data.remaining ?? data.dailyLimit ?? 0} 份报告（匿名用户每日限额 ${data.dailyLimit ?? 5} 次）`;
+}
+async function renderModelSettings() {
+  const configuration = readModelConfiguration();
+  const mode = configuration?.mode === "byok" ? "byok" : "public";
+  $("#reportMode").value = mode;
+  $("#providerSelect").value = publicProviderIds.includes(configuration?.provider) ? configuration.provider : "auto";
+  const byokProvider = configuration?.provider && ["DeepSeek", "OpenAI", "Custom"].includes(configuration.provider) ? configuration.provider : "DeepSeek";
+  $("#byokProviderSelect").value = byokProvider;
+  const defaults = defaultsFor(byokProvider);
+  $("#modelInput").value = configuration?.mode === "byok" ? configuration.model : defaults.model;
+  $("#baseUrlInput").value = configuration?.mode === "byok" ? configuration.baseUrl : defaults.baseUrl;
+  $("#apiKey").value = "";
+  renderSettingsMode();
+  $("#settingStatus").textContent = "正在读取当前服务状态…";
+  try {
+    const data = await fetchProviderStatus();
+    renderProviderStatuses(data);
+    $("#settingStatus").textContent = mode === "byok"
+      ? "当前使用浏览器直连模型；API Key 只保留在本次浏览器会话。"
+      : "默认报告只在当前浏览器内生成，不调用外部 AI 或 API。";
+  } catch {
+    $("#settingStatus").textContent = mode === "byok" ? "公共服务状态暂时不可用；你仍可测试或使用自己的模型。" : "暂时无法读取服务状态，原稿输入和手动练习仍可用。";
+    $("#quotaStatus").textContent = "额度状态暂时不可用";
+  }
+}
+$("#settingsButton").addEventListener("click", () => { openDialog("settingsDialog"); renderModelSettings(); });
+$("#growthButton").addEventListener("click", () => openDialog("growthDialog"));
+$$("[data-close]").forEach((button) => button.addEventListener("click", () => { $("#" + button.dataset.close).hidden = true; }));
+$$(".dialog-backdrop").forEach((item) => item.addEventListener("click", (event) => { if (event.target === item) item.hidden = true; }));
+document.addEventListener("keydown", (event) => { if (event.key === "Escape") $$(".dialog-backdrop").forEach((item) => item.hidden = true); });
+
+$("#reportMode").addEventListener("change", () => {
+  renderSettingsMode();
+    $("#settingStatus").textContent = $("#reportMode").value === "byok" ? "请填写自己的 API Key、模型和 HTTPS Base URL。" : "普通用户无需 API Key，报告将只在当前浏览器内生成。";
+});
+$("#providerSelect").addEventListener("change", (event) => {
+    $("#settingStatus").textContent = `已保留${event.target.options[event.target.selectedIndex].text}偏好；默认报告不调用公共模型。`;
+});
+$("#byokProviderSelect").addEventListener("change", (event) => {
+  const defaults = defaultsFor(event.target.value);
+  $("#modelInput").value = defaults.model;
+  $("#baseUrlInput").value = defaults.baseUrl;
+  $("#settingStatus").textContent = "请填写当前服务的 API Key，再测试或保存。";
+});
+$("#saveButton").addEventListener("click", () => {
+  try {
+    saveModelConfiguration(configurationFromFields());
+    if ($("#reportMode").value === "byok") $("#apiKey").value = "";
+    $("#settingStatus").textContent = $("#reportMode").value === "byok"
+      ? "已保存到当前浏览器会话；Key 不会提交给讲清楚服务器。"
+      : "已保存本地评估偏好；浏览器无需保存 API Key。";
+  } catch {
+    $("#settingStatus").textContent = $("#reportMode").value === "byok" ? "请填写 HTTPS Base URL、模型和 API Key。" : "公共服务选择无效，请重新选择。";
+  }
+});
+$("#testButton").addEventListener("click", async () => {
+  const button = $("#testButton");
+  button.disabled = true;
+  const byok = $("#reportMode").value === "byok";
+    $("#settingStatus").textContent = byok ? "正在直接测试模型服务…" : "本地完整训练评估无需连接外部服务。";
+  try {
+    const health = await testModelConnection(configurationFromFields());
+    $("#settingStatus").textContent = byok ? "连通性测试成功。保存后可用该模型生成训练报告。" : "本地完整训练评估已可用，不会连接外部模型。";
+    if (!byok) {
+      const data = await fetchProviderStatus();
+      renderProviderStatuses(data);
+    }
+  } catch (error) {
+    $("#settingStatus").textContent = error.message === "invalid_model_configuration" ? "请检查 API Key、模型和 HTTPS Base URL。" : error.message === "provider_browser_unavailable" ? "该服务暂时无法从浏览器连接。" : byok ? "连接失败，请检查 API Key、模型和 Base URL。" : "服务状态检查失败，请稍后重试。";
+  } finally {
+    button.disabled = false;
+  }
+});
+
+renderModeGrid();
+renderProfile();
+renderGrowth();
+
+ })(exports, modules["data/profiles.js"], modules["modules/growth.js"], modules["modules/model-settings.js"], modules["modules/report.js"], modules["modules/training.js"], modules["modules/transcription.js"], modules["modules/recording.js"]); return exports; })();</script>
+  </body>
+</html>
