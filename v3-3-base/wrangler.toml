@@ -1,0 +1,17 @@
+name = "speak-grow-v3-3-v3-4-base"
+main = "worker.mjs"
+compatibility_date = "2026-08-08"
+workers_dev = true
+
+[assets]
+directory = "./web"
+binding = "ASSETS"
+
+[[kv_namespaces]]
+binding = "REPORT_QUOTA"
+id = "23db85b0d52f4f20aa8f578324bed300"
+remote = true
+
+[vars]
+DAILY_REPORT_LIMIT = "5"
+PUBLIC_PRIMARY_PROVIDER = "qwen"
