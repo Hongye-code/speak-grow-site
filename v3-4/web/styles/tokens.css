@@ -1,0 +1,35 @@
+/* 讲清楚当前视觉令牌与全局基础规则。 */
+:root {
+  --speak-ink: #101510;
+  --speak-ink-raised: #182018;
+  --speak-ink-soft: #243024;
+  --speak-paper: #f4f6f1;
+  --speak-mist: #ccd3c9;
+  --speak-muted: #8c988d;
+  --speak-line: rgba(244, 246, 241, .14);
+  --speak-acid: #c8ff45;
+  --speak-acid-ink: #162012;
+  --speak-coral: #ff846d;
+  --speak-coral-ink: #5d2118;
+  --speak-focus: rgba(200, 255, 69, .42);
+  --speak-shadow: 0 24px 60px rgba(0, 0, 0, .25);
+  --speak-radius: 8px;
+  --speak-space-1: 4px;
+  --speak-space-2: 8px;
+  --speak-space-3: 12px;
+  --speak-space-4: 16px;
+  --speak-space-5: 24px;
+  --speak-space-6: 32px;
+  --speak-sans: -apple-system, BlinkMacSystemFont, "SF Pro Display", "PingFang SC", "Noto Sans SC", sans-serif;
+  --speak-serif: Georgia, "Songti SC", "STSong", serif;
+  --speak-mono: "SFMono-Regular", "Cascadia Mono", "PingFang SC", monospace;
+}
+
+* { box-sizing: border-box; }
+html { background: var(--speak-ink); }
+body { min-width: 320px; margin: 0; color: var(--speak-paper); background: var(--speak-ink); font-family: var(--speak-sans); letter-spacing: 0; }
+.app-shell { position: relative; z-index: 1; padding-bottom: 40px; }
+button, input, textarea, select { font: inherit; }
+button { cursor: pointer; }
+button:focus-visible, input:focus-visible, textarea:focus-visible, select:focus-visible { outline: 3px solid var(--speak-focus); outline-offset: 3px; }
+[hidden] { display: none !important; }
