@@ -1,0 +1,10 @@
+{
+  "name": "jiangqingchu-web",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "start": "node server.mjs",
+    "check": "node --check server.mjs && node --check worker.mjs && node --check server/report.mjs && node --check web/app.js && node --check web/candidate-home.js && node --check web/candidate-config.js && node --check web/data/improv-scenes.js && node --check web/data/profiles.js && node --check web/modules/growth.js && node --check web/modules/local-report.js && node --check web/modules/model-settings.js && node --check web/modules/report-contract.js && node --check web/modules/report.js && node --check web/modules/training.js && node --check web/modules/transcription.js && node scripts/verify-profiles.mjs && node scripts/verify-inheritance.mjs && node scripts/verify-v3-3.mjs && node scripts/verify-recording.mjs && node scripts/verify-report-contract.mjs && node scripts/verify-server.mjs",
+    "benchmark:reports": "node scripts/benchmark-report-quality.mjs"
+  }
+}
