@@ -1,0 +1,1 @@
+export default { variant: "v3-3", browserTitle: "讲清楚 V3-3 | 职场讲故事", eyebrow: "V3-3 / 职场讲故事", title: "先选方向，再说清要推动什么。", description: "把职场中的目标、主线和证据带入一条真实训练。", defaultTrack: "workplace", actionLabel: "带入训练题目", collectIntent: true, startImmediately: false, routes: { workplace: "先写下要推动的决定，再进入职场练习。", ideas: "先写下希望听者理解的判断，再进入想法练习。" } };

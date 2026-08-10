@@ -1,0 +1,299 @@
+<!doctype html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="description" content="讲清楚 V3-3 第四轮候选 D：原版 E 的 3/2 练习收敛" />
+    <title>讲清楚 V3-3 第四轮 D | 目的输入</title>
+    <link rel="stylesheet" href="./styles/tokens.css" />
+    <link rel="stylesheet" href="./styles/components.css" />
+    <link rel="stylesheet" href="./styles/pages.css" />
+  </head>
+  <body>
+    <div class="app-shell">
+      <header class="speak-topbar">
+        <button class="speak-brand" id="homeButton" type="button">
+          <span class="speak-brand-mark">说</span
+          ><span
+            >讲清楚<small class="speak-brand-meta"
+              >SPEAK WITH INTENTION</small
+            ></span
+          >
+        </button>
+        <div class="top-actions">
+          <button class="quiet-button" id="growthButton" type="button">
+            我的成长</button
+          ><button
+            class="speak-icon-button"
+            id="settingsButton"
+            aria-label="AI 服务设置"
+            title="AI 服务设置"
+            type="button"
+          >
+            ⚙
+          </button>
+        </div>
+      </header>
+      <main>
+        <section class="screen active" id="setupScreen">
+          <div class="archive-head candidate-archive-head">
+            <div class="candidate-home" id="candidateHome">
+              <p class="speak-eyebrow" id="candidateEyebrow">V3-3 / 功能完整候选</p>
+              <h1 id="candidateTitle">这一次，要从哪儿开口？</h1>
+              <p id="candidateDescription">先选一件此刻要说清楚的事，再进入真实的 60 秒训练。</p>
+              <div class="candidate-track-grid" id="candidateTracks" aria-label="首页内容入口">
+                <button class="candidate-track" data-track="workplace" type="button">
+                  <span>01 / 此刻要推进的事</span>
+                  <strong id="workplaceTrackTitle">职场开口</strong>
+                  <small id="workplaceTrackDescription">汇报故事、协作推进、求职面试</small>
+                </button>
+                <button class="candidate-track" data-track="ideas" type="button">
+                  <span>02 / 想让别人听懂的事</span>
+                  <strong id="ideasTrackTitle">讲清想法</strong>
+                  <small id="ideasTrackDescription">深度演讲、主题表达</small>
+                </button>
+              </div>
+              <div class="candidate-action-row">
+                <label class="candidate-intent" id="candidateIntentWrap" for="candidateIntent" hidden>
+                  <span>这一分钟，你想推动什么？</span>
+                  <input id="candidateIntent" maxlength="160" placeholder="例如：让领导确认下一周的优先级" />
+                </label>
+                <div class="candidate-action-copy">
+                  <p id="candidateRoute">当前会进入“职场开口”的真实题库和训练。</p>
+                  <button class="speak-button speak-button--primary" id="candidateGo" type="button">开始这一轮</button>
+                  <button class="link-button" id="candidateAllProfiles" type="button">查看全部练习</button>
+                </div>
+              </div>
+            </div>
+            <div class="score-pocket">
+              <strong id="points">1,240</strong><span>个人训练分</span>
+              <div class="progress"><i></i></div>
+              <small id="nextMilestone">距离“稳住边界”还差 760 分</small>
+            </div>
+          </div>
+          <section class="candidate-profile-index" aria-labelledby="candidateProfilesTitle">
+            <div class="candidate-index-head"><p class="speak-eyebrow">具体练习</p><h2 id="candidateProfilesTitle">选择一个训练方式</h2></div>
+            <div class="mode-grid" id="modeGrid" aria-label="全部训练板块"></div>
+          </section>
+          <div class="setup-grid">
+            <section class="speak-card composer">
+              <div class="label-row">
+                <label for="topic">你现在遇到了什么问题？</label
+                ><button class="link-button" id="randomButton" type="button">
+                  换一个场景
+                </button>
+              </div>
+              <textarea
+                class="speak-input"
+                id="topic"
+                maxlength="160"
+              ></textarea>
+              <div class="goal-chips" id="goals"></div>
+              <button
+                class="speak-button speak-button--primary full-width"
+                id="startButton"
+                type="button"
+              >
+                开始 60 秒练习
+              </button>
+            </section>
+            <aside class="speak-card toolkit">
+              <p class="speak-eyebrow">本轮力量动作</p>
+              <h2 id="toolTitle"></h2>
+              <p id="toolSummary"></p>
+              <ol id="toolList"></ol>
+            </aside>
+          </div>
+        </section>
+        <section class="screen" id="practiceScreen">
+          <div class="practice-grid">
+            <section class="speak-card practice-stage">
+              <button class="back-button" id="backButton" type="button">
+                ← 返回重新选题
+              </button>
+              <div class="chips">
+                <span class="speak-chip" id="modeName"></span
+                ><span class="speak-chip speak-chip--coral">第一轮</span>
+              </div>
+              <time id="timer">01:00</time>
+              <h1 id="question"></h1>
+              <p id="goal"></p>
+              <textarea
+                class="speak-input transcript"
+                id="transcript"
+                placeholder="开始浏览器转写后，识别到的文字会显示在这里；也可以直接输入或粘贴原稿。"
+              ></textarea>
+              <div class="transcript-meta">
+                <span id="transcriptState">准备开始转写</span
+                ><span id="wordCount">0 字</span>
+              </div>
+              <div class="capture-tools">
+                <section class="capture-tool" aria-label="浏览器转写控制">
+                  <span class="capture-label">浏览器转写</span>
+                  <div class="recording-controls">
+                    <button class="speak-button speak-button--secondary" id="recordStartButton" type="button">开始浏览器转写</button>
+                    <button class="speak-button speak-button--secondary" id="recordPauseButton" type="button" hidden>暂停转写</button>
+                    <button class="speak-button speak-button--secondary" id="recordStopButton" type="button" hidden>结束转写</button>
+                  </div>
+                </section>
+                <section class="capture-tool audio-recorder" id="audioRecorder" aria-label="本地音频录制" hidden>
+                  <span class="capture-label">本地音频录制</span>
+                  <div class="recording-controls">
+                    <button class="speak-button speak-button--secondary" id="audioStartButton" type="button">开始本地录音</button>
+                    <button class="speak-button speak-button--secondary" id="audioPauseButton" type="button" hidden>暂停录音</button>
+                    <button class="speak-button speak-button--secondary" id="audioStopButton" type="button" hidden>结束录音</button>
+                    <button class="speak-button speak-button--secondary" id="audioDownloadButton" type="button" hidden>下载 WebM 音频</button>
+                  </div>
+                  <small class="audio-status" id="audioState" aria-live="polite">点击后才请求麦克风权限；音频仅保留在当前浏览器内存中。</small>
+                </section>
+              </div>
+              <div class="practice-actions">
+                <button
+                  class="speak-button speak-button--primary"
+                  id="analyzeButton"
+                  type="button"
+                >
+                  生成训练报告
+                </button>
+              </div>
+              <p class="privacy-note">
+                浏览器转写使用浏览器语音识别；即兴表达的本地录音只在当前浏览器内存中生成，需你主动下载。AI
+                默认报告只在当前浏览器内依据原稿生成，不调用外部 AI 或 API；只有你主动启用自己的模型时才会发送确认提交的文字原稿。音频不会上传。
+              </p>
+            </section>
+            <aside class="speak-card focus-card">
+              <p class="speak-eyebrow">这轮只练一件事</p>
+              <h2 id="focus"></h2>
+              <div class="focus-list">
+                <p><b>主张</b>先把你的判断说完整。</p>
+                <p><b>边界</b>说明影响，而不是只说“我很忙”。</p>
+                <p><b>下一步</b>把优先级交回需要做决定的人。</p>
+              </div>
+            </aside>
+          </div>
+        </section>
+        <section class="screen" id="reportScreen">
+          <div class="report-wrap">
+            <div class="report-head">
+              <div>
+                <p class="speak-eyebrow">训练报告</p>
+                <small class="report-source" id="reportSource"></small>
+                <h1 id="reportTitle">你已经把重点说出来了。</h1>
+                <p id="reportSummary"></p>
+              </div>
+              <div class="report-score" id="reportScorePanel">
+                <strong id="reportScore">--</strong><span>本轮训练分</span>
+              </div>
+            </div>
+            <div class="report-stats" aria-label="本轮练习记录">
+              <div><span>训练目标</span><strong id="reportDuration">60 秒</strong></div>
+              <div><span>本轮字数</span><strong id="reportWords">0</strong></div>
+              <div><span>填充词</span><strong id="reportFillers">暂未统计</strong></div>
+            </div>
+            <section class="speak-card report-card">
+              <section class="report-priority" aria-labelledby="priorityHeading">
+                <p class="speak-eyebrow" id="priorityHeading">这次先改一处</p>
+                <h2 id="priorityLabel"></h2>
+                <blockquote id="priorityQuote"></blockquote>
+                <p id="priorityImpact"></p>
+                <p class="priority-action"><b>下一轮动作</b><span id="priorityAction"></span></p>
+              </section>
+              <h2>本轮表达罗盘</h2>
+              <div class="compass" id="compass"></div>
+              <button class="speak-button speak-button--secondary report-details-toggle" id="detailsToggle" type="button" aria-expanded="false">展开完整五维分析</button>
+              <div class="report-details" id="reportDetails" hidden></div>
+              <section class="deep-coach" id="deepCoach" hidden aria-labelledby="deepCoachTitle">
+                <p class="speak-eyebrow">用户自带 API 专属</p>
+                <h2 id="deepCoachTitle">专属深度教练</h2>
+                <blockquote id="deepCoachQuote"></blockquote>
+                <p id="deepCoachAnalysis"></p>
+                <h3>第二轮 60 秒示范</h3>
+                <blockquote id="deepCoachSecondRound"></blockquote>
+                <h3>复练验收清单</h3>
+                <ul id="deepCoachChecklist"></ul>
+              </section>
+              <div class="rewrite">
+                <p>只改这一句</p>
+                <blockquote id="rewriteText"></blockquote>
+                <small id="rewriteReason"></small>
+              </div>
+              <div class="practice-actions">
+                <button
+                  class="speak-button speak-button--primary"
+                  id="retryButton"
+                  type="button"
+                >
+                  用加强句再练 60 秒</button
+                ><button class="speak-button speak-button--secondary" id="reportAudioDownload" type="button" hidden>
+                  下载本轮本地音频</button
+                ><button
+                  class="speak-button speak-button--secondary"
+                  id="reportHome"
+                  type="button"
+                >
+                  回到训练首页
+                </button>
+              </div>
+            </section>
+          </div>
+        </section>
+      </main>
+      <footer class="copyright-footer"><a href="./legal-notice.html">版权与授权</a></footer>
+      <span class="speak-watermark" aria-hidden="true">陈红叶</span>
+      <div class="dialog-backdrop" id="settingsDialog" hidden>
+        <section
+          class="dialog"
+          role="dialog"
+          aria-modal="true"
+          aria-labelledby="settingsTitle"
+        >
+          <header>
+            <h2 id="settingsTitle">AI 服务</h2>
+            <button data-close="settingsDialog" aria-label="关闭" type="button">
+              ×
+            </button>
+          </header>
+          <div class="settings-body">
+            <label class="model-field" for="reportMode"><span>报告生成方式</span><select id="reportMode"><option value="public">大众本地完整评估（不调用 AI）</option><option value="byok">使用我自己的模型（API Key）</option></select></label>
+            <section id="publicSettings" class="settings-section" aria-label="公共模型设置">
+              <p class="muted">所有用户默认在浏览器内获得训练分、五维罗盘和完整报告。本站不使用创作者的 API Key，也不会把原稿发送到外部模型。</p>
+              <label class="model-field" for="providerSelect" hidden><span>公共服务偏好</span><select id="providerSelect"><option value="auto">自动选择</option><option value="qwen">通义千问</option><option value="doubao">豆包</option><option value="deepseek">DeepSeek</option></select></label>
+              <ul class="provider-status" id="providerStatus" aria-label="AI 服务可用状态" hidden></ul>
+              <p class="model-status" id="quotaStatus" role="status" hidden></p>
+            </section>
+            <section id="byokSettings" class="settings-section" aria-label="用户自带模型设置" hidden>
+              <label class="model-field" for="byokProviderSelect"><span>AI 服务商</span><select id="byokProviderSelect"><option value="DeepSeek">DeepSeek</option><option value="OpenAI">OpenAI</option><option value="Custom">自定义（OpenAI 兼容）</option></select></label>
+              <label class="model-field" for="apiKey"><span>API Key</span><input id="apiKey" type="password" autocomplete="new-password" placeholder="仅用于当前浏览器会话" /></label>
+              <label class="model-field" for="modelInput"><span>模型名</span><input id="modelInput" autocomplete="off" /></label>
+              <label class="model-field" for="baseUrlInput"><span>Base URL</span><input id="baseUrlInput" type="url" inputmode="url" autocomplete="off" placeholder="https://api.example.com/v1" /></label>
+              <p class="muted">Key 只会从当前浏览器直接发送给你选择的模型服务，不会上传到讲清楚服务器；关闭浏览器后会话数据会清除。自定义接口需允许浏览器跨域。</p>
+            </section>
+            <p class="model-status" id="settingStatus" role="status"></p>
+            <div class="settings-actions"><button class="speak-button speak-button--secondary" id="testButton" type="button">刷新服务状态</button><button class="speak-button speak-button--primary" id="saveButton" type="button">保存本次偏好</button></div>
+            <p class="muted">默认路线不调用任何外部模型；你仍可保留 3.1 的自带 Key、模型名和 Base URL 设置。两条路径共用同一套训练和报告页面。</p>
+          </div>
+        </section>
+      </div>
+      <div class="dialog-backdrop" id="growthDialog" hidden>
+        <section
+          class="dialog"
+          role="dialog"
+          aria-modal="true"
+          aria-labelledby="growthTitle"
+        >
+          <header>
+            <h2 id="growthTitle">我的成长</h2>
+            <button data-close="growthDialog" aria-label="关闭" type="button">
+              ×
+            </button>
+          </header>
+          <div>
+            <p id="growthSummary">1,240 训练分 · 下一阶段：稳住边界</p>
+            <div class="badges" id="growthBadges"></div>
+          </div>
+        </section>
+      </div>
+    </div>
+    <script type="module" src="./app.js"></script>
+  </body>
+</html>
