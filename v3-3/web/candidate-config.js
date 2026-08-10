@@ -1,0 +1,1 @@
+export default { variant: "v3-3", browserTitle: "讲清楚 V3-3 | 连续训练", eyebrow: "V3-3 / 正式版", title: "自信不是气场，是一条练得完的路径。", description: "从卡点、证据到追问与复练，让每一步都有下一步。", defaultTrack: "workplace", defaultItem: 0, actionLabel: "按步骤开始面试训练", collectIntent: false, startImmediately: false, routes: { workplace: "先完成一条训练路径；随时可以回到讲故事、闲聊和原有练习。", ideas: "先写下希望听者理解的判断，再进入想法练习。" } };
