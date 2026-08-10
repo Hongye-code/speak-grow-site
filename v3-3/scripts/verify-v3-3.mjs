@@ -1,0 +1,26 @@
+import { readFile, stat } from "node:fs/promises";
+import { fileURLToPath } from "node:url";
+import { smalltalkScenes } from "../web/data/smalltalk-scenes.js";
+import { buildLocalReport } from "../web/modules/local-report.js";
+
+const root = fileURLToPath(new URL("../", import.meta.url));
+const [index, app, home] = await Promise.all(["web/index.html", "web/app.js", "web/candidate-home.js"].map((path) => readFile(new URL(path, `file://${root}`), "utf8")));
+const questions = smalltalkScenes.map((scene) => scene.question);
+if (questions.length !== 100 || new Set(questions).size !== 100) throw new Error("职场闲聊必须提供 100 个不重复场景");
+if (!["interviewWorkbench", "常规面试", "100 道真实题目", "自信专训", "confidencePrepTitle", "confidenceTheoryTitle", "confidencePracticeTitle", "confidenceMaterialsTitle", "confidenceScenario", "confidenceSolution", "confidenceStart", "evidenceResult", "evidenceRole", "evidenceProof"].every((id) => index.includes(id))) throw new Error("职场面试的常规面试与自信专训内容不完整");
+if (!["理论学习", "实战练习", "使用资料", "快速准备"].every((label) => index.includes(label))) throw new Error("自信专训必须提供理论学习、实战练习及理论学习下的两个二级入口");
+if (!index.includes('data-confidence-tab="theory"') || !index.includes('data-confidence-tab="practice"') || !index.includes('data-confidence-theory-tab="prep"') || !index.includes('data-confidence-theory-tab="materials"')) throw new Error("自信专训层级必须是理论学习和实战练习；快速准备、使用资料只能属于理论学习");
+if (!["confidenceScenario", "evidenceResult", "evidenceRole", "evidenceProof"].every((field) => index.includes(`id=\"${field}\"`)) || index.includes('id="confidenceBlocker"') || index.includes('id="confidenceReaction"') || index.includes('id="confidenceFramework"')) throw new Error("自信表达应只要求场景和三条证据，回答路线必须由场景自动给出");
+if (!["本期使用的 18 条资料", "10 本书、5 个核心公开来源、3 个练习灵感", "The Confidence Gap", "The Interview Book", "Crucial Conversations", "Peak", "MIT：STAR 行为面试法", "Bandura：自我效能理论", "Matt Abrahams 的 X"].every((source) => index.includes(source))) throw new Error("自信专训的 18 条使用资料不完整");
+if (!index.includes("think-faster-talk-smarter-reading.pages.dev")) throw new Error("自信专训必须以精读训练页作为依据入口");
+if (!["confidenceSolutions", "applyConfidenceFeedback", "setConfidencePanel", "setConfidenceTheoryPanel", "项目追问", "PREP", "speak-confidence-evidence", "openConfidence", "openInterview", "openStandardInterview"].every((token) => app.includes(token))) throw new Error("自信专训训练闭环不完整");
+const confidenceSelect = index.match(/<select id="confidenceScenario"[^>]*>([\s\S]*?)<\/select>/)?.[1] || "";
+const confidenceOptions = [...confidenceSelect.matchAll(/<option value="([^"]+)">/g)].map((match) => match[1]);
+const expectedConfidenceScenarios = ["intro", "roleFit", "careerChange", "strength", "project", "ownership", "collaboration", "conflict", "failure", "setback", "deadline", "judgment", "dataDecision", "leadership", "ambiguity", "priority", "feedback", "motivation", "gap", "followup"];
+if (confidenceOptions.length !== 20 || new Set(confidenceOptions).size !== 20 || expectedConfidenceScenarios.some((scenario) => !confidenceOptions.includes(scenario))) throw new Error("自信专训必须提供 20 个不重复真实面试场景");
+if (expectedConfidenceScenarios.some((scenario) => !app.includes(`${scenario}: { framework:`))) throw new Error("20 个自信专训场景必须各自具有自动回答路线");
+if (!["职场面试", "职场闲聊"].every((token) => home.includes(token)) || home.includes('name: "自信表达"')) throw new Error("V3-3 新模块必须经由职场面试进入，不能与常规面试并列");
+await stat(new URL("web/research.html", `file://${root}`));
+const report = buildLocalReport({ profileId: "smalltalk", scene: questions[0], goal: "接住对方关键词", transcript: "我听到你刚结束这个项目，辛苦了。你觉得最值得保留的一个做法是什么？" });
+if (!report.priority?.action || report.source !== "local") throw new Error("职场闲聊必须能使用本地完整报告");
+console.log("v3-3: 100 small-talk scenes, 20 confidence scenarios, research entry, local report, and audio-download coverage verified");

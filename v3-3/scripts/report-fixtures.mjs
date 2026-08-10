@@ -1,0 +1,22 @@
+export const reportFixtures = [
+  { profileId: "interview", scene: "面试产品岗位时介绍一个项目", goal: "先讲结果", focus: "先说最后创造的变化。", transcript: "我负责过一次注册流程优化，先访谈了用户，再和研发一起把步骤减少，最后让新用户更容易完成注册。" },
+  { profileId: "interview", scene: "面试中解释一次项目受挫", goal: "说清自己的作用", focus: "说明你的关键判断。", transcript: "这个项目没有按期上线，我当时负责整理问题，但没有及时把风险告诉团队，所以后面大家只能临时调整。" },
+  { profileId: "interview", scene: "面试中说明转岗原因", goal: "给出可验证证据", focus: "留下一个可核验细节。", transcript: "我想转到运营岗位，因为我在原岗位做活动时更喜欢研究用户为什么不参与，也愿意用数据验证自己的判断。" },
+  { profileId: "interview", scene: "面试中回答为什么选择你", goal: "先讲结果", focus: "先说最后创造的变化。", transcript: "我没有特别大的项目，但我习惯把模糊问题拆开，和同事确认目标后持续跟进，所以很多小事情最后能落下来。" },
+  { profileId: "workplace", scene: "同事临时要求你接手工作", goal: "先说可支持范围", focus: "先说你能支持什么。", transcript: "这个需求我今天可以先帮你看关键部分，但如果全部接手，我原来答应客户的材料就会延期。" },
+  { profileId: "workplace", scene: "向负责人汇报方案取舍", goal: "讲清已有承诺", focus: "说明完整接手会影响什么。", transcript: "我建议先做用户最常卡住的步骤，因为现在同时改三个地方会分散研发时间，也难以判断效果。" },
+  { profileId: "workplace", scene: "会议中提出不同意见", goal: "把优先级交回去", focus: "请对方确认优先级。", transcript: "我理解大家都想尽快上线，不过这个版本还没有验证核心流程。如果必须今天上线，需要先确认由谁承担后续返工。" },
+  { profileId: "workplace", scene: "向跨部门同事说明延期", goal: "先说可支持范围", focus: "先说你能支持什么。", transcript: "这部分我会继续处理，不过今天不能承诺全部完成。我先把影响交付的两个问题解决，剩下的明早同步进度。" },
+  { profileId: "speech", scene: "分享为什么忙碌不等于有效", goal: "先抛出观点", focus: "第一句说判断。", transcript: "我的观点是，忙碌不等于有效。因为很多人只是不断回应消息，却没有把时间留给真正影响结果的事情。" },
+  { profileId: "speech", scene: "分享一次失败后的学习", goal: "用一个证据支撑", focus: "只选一个有力例子。", transcript: "我想谈失败的价值。去年一次活动报名很少，我们后来才发现不是内容不够好，而是用户根本没有看到报名入口。" },
+  { profileId: "speech", scene: "公开分享长期主义", goal: "留下可行动的结尾", focus: "留下今天能做的一步。", transcript: "长期主义不是永远做大事，而是给重要事情留下固定时间。今天可以先选一件你愿意连续做七天的小事。" },
+  { profileId: "speech", scene: "分享为什么需要复盘", goal: "先抛出观点", focus: "第一句说判断。", transcript: "复盘不是把过去重新说一遍。它应该帮助我们找到下一次会做出不同选择的那个节点。" },
+  { profileId: "topic", scene: "解释为什么工具越多反而越忙", goal: "把主题说简单", focus: "先用真实小事起头。", transcript: "工具变多后我更忙，不是因为工具没用，而是每个工具都在提醒我还有一件事情没有处理。" },
+  { profileId: "topic", scene: "向朋友解释安全感", goal: "举一个具体例子", focus: "一次只说一个逻辑台阶。", transcript: "我理解的安全感不是永远没有问题，而是突然发生事情时，我知道可以先找谁、先做什么。" },
+  { profileId: "topic", scene: "说明为什么整理房间有帮助", goal: "形成清楚收束", focus: "用一句可复述的话结尾。", transcript: "整理房间不会直接解决所有问题，但看见桌面空下来，会让人先从混乱里拿回一点能控制的部分。" },
+  { profileId: "topic", scene: "讨论公开承诺的作用", goal: "举一个具体例子", focus: "一次只说一个逻辑台阶。", transcript: "公开承诺有时有用，因为当我告诉朋友周五会交一篇文章时，我会更早把写作时间留出来。" },
+  { profileId: "improv", scene: "临时说明为什么方案要调整", goal: "讲出结构", focus: "先说它是什么。", transcript: "这个调整是把原来的三个步骤合成两个。这样做是因为用户在第二步离开得最多，接下来我们先用一周看完成率。" },
+  { profileId: "improv", scene: "同事抱怨工作量太大", goal: "接住对方", focus: "先说它是什么。", transcript: "我听到你现在很赶，也理解这件事突然加进来很难受。我们先把最急的部分列出来，再看哪些可以晚一点做。" },
+  { profileId: "improv", scene: "会议上被问到不确定的问题", goal: "减少一个口头禅", focus: "先说它是什么。", transcript: "嗯，这个问题我现在没有完整答案。我先说已经确认的部分：用户反馈集中在速度，剩下的数据我下午核实后再回复。" },
+  { profileId: "improv", scene: "临时介绍一个新流程", goal: "讲出结构", focus: "先说它是什么。", transcript: "这个新流程是让大家先提交问题，再由一个人汇总。这样能减少重复讨论，明天上午我们先试一次再决定要不要固定下来。" }
+];
