@@ -15,3 +15,9 @@ remote = true
 [vars]
 DAILY_REPORT_LIMIT = "5"
 PUBLIC_PRIMARY_PROVIDER = "qwen"
+
+# 匿名周榜尚未启用 D1 时，题签自动降级为本地随机练习，不阻断训练。
+# [[d1_databases]]
+# binding = "LADDER"
+# database_name = "speak-grow-v3-4-1-a-ladder"
+# database_id = ""
