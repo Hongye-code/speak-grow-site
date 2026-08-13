@@ -4,6 +4,7 @@ export const pyramidLevels = [
   {
     id: 1,
     name: "开口有主线",
+    role: "职场新人",
     short: "先说结论，再补一个理由。",
     completeLabel: "完成 3 次结论先行",
     challenges: [
@@ -15,6 +16,7 @@ export const pyramidLevels = [
   {
     id: 2,
     name: "讲得完整清晰",
+    role: "专员",
     short: "让人听见结果、你的动作和证据。",
     completeLabel: "完成 3 张项目证据卡",
     challenges: [
@@ -26,6 +28,7 @@ export const pyramidLevels = [
   {
     id: 3,
     name: "60 秒讲到位",
+    role: "项目骨干",
     short: "按场景压缩，只留下对方需要的信息。",
     completeLabel: "完成 3 次跨场景复练",
     challenges: [
@@ -34,10 +37,10 @@ export const pyramidLevels = [
       { id: "l3-story", profile: "story", goal: "变化 + 判断 + 证据", topic: "讲一个推进卡住后重新向前的经历：先说变化，再说你的判断和一个证据。" }
     ]
   },
-  { id: 4, name: "推动别人行动", short: "未来：方案说服与分歧推进。", future: true },
-  { id: 5, name: "多人沟通控场", short: "未来：会议收拢、回应质疑与明确决定。", future: true },
-  { id: 6, name: "统一目标与共识", short: "未来：战略叙事与长期协同。", future: true },
-  { id: 7, name: "高压演说与博弈", short: "未来：危机回应、谈判与公开表达。", future: true }
+  { id: 4, name: "推动别人行动", role: "主管", short: "方案说服与分歧推进。", ladder: true },
+  { id: 5, name: "多人沟通控场", role: "团队负责人、总监", short: "会议收拢、回应质疑与明确决定。", ladder: true },
+  { id: 6, name: "统一目标与共识", role: "部门负责人、高管", short: "战略叙事与长期协同。", ladder: true },
+  { id: 7, name: "高压演说与博弈", role: "创始人、高阶谈判者", short: "危机回应、谈判与公开表达。", ladder: true }
 ];
 
 function read() {
@@ -64,7 +67,7 @@ export function createPyramidProgress() {
     return Boolean(item && !item.future && count(levelId) >= item.challenges.length);
   }
   function currentLevel() {
-    return pyramidLevels.find((item) => !item.future && !isComplete(item.id)) || pyramidLevels[2];
+    return pyramidLevels.find((item) => !item.future && !item.ladder && !isComplete(item.id)) || pyramidLevels[2];
   }
   function nextChallenge(levelId = currentLevel().id) {
     const item = level(levelId) || currentLevel();
@@ -82,7 +85,7 @@ export function createPyramidProgress() {
   return { count, isComplete, currentLevel, nextChallenge, record };
 }
 
-export function mountPyramidHome({ progress, startChallenge, showAllProfiles, openTheory }) {
+export function mountPyramidHome({ progress, startChallenge, showAllProfiles, openTheory, openLadder }) {
   const $ = (selector) => document.querySelector(selector);
   const root = $("#pyramidHome");
   if (!root) return { refresh: () => {} };
@@ -95,9 +98,19 @@ export function mountPyramidHome({ progress, startChallenge, showAllProfiles, op
       const heading = document.createElement("strong");
       heading.textContent = `${level.id} / ${level.name}`;
       const detail = document.createElement("span");
-      detail.textContent = level.future ? level.short : `${level.short} ${progress.count(level.id)}/${level.challenges.length}`;
-      item.append(heading, detail);
+      detail.textContent = level.future || level.ladder ? level.short : `${level.short} ${progress.count(level.id)}/${level.challenges.length}`;
+      const role = document.createElement("span");
+      role.className = "pyramid-role";
+      role.textContent = `常见承担角色：${level.role}`;
+      item.append(heading, role, detail);
       if (level.future) item.className = "future";
+      else if (level.ladder) {
+        const button = document.createElement("button");
+        button.type = "button";
+        button.textContent = "去天梯训练";
+        button.addEventListener("click", () => openLadder(level.id));
+        item.append(button);
+      }
       else if (progress.isComplete(level.id)) item.className = "complete";
       else {
         const button = document.createElement("button");
