@@ -3,7 +3,7 @@
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <meta name="description" content="讲清楚 V3-4：用今日闯关完成职场表达的真实训练闭环" />
+    <meta name="description" content="讲清楚 V3-4：完成职场表达能力金字塔的真实训练闭环" />
     <title>讲清楚 V3-4 | 职场表达能力金字塔</title>
     <link rel="stylesheet" href="./styles/tokens.css" />
     <link rel="stylesheet" href="./styles/components.css" />
@@ -35,11 +35,22 @@
         </div>
       </header>
       <main>
+        <section class="screen" id="sixtyChallengeScreen" aria-labelledby="sixtyChallengeTitle">
+          <div class="sixty-challenge-wrap">
+            <p class="speak-eyebrow">60 秒表达挑战 / 首次先测</p>
+            <h1 id="sixtyChallengeTitle">60 秒测出你说话能力第几级</h1>
+            <p class="sixty-challenge-lead">领导突然问：你最近在忙什么？请用 60 秒说明。</p>
+            <p class="ladder-status">直接录音或浏览器转写；无法转写时补写原稿也能完成。分数只来自你本轮实际原稿。</p>
+            <div class="practice-actions">
+              <button class="speak-button speak-button--primary" id="challengeStart" type="button">开始 60 秒测级</button>
+            </div>
+          </div>
+        </section>
         <section class="screen active" id="setupScreen">
           <div class="archive-head pyramid-archive-head">
             <div class="pyramid-home" id="pyramidHome">
-              <p class="speak-eyebrow">V3-4 / 今日闯关</p>
-              <h1>今天，只练一件能马上用上的事。</h1>
+              <p class="speak-eyebrow">职场表达能力金字塔 / 60 秒挑战</p>
+              <h1>今天，离下一段位只差一条真实证据。</h1>
               <section class="pyramid-current" aria-label="当前训练关卡">
                 <p id="pyramidLevel"></p>
                 <h2 id="pyramidQuestion"></h2>
@@ -49,6 +60,7 @@
               <div class="pyramid-actions">
                 <button class="speak-button speak-button--primary" id="pyramidGo" type="button">开始 60 秒练习</button>
                 <button class="link-button" id="pyramidOpen" type="button" aria-expanded="false">查看能力金字塔</button>
+                <button class="link-button" id="ladderHomeButton" type="button">进入匿名周榜</button>
               </div>
               <section class="pyramid-map" id="pyramidMap" hidden aria-label="七级职场表达能力金字塔">
                 <p class="speak-eyebrow">个人训练地图</p>
@@ -156,6 +168,13 @@
                 <li><b>Kerry Patterson 等《Crucial Conversations》</b><span>V3-3 协作推进与 V3-4 职场闲聊：先回到共同目标，再说明判断与下一步。</span></li>
                 <li><b>Anders Ericsson、Robert Pool《Peak》</b><span>V3-2 至 V3-4 的训练方法：一轮原稿、一个反馈点、一次复练。</span></li>
               </ul></details>
+              <details><summary>天梯第 4 至 7 级可选资料</summary><ul class="material-list material-links">
+                <li><a href="https://www.pon.harvard.edu/" target="_blank" rel="noopener">Harvard Program on Negotiation</a><span>第 4 级：用利益、选项与可执行承诺推进分歧；不替代具体谈判准备。</span></li>
+                <li><b>Robert Cialdini《Influence》</b><span>第 4 级：第 1 至 3 章定位卡，用于理解影响原则；版权书籍仅提供阅读定位。</span></li>
+                <li><a href="https://www.sessionlab.com/library/" target="_blank" rel="noopener">SessionLab Facilitation Library</a><span>第 5 级：会议议程、观点收拢与冲突处理的可选方法索引。</span></li>
+                <li><a href="https://www.strategy-business.com/" target="_blank" rel="noopener">Strategy+Business</a><span>第 6 级：战略叙事、变革沟通与跨部门共识案例。</span></li>
+                <li><a href="https://emergency.cdc.gov/cerc/" target="_blank" rel="noopener">CDC CERC</a><span>第 7 级：危机沟通的可信度、同理与行动信息原则。</span></li>
+              </ul></details>
             </section>
             </section>
           </section>
@@ -189,6 +208,66 @@
             </aside>
           </div>
         </section>
+        <section class="screen" id="ladderScreen" aria-labelledby="ladderTitle">
+          <div class="ladder-wrap">
+            <section class="ladder-assessment" id="ladderAssessment" aria-labelledby="assessmentTitle" hidden>
+              <p class="speak-eyebrow">首次进入 / 7 分钟测级</p>
+              <h1 id="assessmentTitle">先完成 7 轮短练，找到你的训练起点。</h1>
+              <p class="ladder-intro">每级随机一题、每题 60 秒。结果只决定从哪里开始练，不计入周榜，也不是职业能力认证。</p>
+              <p class="speak-eyebrow" id="assessmentStep"></p>
+              <time class="assessment-timer" id="assessmentTimer">01:00</time>
+              <h2 id="assessmentQuestion"></h2>
+              <textarea class="speak-input transcript" id="assessmentTranscript" placeholder="直接输入或粘贴你的 60 秒原稿。"></textarea>
+              <div class="practice-actions">
+                <button class="speak-button speak-button--primary" id="assessmentStart" type="button">开始本题 60 秒</button>
+                <button class="speak-button speak-button--secondary" id="assessmentNext" type="button" disabled>提交本题</button>
+                <button class="speak-button speak-button--primary" id="assessmentEnter" type="button" hidden>从当前段位开始练习</button>
+              </div>
+              <p class="ladder-status" id="assessmentStatus" role="status"></p>
+            </section>
+            <section id="ladderLive">
+            <p class="speak-eyebrow">匿名表达天梯</p>
+            <h1 id="ladderTitle">用五条不同场景的证据，进入下一段位。</h1>
+            <p class="ladder-intro">排行榜只记录匿名昵称、段位、有效分和时间。音频永不上传；文字只在你主动提交上榜时临时校验，不保存原稿。</p>
+            <section class="ladder-tool" aria-label="领取一次性训练题签">
+              <label for="ladderLevelSelect">选择训练段位</label>
+              <select id="ladderLevelSelect">
+                <option value="1">第 1 级：开口新手 / 职场新人</option><option value="2">第 2 级：可靠执行者 / 专员</option><option value="3">第 3 级：核心骨干 / 项目骨干</option><option value="4">第 4 级：项目主导者 / 主管</option><option value="5">第 5 级：协同统筹者 / 团队负责人、总监</option><option value="6">第 6 级：共识引领者 / 部门负责人、高管</option><option value="7">第 7 级：战略发声者 / 创始人、高阶谈判者</option>
+              </select>
+              <button class="speak-button speak-button--primary" id="ladderGetChallenge" type="button">领取 60 秒题签</button>
+              <p id="ladderChallengeMeta" class="speak-eyebrow"></p><h2 id="ladderChallenge">领取后显示一道随机具体场景。</h2>
+              <button class="speak-button speak-button--secondary" id="ladderStart" type="button" disabled>开始这道训练</button>
+              <p id="ladderStatus" class="ladder-status" role="status"></p>
+            </section>
+            <section class="ladder-board" aria-labelledby="ladderBoardTitle">
+              <div><p class="speak-eyebrow">本周匿名榜</p><h2 id="ladderBoardTitle">当前段位只比较五条有效证据</h2></div>
+              <button class="speak-button speak-button--secondary" id="ladderBoardRefresh" type="button">刷新周榜</button>
+              <ol id="ladderBoard"></ol><p id="ladderBoardEmpty" class="ladder-status"></p>
+              <button class="link-button" id="ladderDelete" type="button">退出榜单并删除我的上榜记录</button>
+            </section>
+            </section>
+          </div>
+        </section>
+        <section class="screen" id="challengeResultScreen" aria-labelledby="challengeResultTitle">
+          <div class="challenge-result-wrap">
+            <p class="speak-eyebrow" id="challengeResultEyebrow"></p>
+            <h1 id="challengeResultTitle"></h1>
+            <p class="challenge-result-lead" id="challengeResultLead"></p>
+            <div class="challenge-result-score"><strong id="challengeScore">--</strong><span>本轮训练分</span></div>
+            <section class="challenge-result-details" aria-label="本轮初步训练段位">
+              <p id="challengeRank"></p>
+              <strong id="challengeGap"></strong>
+              <p><b>只改一个动作</b><span id="challengeAction"></span></p>
+              <p id="challengeComparison"></p>
+            </section>
+            <div class="practice-actions">
+              <button class="speak-button speak-button--primary" id="challengeRetry" type="button">用这句再练同一道题</button>
+              <button class="speak-button speak-button--secondary" id="challengePoster" type="button" hidden>下载挑战海报</button>
+              <button class="link-button" id="challengeBackHome" type="button">进入全部训练</button>
+            </div>
+            <p class="ladder-status" id="challengeResultNote">这是初步训练段位，不是职位、职业资格或社会地位判断。</p>
+          </div>
+        </section>
         <section class="screen" id="practiceScreen">
           <div class="practice-grid">
             <section class="speak-card practice-stage">
@@ -209,7 +288,7 @@
               ></textarea>
               <div class="transcript-meta">
                 <span id="transcriptState">准备开始转写</span
-                ><span id="wordCount">0 字</span>
+                ><span id="wordCount">0 字</span><button class="clear-transcript" id="clearTranscriptButton" type="button">清空原稿</button>
               </div>
               <div class="capture-tools">
                 <section class="capture-tool" aria-label="浏览器转写控制">
@@ -310,6 +389,8 @@
                   用加强句再练 60 秒</button
                 ><button class="speak-button speak-button--secondary" id="reportAudioDownload" type="button" hidden>
                   下载本轮本地音频</button
+                ><button class="speak-button speak-button--secondary" id="ladderSubmit" type="button" hidden>
+                  提交匿名上榜校验</button
                 ><button
                   class="speak-button speak-button--secondary"
                   id="reportHome"
@@ -374,13 +455,14 @@
           <div>
             <p id="growthSummary">1,240 训练分 · 下一阶段：稳住边界</p>
             <div class="badges" id="growthBadges"></div>
+            <button class="speak-button speak-button--secondary" id="growthRetest" type="button">重测初步训练段位</button>
           </div>
         </section>
       </div>
     </div>
     <script src="./vendor/vad/ort.wasm.min.js"></script>
     <script src="./vendor/vad/vad.bundle.min.js"></script>
-    <script type="module" src="./app.js"></script>
     <script type="module" src="./candidate-variant.js"></script>
+    <script type="module" src="./app.js"></script>
   </body>
 </html>

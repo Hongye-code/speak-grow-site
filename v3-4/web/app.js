@@ -7,14 +7,18 @@ import { createTranscriber } from "./modules/transcription.js";
 import { createAudioRecorder } from "./modules/recording.js";
 import { createPyramidProgress, mountPyramidHome } from "./modules/pyramid.js";
 import { createVadIndicator } from "./modules/vad.js";
+import { mountLadder } from "./modules/ladder.js";
+import { mountSixtySecondChallenge } from "./modules/sixty-second-challenge.js";
 
 const $ = (selector) => document.querySelector(selector);
 const $$ = (selector) => [...document.querySelectorAll(selector)];
 const publicProviderIds = ["auto", "qwen", "doubao", "deepseek"];
-const state = { mode: defaultProfileId, goal: "", scene: defaultScene(defaultProfileId), confidence: { active: false, phase: "opening", evidence: null }, pyramid: null };
+const state = { mode: defaultProfileId, goal: "", scene: defaultScene(defaultProfileId), confidence: { active: false, phase: "opening", evidence: null }, pyramid: null, sixtyChallenge: null };
 let syncPyramidHome = () => {};
 let pyramidProgress;
 let pyramidHome = { refresh: () => {} };
+let ladderHome = { open: () => {}, ready: () => {}, needsAssessment: () => false };
+let sixtyChallengeHome = { open: () => {}, retest: () => {}, complete: () => ({ valid: false }) };
 
 function profile() { return profiles[state.mode]; }
 function screen(id) { $$(".screen").forEach((item) => item.classList.toggle("active", item.id === id)); window.scrollTo({ top: 0, behavior: "smooth" }); }
@@ -141,6 +145,7 @@ function openTheory() {
 }
 
 function startPyramidChallenge(challenge, levelId) {
+  state.sixtyChallenge = null;
   state.pyramid = { levelId, challengeId: challenge.id };
   if (challenge.confidenceScenario) {
     openConfidence();
@@ -154,6 +159,36 @@ function startPyramidChallenge(challenge, levelId) {
   state.goal = challenge.goal;
   $("#topic").value = challenge.topic;
   startPractice();
+}
+
+function startLadderChallenge(challenge) {
+  state.pyramid = null;
+  state.confidence.active = false;
+  state.ladder = challenge;
+  state.sixtyChallenge = null;
+  selectProfile(challenge.profileId || "workplace");
+  state.goal = `第 ${challenge.level} 级：${challenge.category}表达`;
+  $("#topic").value = challenge.question;
+  startPractice();
+}
+
+function startSixtySecondPractice({ question, draft, round }) {
+  state.pyramid = null;
+  state.ladder = null;
+  state.confidence.active = false;
+  state.sixtyChallenge = { round };
+  selectProfile("improv");
+  state.goal = "先给重点，再给一个依据，最后说下一步。";
+  $("#topic").value = question;
+  prepareAudioRecorder();
+  $("#modeName").textContent = `60 秒测级 / 第 ${round} 轮`;
+  $("#question").textContent = question;
+  $("#goal").textContent = state.goal;
+  $("#focus").textContent = round === 1 ? "先完成真实回答，不追求漂亮。" : "只执行上一轮的唯一改进句。";
+  setTranscript(draft || "");
+  $("#transcriptState").textContent = "点击录音或浏览器转写；不可用时直接补写原稿。";
+  screen("practiceScreen");
+  training.start();
 }
 
 const confidenceSolutions = {
@@ -259,9 +294,15 @@ function renderGrowth() {
   renderBadges($("#growthBadges"));
 }
 
-const training = createTrainingSession((seconds) => {
+const training = createTrainingSession(({ seconds, preparation, phase }) => {
+  if (phase === "preparing") {
+    $("#timer").textContent = `准备 ${preparation} 秒`;
+    $("#transcriptState").textContent = "准备期不扣练习时间：可授权麦克风、开始转写或清空旧稿。";
+    return;
+  }
   const minutes = Math.floor(seconds / 60);
   $("#timer").textContent = `${String(minutes).padStart(2, "0")}:${String(seconds % 60).padStart(2, "0")}`;
+  if (seconds === 60) $("#transcriptState").textContent = "60 秒已开始：先说重点，再给一个依据，最后说下一步。";
 });
 const transcriber = createTranscriber({
   getText: () => $("#transcript").value,
@@ -307,7 +348,7 @@ function prepareAudioRecorder() {
   audioRecorder.cleanup(profile().capabilities.audioDownload ? "点击后才请求麦克风权限；音频仅保留在当前浏览器内存中。" : "");
 }
 
-$("#startButton").addEventListener("click", startPractice);
+$("#startButton").addEventListener("click", () => { state.sixtyChallenge = null; startPractice(); });
 
 $("#confidenceStart").addEventListener("click", () => {
   const solution = confidenceSolutions[$("#confidenceScenario").value];
@@ -350,6 +391,12 @@ $("#randomButton").addEventListener("click", () => {
 $("#recordStartButton").addEventListener("click", () => transcriber.start());
 $("#recordPauseButton").addEventListener("click", () => transcriber.pause());
 $("#recordStopButton").addEventListener("click", () => transcriber.stop());
+$("#clearTranscriptButton").addEventListener("click", () => {
+  setTranscript("");
+  transcriber.sync("");
+  $("#transcriptState").textContent = "原稿已清空；可开始新的回答或继续浏览器转写。";
+  $("#transcript").focus();
+});
 $("#audioStartButton").addEventListener("click", async () => {
   await audioRecorder.start();
   void vadIndicator.start(audioRecorder.getActiveStream());
@@ -383,6 +430,15 @@ $("#analyzeButton").addEventListener("click", async () => {
   button.disabled = true;
   button.textContent = "正在分析…";
   try {
+    if (state.sixtyChallenge) {
+      const result = sixtyChallengeHome.complete(transcript);
+      if (!result.valid) {
+        $("#transcriptState").textContent = "至少保留一句完整原稿后再测级。";
+        return;
+      }
+      $("#reportAudioDownload").hidden = true;
+      return;
+    }
     const configuration = readModelConfiguration();
     const rawReport = await requestReport({ transcript, scene: $("#topic").value, goal: state.goal, focus: $("#focus").textContent, profileId: state.mode, detailLevel: configuration?.mode === "byok" ? "advanced" : "standard" }, configuration);
     const report = applyConfidenceFeedback(rawReport, transcript);
@@ -396,6 +452,7 @@ $("#analyzeButton").addEventListener("click", async () => {
       if (saved) pyramidHome.refresh("这一关已留下练习证据。");
       state.pyramid = null;
     }
+    if (state.ladder) ladderHome.ready(transcript);
     renderGrowth();
     $("#retryButton").textContent = state.confidence.active && state.confidence.phase === "opening" ? "进入项目追问，再练 60 秒" : "用加强句再练 60 秒";
     screen("reportScreen");
@@ -408,7 +465,7 @@ $("#analyzeButton").addEventListener("click", async () => {
   }
 });
 
-$("#backButton").addEventListener("click", () => { leavePractice(); screen("setupScreen"); });
+$("#backButton").addEventListener("click", () => { leavePractice(); state.sixtyChallenge = null; screen("setupScreen"); });
 $("#retryButton").addEventListener("click", () => {
   if (state.confidence.active && state.confidence.phase === "opening") {
     state.confidence.phase = "followup";
@@ -419,8 +476,8 @@ $("#retryButton").addEventListener("click", () => {
   prepareAudioRecorder();
   startPractice();
 });
-$("#reportHome").addEventListener("click", () => { leavePractice(); screen("setupScreen"); });
-$("#homeButton").addEventListener("click", () => { leavePractice(); screen("setupScreen"); });
+$("#reportHome").addEventListener("click", () => { leavePractice(); state.sixtyChallenge = null; screen("setupScreen"); });
+$("#homeButton").addEventListener("click", () => { leavePractice(); state.sixtyChallenge = null; sixtyChallengeHome.open(); });
 
 function openDialog(id) { $("#" + id).hidden = false; }
 function configurationFromFields() {
@@ -538,6 +595,12 @@ pyramidHome = mountPyramidHome({
   progress: pyramidProgress,
   startChallenge: startPyramidChallenge,
   showAllProfiles,
-  openTheory
+  openTheory,
+  openLadder: (level) => { $("#ladderLevelSelect").value = String(level); ladderHome.open(); }
 });
+ladderHome = mountLadder({ startPractice: startLadderChallenge });
+sixtyChallengeHome = mountSixtySecondChallenge({ startPractice: startSixtySecondPractice, showScreen: screen });
+$("#ladderHomeButton").addEventListener("click", () => { if (sixtyChallengeHome.needsAssessment()) sixtyChallengeHome.open(); else ladderHome.open(); });
+$("#growthRetest").addEventListener("click", () => { $("#growthDialog").hidden = true; sixtyChallengeHome.retest(); });
+sixtyChallengeHome.open();
 syncPyramidHome = () => pyramidHome.refresh();
