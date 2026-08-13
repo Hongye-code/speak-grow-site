@@ -270,6 +270,7 @@ main { width:min(1160px,calc(100% - 48px)); margin:auto; padding:34px 0 68px; } 
 .pyramid-levels li { display: grid; grid-template-columns: minmax(152px, .55fr) minmax(0, 1.45fr) auto; align-items: center; gap: 13px; padding: 11px 12px; border: 1px solid var(--speak-line); color: var(--speak-mist); background: rgba(244,246,241,.018); }
 .pyramid-levels strong { color: var(--speak-paper); font-size: 13px; }
 .pyramid-levels span { font-size: 12px; line-height: 1.55; }
+.pyramid-levels .pyramid-role { color: var(--speak-acid); font-size: 11px; font-weight: 760; }
 .pyramid-levels li.complete { border-color: rgba(200,255,69,.58); }
 .pyramid-levels li.complete strong { color: var(--speak-acid); }
 .pyramid-levels li.future { opacity: .58; }
@@ -280,6 +281,9 @@ main { width:min(1160px,calc(100% - 48px)); margin:auto; padding:34px 0 68px; } 
   .pyramid-archive-head { grid-template-columns: 1fr; }
   .pyramid-archive-head .score-pocket { margin-top: 20px; }
 }
+
+/* E 连续闯关：默认展开地图，其他训练模块保持原有能力。 */
+body[data-candidate-variant="e"] .pyramid-map { border-color: rgba(200,255,69,.5); }
 
 @media (max-width: 560px) {
   .pyramid-home h1 { font-size: 29px; }
@@ -293,12 +297,43 @@ main { width:min(1160px,calc(100% - 48px)); margin:auto; padding:34px 0 68px; } 
   .pyramid-levels button { width: 100%; margin-top: 4px; }
 }
 
-/* V3-5 候选仅调整首页训练节奏，所有训练模块保持继承。 */
-.candidate-proof,.candidate-routes { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 7px; margin-top: 15px; }
-.candidate-proof b,.candidate-routes span { min-height: 34px; display: grid; place-items: center; border: 1px solid var(--speak-line); color: var(--speak-mist); background: rgba(244,246,241,.025); font-size: 11px; }
-.candidate-rewrite { margin: 15px 0 0; padding: 10px 12px; border-left: 3px solid var(--speak-coral); color: #ffc1b5; background: rgba(255,132,109,.08); font-size: 12px; line-height: 1.6; }
-body[data-candidate-variant="b"] .pyramid-current { border-left-color: var(--speak-coral); }
-body[data-candidate-variant="c"] .pyramid-current { border-style: dashed; }
-body[data-candidate-variant="d"] .pyramid-current { border-left-color: var(--speak-coral); }
-body[data-candidate-variant="e"] .pyramid-map { border-color: rgba(200,255,69,.5); }
-@media (max-width: 560px) { .candidate-proof,.candidate-routes { grid-template-columns: 1fr; } }
+/* V3-4.1：训练优先，匿名周榜仅作为完成后的可选互动。 */
+.ladder-wrap { width: min(900px, 100%); margin: 0 auto; }
+.sixty-challenge-wrap,.challenge-result-wrap { width:min(760px, 100%); margin:0 auto; padding:clamp(24px, 5vw, 56px) 0; }
+.sixty-challenge-wrap h1,.challenge-result-wrap h1 { max-width:680px; font-size:clamp(32px, 5vw, 52px); line-height:1.12; }
+.sixty-challenge-lead { max-width:650px; margin:20px 0; color:var(--speak-paper); font-size:clamp(20px, 3vw, 28px); line-height:1.55; }
+.challenge-result-lead { max-width:670px; color:var(--speak-mist); line-height:1.7; }
+.challenge-result-score { display:flex; align-items:baseline; gap:14px; margin:30px 0 22px; color:var(--speak-paper); }
+.challenge-result-score strong { color:var(--speak-acid); font-family:var(--speak-mono); font-size:clamp(72px, 13vw, 140px); line-height:.8; }
+.challenge-result-score span { color:var(--speak-muted); font-size:14px; }
+.challenge-result-details { display:grid; gap:12px; margin:0 0 24px; padding:20px; border:1px solid var(--speak-line); border-radius:var(--speak-radius); background:var(--speak-ink-raised); }
+.challenge-result-details p { margin:0; color:var(--speak-mist); line-height:1.65; }
+.challenge-result-details strong { color:var(--speak-acid); font-size:20px; }
+.challenge-result-details b { display:block; margin-bottom:5px; color:var(--speak-paper); }
+.challenge-result-details span { display:block; color:var(--speak-paper); }
+.clear-transcript { margin-left:auto; padding:0; border:0; color:var(--speak-acid); background:transparent; font:inherit; font-weight:720; cursor:pointer; }
+.ladder-assessment { padding: 24px; border: 1px solid rgba(200,255,69,.5); border-radius: var(--speak-radius); background: var(--speak-ink-raised); }
+.ladder-assessment h1 { max-width: 720px; font-size: 39px; }
+.ladder-assessment h2 { max-width: 760px; color: var(--speak-paper); font-size: 21px; line-height: 1.55; }
+.assessment-timer { display:block; margin:18px 0; color:var(--speak-acid); font-family:var(--speak-mono); font-size:54px; font-weight:840; }
+.ladder-wrap > h1 { max-width: 760px; font-size: 39px; }
+.ladder-intro,.ladder-status { max-width: 720px; color: var(--speak-mist); font-size: 13px; line-height: 1.7; }
+.ladder-tool,.ladder-board { margin-top: 22px; padding: 22px; border: 1px solid var(--speak-line); border-radius: var(--speak-radius); background: var(--speak-ink-raised); }
+.ladder-tool { display: grid; gap: 13px; }
+.ladder-tool label { color: var(--speak-muted); font-size: 12px; }
+.ladder-tool select { min-height: 47px; padding: 0 12px; border: 1px solid var(--speak-line); border-radius: 6px; color: var(--speak-paper); background: var(--speak-ink); }
+.ladder-tool h2 { margin: 0; color: var(--speak-paper); font-size: 20px; line-height: 1.55; }
+.ladder-tool .speak-button { width: fit-content; min-width: 180px; }
+.ladder-board { display: grid; grid-template-columns: minmax(0, 1fr) auto; gap: 14px; align-items: start; }
+.ladder-board h2 { margin: 4px 0 0; font-size: 19px; }
+.ladder-board ol,.ladder-board > p,.ladder-board > .link-button { grid-column: 1 / -1; }
+.ladder-board ol { display: grid; gap: 7px; margin: 0; padding: 0; list-style: none; }
+.ladder-board li { padding: 11px 12px; border: 1px solid var(--speak-line); color: var(--speak-mist); font-size: 13px; }
+@media (max-width: 560px) {
+  .ladder-wrap > h1 { font-size: 29px; }
+  .ladder-assessment { padding: 17px; }
+  .ladder-assessment h1 { font-size: 29px; }
+  .ladder-tool,.ladder-board { padding: 17px; }
+  .ladder-tool .speak-button,.ladder-board .speak-button { width: 100%; }
+  .ladder-board { grid-template-columns: 1fr; }
+}
