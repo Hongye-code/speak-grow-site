@@ -10,12 +10,13 @@
 | v2 | 2.0 独立体验 | [预览](https://hongye-code.github.io/speak-grow-site/v2/) | [`v2/`](v2/) | 以练习为中心 |
 | v3 | 职场力量练习 | [预览](https://hongye-code.github.io/speak-grow-site/v3/) | [`v3/`](v3/) | 60秒沟通，表达导师 |
 | v3-1 | 3.1 样式快照 | - | [`v3-1/`](v3-1/) | Cloudflare Worker 版本 |
+| v3-4 | 60秒表达挑战 | [预览](https://hongye-code.github.io/speak-grow-site/v3-4/web/) | [`v3-4/`](v3-4/) | 职场表达能力金字塔，最新版本 |
 | 4.1 | 读完有话说 | [预览](https://hongye-code.github.io/speak-grow-site/read-then-speak-4-1/) | [`read-then-speak-4-1/`](read-then-speak-4-1/) | 粉红编辑室，资料→表达 |
-| v3-4 | 60秒表达挑战 | 开发中 | Private 仓库 | 最新开发版本 |
 
 ## 快速访问
 
 - **主站入口**：https://hongye-code.github.io/speak-grow-site/
+- **v3-4 预览**：https://hongye-code.github.io/speak-grow-site/v3-4/web/
 - **正式版（Cloudflare）**：https://read-then-speak-4-1.pages.dev/
 - **开发仓库**：[`speak-grow`](https://github.com/Hongye-code/speak-grow)（Private）— 面向大众的三分钟口语表达训练网页
 
