@@ -1,0 +1,468 @@
+<!doctype html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="description" content="讲清楚 V3-4：完成职场表达能力金字塔的真实训练闭环" />
+    <title>讲清楚 V3-4 | 职场表达能力金字塔</title>
+    <link rel="stylesheet" href="./styles/tokens.css" />
+    <link rel="stylesheet" href="./styles/components.css" />
+    <link rel="stylesheet" href="./styles/pages.css" />
+  </head>
+  <body>
+    <div class="app-shell">
+      <header class="speak-topbar">
+        <button class="speak-brand" id="homeButton" type="button">
+          <span class="speak-brand-mark">说</span
+          ><span
+            >讲清楚<small class="speak-brand-meta"
+              >SPEAK WITH INTENTION</small
+            ></span
+          >
+        </button>
+        <div class="top-actions">
+          <button class="quiet-button" id="growthButton" type="button">
+            我的成长</button
+          ><button
+            class="speak-icon-button"
+            id="settingsButton"
+            aria-label="AI 服务设置"
+            title="AI 服务设置"
+            type="button"
+          >
+            ⚙
+          </button>
+        </div>
+      </header>
+      <main>
+        <section class="screen" id="sixtyChallengeScreen" aria-labelledby="sixtyChallengeTitle">
+          <div class="sixty-challenge-wrap">
+            <p class="speak-eyebrow">60 秒表达挑战 / 首次先测</p>
+            <h1 id="sixtyChallengeTitle">60 秒测出你说话能力第几级</h1>
+            <p class="sixty-challenge-lead">领导突然问：你最近在忙什么？请用 60 秒说明。</p>
+            <p class="ladder-status">直接录音或浏览器转写；无法转写时补写原稿也能完成。分数只来自你本轮实际原稿。</p>
+            <div class="practice-actions">
+              <button class="speak-button speak-button--primary" id="challengeStart" type="button">开始 60 秒测级</button>
+            </div>
+          </div>
+        </section>
+        <section class="screen active" id="setupScreen">
+          <div class="archive-head pyramid-archive-head">
+            <div class="pyramid-home" id="pyramidHome">
+              <p class="speak-eyebrow">职场表达能力金字塔 / 60 秒挑战</p>
+              <h1>今天，离下一段位只差一条真实证据。</h1>
+              <section class="pyramid-current" aria-label="当前训练关卡">
+                <p id="pyramidLevel"></p>
+                <h2 id="pyramidQuestion"></h2>
+                <p id="pyramidProgress"></p>
+              </section>
+              <p class="pyramid-status" id="pyramidStatus" role="status"></p>
+              <div class="pyramid-actions">
+                <button class="speak-button speak-button--primary" id="pyramidGo" type="button">开始 60 秒练习</button>
+                <button class="link-button" id="pyramidOpen" type="button" aria-expanded="false">查看能力金字塔</button>
+                <button class="link-button" id="ladderHomeButton" type="button">进入匿名周榜</button>
+              </div>
+              <section class="pyramid-map" id="pyramidMap" hidden aria-label="七级职场表达能力金字塔">
+                <p class="speak-eyebrow">个人训练地图</p>
+                <ol class="pyramid-levels" id="pyramidLevels"></ol>
+              </section>
+              <div class="pyramid-secondary-actions">
+                <button class="link-button" id="pyramidAllProfiles" type="button">查看全部练习</button>
+                <button class="link-button" id="pyramidTheory" type="button">学习准备</button>
+              </div>
+            </div>
+            <div class="score-pocket">
+              <strong id="points">1,240</strong><span>个人训练分</span>
+              <div class="progress"><i></i></div>
+              <small id="nextMilestone">距离“稳住边界”还差 760 分</small>
+            </div>
+          </div>
+          <section class="candidate-profile-index" id="allProfiles" aria-labelledby="candidateProfilesTitle" hidden>
+            <div class="candidate-index-head"><p class="speak-eyebrow">具体练习</p><h2 id="candidateProfilesTitle">选择一个训练方式</h2></div>
+            <div class="mode-grid" id="modeGrid" aria-label="全部训练板块"></div>
+          </section>
+          <section class="interview-workbench" id="interviewWorkbench" hidden aria-labelledby="interviewWorkbenchTitle">
+            <div class="interview-workbench-head"><p class="speak-eyebrow">职场开口 / 职场面试</p><h2 id="interviewWorkbenchTitle">这次，你要练哪一种面试？</h2><p>常规题库练回答；自信专训练紧张时说清价值。</p></div>
+            <div class="interview-path-grid">
+              <button class="interview-path" data-open-interview-panel="standard" type="button"><span>01 / 常规面试</span><strong>100 道真实题目</strong><small>自我介绍、项目、行为题与追问。</small></button>
+              <button class="interview-path" data-open-interview-panel="confidence" type="button"><span>02 / 自信专训</span><strong>从紧张到说清价值</strong><small>准备、证据、60 秒、追问与复练。</small></button>
+            </div>
+          </section>
+          <section class="confidence-workbench" id="confidenceWorkbench" hidden aria-labelledby="confidenceTitle">
+            <div class="confidence-head">
+              <div><p class="speak-eyebrow">职场面试 / 自信专训</p><h2 id="confidenceTitle">紧张，也能讲清你的价值。</h2><p>选场景，填三条证据，开始 60 秒。</p></div>
+              <a class="link-button" href="https://think-faster-talk-smarter-reading.pages.dev/" target="_blank" rel="noopener">查看精读依据</a>
+            </div>
+            <nav class="confidence-nav" aria-label="自信专训内容">
+              <button data-confidence-tab="theory" aria-selected="true" type="button">理论学习</button>
+              <button data-confidence-tab="practice" aria-selected="false" type="button">实战练习</button>
+            </nav>
+            <section class="confidence-theory" data-confidence-panel="theory" aria-labelledby="confidenceTheoryTitle">
+              <div class="confidence-section-head"><p class="speak-eyebrow">第一部分 / 理论学习</p><h3 id="confidenceTheoryTitle">练习前，先给自己一条清楚的路。</h3></div>
+              <nav class="confidence-theory-nav" aria-label="理论学习内容">
+                <button data-confidence-theory-tab="prep" aria-selected="true" type="button">快速准备</button>
+                <button data-confidence-theory-tab="materials" aria-selected="false" type="button">使用资料</button>
+              </nav>
+            <section class="confidence-prep" data-confidence-theory-panel="prep" aria-labelledby="confidencePrepTitle">
+              <div class="confidence-section-head"><p class="speak-eyebrow">快速准备 / 30 秒</p><h3 id="confidencePrepTitle">不用压住紧张，先把注意力放回回答。</h3></div>
+              <ol class="prep-list"><li><b>01 / 呼气</b><span>紧张是反应，不是能力结论。</span></li><li><b>02 / 换任务</b><span>这一分钟，只交付判断和依据。</span></li><li><b>03 / 先说结论</b><span>背景和细节，放在后面。</span></li></ol>
+              <button class="speak-button speak-button--primary" data-open-confidence-panel="practice" type="button">开始 60 秒练习</button>
+            </section>
+            <section class="confidence-theory-prep-detail" data-confidence-theory-panel="prep" aria-label="快速准备的心理与结构依据">
+              <div class="theory-grid">
+                <article><span>CALM</span><h4>先接住反应</h4><p>情绪、身体和思维都会紧张。它们不是“我不行”的证据。</p></article>
+                <article><span>REDEFINE</span><h4>把焦点给听者</h4><p>别追求答对；让对方听懂你的判断和依据。</p></article>
+                <article><span>STRUCTURE</span><h4>让结构带路</h4><p>不用背稿。系统会按场景配好回答路线。</p></article>
+              </div>
+            </section>
+            </section>
+            <section class="confidence-practice" data-confidence-panel="practice" aria-labelledby="confidencePracticeTitle" hidden>
+              <div class="confidence-section-head"><p class="speak-eyebrow">第二部分 / 实战练习</p><h3 id="confidencePracticeTitle">选场景，填三条证据，开口。</h3></div>
+              <div class="confidence-steps" aria-label="自信专训训练步骤"><span class="active">01 场景</span><span>02 证据</span><span>03 60 秒</span><span>04 追问复练</span></div>
+              <p class="confidence-reframe"><b>本轮目标：让面试官先听见结果、你的动作和一个细节。</b></p>
+            <div class="confidence-fields">
+              <label><span>选择一个真实面试场景</span><select id="confidenceScenario"><option value="intro">90 秒自我介绍：先让人知道你是谁、做过什么</option><option value="roleFit">为什么是这个岗位：把经历连到岗位需要</option><option value="careerChange">为什么转行：讲清主动选择，不先解释短板</option><option value="strength">你的核心优势：用一项能力和证据回答</option><option value="project">讲一个项目：把过程讲成价值证据</option><option value="ownership">你在项目中具体负责什么：说清个人作用</option><option value="collaboration">跨团队协作：讲清怎样推动不同角色</option><option value="conflict">意见不一致：不回避分歧，讲清处理方式</option><option value="failure">一次失败：说明责任、修正和后续变化</option><option value="setback">高压或挫折：脑中紧张时仍说清应对</option><option value="deadline">时间很紧：讲清取舍和交付判断</option><option value="judgment">为什么这样做：解释一个关键判断</option><option value="dataDecision">数据与直觉冲突：说明你如何做决定</option><option value="leadership">带动他人：讲清影响而不是只报头衔</option><option value="ambiguity">目标不清：说明你怎样把模糊变成行动</option><option value="priority">多任务冲突：讲清优先级和沟通动作</option><option value="feedback">收到负面反馈：把防御变成具体改进</option><option value="motivation">为什么离开或加入：保持诚实，也面向未来</option><option value="gap">经历空档或短板：不回避，说明准备和价值</option><option value="followup">被继续追问：脑中空白时怎么接住问题</option></select></label>
+              <label><span>项目带来的结果</span><input id="evidenceResult" maxlength="100" placeholder="交付周期从 10 天缩短到 6 天" /></label>
+              <label><span>我做的关键动作</span><input id="evidenceRole" maxlength="100" placeholder="重排验收顺序，先解决返工最多的环节" /></label>
+              <label><span>一个具体细节</span><input id="evidenceProof" maxlength="100" placeholder="第二周返工工单减少了 14 个" /></label>
+            </div>
+            <aside class="confidence-solution" id="confidenceSolution" aria-live="polite"></aside>
+            <p class="confidence-status" id="confidenceStatus" role="status">系统已按场景配好路线；证据只保存在当前浏览器。</p>
+            <button class="speak-button speak-button--primary" id="confidenceStart" type="button">带着证据开始 60 秒</button>
+            </section>
+            <section class="confidence-theory confidence-materials-shell" data-confidence-panel="theory" hidden>
+            <section class="confidence-materials" data-confidence-theory-panel="materials" aria-labelledby="confidenceMaterialsTitle" hidden>
+              <div class="confidence-section-head"><p class="speak-eyebrow">理论学习 / 使用资料</p><h3 id="confidenceMaterialsTitle">训练引用与历代资料索引。</h3></div>
+              <p class="confidence-materials-intro">先保留 V3-4 的 18 条基础资料，再按训练模块补充历代版本引用。它们是训练依据，不必读完才开始。</p>
+              <details><summary>10 本指定章节书籍</summary><ul class="material-list">
+                <li><b>Matt Abrahams《Think Faster, Talk Smarter》</b><span>临场回答结构、重新理解紧张、先讲结论。</span></li>
+                <li><b>Russ Harris《The Confidence Gap》</b><span>紧张仍可行动，不把“不紧张”当目标。</span></li>
+                <li><b>James Innes《The Interview Book》</b><span>岗位匹配、能力题与面试准备。</span></li>
+                <li><b>Martin John Yate《Great Answers to Tough Interview Questions》</b><span>自我介绍、优势、失败与行为题。</span></li>
+                <li><b>Martin John Yate《Knock 'em Dead Job Interview》</b><span>面试前研究、难题回答和反问。</span></li>
+                <li><b>Matthew Dicks《Storyworthy》</b><span>用转折和具体细节，避免 STAR 成为流水账。</span></li>
+                <li><b>Kerry Patterson 等《Crucial Conversations》</b><span>面对追问时说清判断、证据和边界。</span></li>
+                <li><b>Amy Cuddy《Presence》</b><span>高压前准备仪式和注意力管理。</span></li>
+                <li><b>Anders Ericsson、Robert Pool《Peak》</b><span>明确目标、反馈和一次只改一个问题。</span></li>
+                <li><b>Dale Carnegie《The Quick and Easy Way to Effective Speaking》</b><span>准备、练习和听者导向的开场。</span></li>
+              </ul></details>
+              <details><summary>5 个核心公开来源</summary><ul class="material-list material-links">
+                <li><a href="https://capd.mit.edu/resources/the-star-method-for-behavioral-interviews/" target="_blank" rel="noopener">MIT：STAR 行为面试法</a><span>用结果、行动和证据准备行为题故事。</span></li>
+                <li><a href="https://capd.mit.edu/resources/interviewing/" target="_blank" rel="noopener">MIT：面试准备</a><span>模拟面试和建设性反馈。</span></li>
+                <li><a href="https://doi.org/10.1111/peps.12052" target="_blank" rel="noopener">Levashina 等：结构化面试研究综述</a><span>围绕岗位相关、可比较的证据。</span></li>
+                <li><a href="https://doi.org/10.1037/0021-9010.79.4.599" target="_blank" rel="noopener">McDaniel 等：面试效度元分析</a><span>不只凭第一印象判断表现。</span></li>
+                <li><a href="https://doi.org/10.1037/0033-295x.84.2.191" target="_blank" rel="noopener">Bandura：自我效能理论</a><span>小而完成的练习经验比空泛鼓励更有意义。</span></li>
+              </ul></details>
+              <details><summary>3 个练习灵感入口</summary><ul class="material-list material-links">
+                <li><a href="https://www.youtube.com/watch?v=HAnw168huqA" target="_blank" rel="noopener">Matt Abrahams：公开演讲</a><span>观察即兴表达的结构和停顿。</span></li>
+                <li><a href="https://www.youtube.com/watch?v=Unzc731iCUY" target="_blank" rel="noopener">MIT《How to Speak》</a><span>观察表达结构和听众意识。</span></li>
+                <li><a href="https://x.com/mattabrahams" target="_blank" rel="noopener">Matt Abrahams 的 X</a><span>观察即时表达的公开实践观点。</span></li>
+              </ul></details>
+              <details><summary>历代版本：结构化表达与面试</summary><ul class="material-list material-links">
+                <li><a href="https://capd.mit.edu/resources/the-star-method-for-behavioral-interviews/" target="_blank" rel="noopener">MIT：STAR 行为面试法</a><span>V3-2 至 V3-4 均用作行为题与证据卡的结构依据。</span></li>
+                <li><a href="https://www.youtube.com/watch?v=Unzc731iCUY" target="_blank" rel="noopener">MIT《How to Speak》</a><span>V3-2 的结构化表达补充：关注听众、主线和收束。</span></li>
+                <li><a href="https://think-faster-talk-smarter-reading.pages.dev/" target="_blank" rel="noopener">Think Faster, Talk Smarter 精读页</a><span>自信专训的快速准备依据：接住反应、重设任务、用结构开口。</span></li>
+              </ul></details>
+              <details><summary>历代版本：职场讲故事、协作与闲聊</summary><ul class="material-list">
+                <li><b>Matthew Dicks《Storyworthy》</b><span>V3-3 职场讲故事：用变化、判断和具体细节取代流水账。</span></li>
+                <li><b>Kerry Patterson 等《Crucial Conversations》</b><span>V3-3 协作推进与 V3-4 职场闲聊：先回到共同目标，再说明判断与下一步。</span></li>
+                <li><b>Anders Ericsson、Robert Pool《Peak》</b><span>V3-2 至 V3-4 的训练方法：一轮原稿、一个反馈点、一次复练。</span></li>
+              </ul></details>
+              <details><summary>天梯第 4 至 7 级可选资料</summary><ul class="material-list material-links">
+                <li><a href="https://www.pon.harvard.edu/" target="_blank" rel="noopener">Harvard Program on Negotiation</a><span>第 4 级：用利益、选项与可执行承诺推进分歧；不替代具体谈判准备。</span></li>
+                <li><b>Robert Cialdini《Influence》</b><span>第 4 级：第 1 至 3 章定位卡，用于理解影响原则；版权书籍仅提供阅读定位。</span></li>
+                <li><a href="https://www.sessionlab.com/library/" target="_blank" rel="noopener">SessionLab Facilitation Library</a><span>第 5 级：会议议程、观点收拢与冲突处理的可选方法索引。</span></li>
+                <li><a href="https://www.strategy-business.com/" target="_blank" rel="noopener">Strategy+Business</a><span>第 6 级：战略叙事、变革沟通与跨部门共识案例。</span></li>
+                <li><a href="https://emergency.cdc.gov/cerc/" target="_blank" rel="noopener">CDC CERC</a><span>第 7 级：危机沟通的可信度、同理与行动信息原则。</span></li>
+              </ul></details>
+            </section>
+            </section>
+          </section>
+          <div class="setup-grid" id="practiceSetup" hidden>
+            <section class="speak-card composer">
+              <div class="label-row">
+                <label for="topic">你现在遇到了什么问题？</label
+                ><button class="link-button" id="randomButton" type="button">
+                  换一个场景
+                </button>
+              </div>
+              <textarea
+                class="speak-input"
+                id="topic"
+                maxlength="160"
+              ></textarea>
+              <div class="goal-chips" id="goals"></div>
+              <button
+                class="speak-button speak-button--primary full-width"
+                id="startButton"
+                type="button"
+              >
+                开始 60 秒练习
+              </button>
+            </section>
+            <aside class="speak-card toolkit">
+              <p class="speak-eyebrow">本轮力量动作</p>
+              <h2 id="toolTitle"></h2>
+              <p id="toolSummary"></p>
+              <ol id="toolList"></ol>
+            </aside>
+          </div>
+        </section>
+        <section class="screen" id="ladderScreen" aria-labelledby="ladderTitle">
+          <div class="ladder-wrap">
+            <section class="ladder-assessment" id="ladderAssessment" aria-labelledby="assessmentTitle" hidden>
+              <p class="speak-eyebrow">首次进入 / 7 分钟测级</p>
+              <h1 id="assessmentTitle">先完成 7 轮短练，找到你的训练起点。</h1>
+              <p class="ladder-intro">每级随机一题、每题 60 秒。结果只决定从哪里开始练，不计入周榜，也不是职业能力认证。</p>
+              <p class="speak-eyebrow" id="assessmentStep"></p>
+              <time class="assessment-timer" id="assessmentTimer">01:00</time>
+              <h2 id="assessmentQuestion"></h2>
+              <textarea class="speak-input transcript" id="assessmentTranscript" placeholder="直接输入或粘贴你的 60 秒原稿。"></textarea>
+              <div class="practice-actions">
+                <button class="speak-button speak-button--primary" id="assessmentStart" type="button">开始本题 60 秒</button>
+                <button class="speak-button speak-button--secondary" id="assessmentNext" type="button" disabled>提交本题</button>
+                <button class="speak-button speak-button--primary" id="assessmentEnter" type="button" hidden>从当前段位开始练习</button>
+              </div>
+              <p class="ladder-status" id="assessmentStatus" role="status"></p>
+            </section>
+            <section id="ladderLive">
+            <p class="speak-eyebrow">匿名表达天梯</p>
+            <h1 id="ladderTitle">用五条不同场景的证据，进入下一段位。</h1>
+            <p class="ladder-intro">排行榜只记录匿名昵称、段位、有效分和时间。音频永不上传；文字只在你主动提交上榜时临时校验，不保存原稿。</p>
+            <section class="ladder-tool" aria-label="领取一次性训练题签">
+              <label for="ladderLevelSelect">选择训练段位</label>
+              <select id="ladderLevelSelect">
+                <option value="1">第 1 级：开口新手 / 职场新人</option><option value="2">第 2 级：可靠执行者 / 专员</option><option value="3">第 3 级：核心骨干 / 项目骨干</option><option value="4">第 4 级：项目主导者 / 主管</option><option value="5">第 5 级：协同统筹者 / 团队负责人、总监</option><option value="6">第 6 级：共识引领者 / 部门负责人、高管</option><option value="7">第 7 级：战略发声者 / 创始人、高阶谈判者</option>
+              </select>
+              <button class="speak-button speak-button--primary" id="ladderGetChallenge" type="button">领取 60 秒题签</button>
+              <p id="ladderChallengeMeta" class="speak-eyebrow"></p><h2 id="ladderChallenge">领取后显示一道随机具体场景。</h2>
+              <button class="speak-button speak-button--secondary" id="ladderStart" type="button" disabled>开始这道训练</button>
+              <p id="ladderStatus" class="ladder-status" role="status"></p>
+            </section>
+            <section class="ladder-board" aria-labelledby="ladderBoardTitle">
+              <div><p class="speak-eyebrow">本周匿名榜</p><h2 id="ladderBoardTitle">当前段位只比较五条有效证据</h2></div>
+              <button class="speak-button speak-button--secondary" id="ladderBoardRefresh" type="button">刷新周榜</button>
+              <ol id="ladderBoard"></ol><p id="ladderBoardEmpty" class="ladder-status"></p>
+              <button class="link-button" id="ladderDelete" type="button">退出榜单并删除我的上榜记录</button>
+            </section>
+            </section>
+          </div>
+        </section>
+        <section class="screen" id="challengeResultScreen" aria-labelledby="challengeResultTitle">
+          <div class="challenge-result-wrap">
+            <p class="speak-eyebrow" id="challengeResultEyebrow"></p>
+            <h1 id="challengeResultTitle"></h1>
+            <p class="challenge-result-lead" id="challengeResultLead"></p>
+            <div class="challenge-result-score"><strong id="challengeScore">--</strong><span>本轮训练分</span></div>
+            <section class="challenge-result-details" aria-label="本轮初步训练段位">
+              <p id="challengeRank"></p>
+              <strong id="challengeGap"></strong>
+              <p><b>只改一个动作</b><span id="challengeAction"></span></p>
+              <p id="challengeComparison"></p>
+            </section>
+            <div class="practice-actions">
+              <button class="speak-button speak-button--primary" id="challengeRetry" type="button">用这句再练同一道题</button>
+              <button class="speak-button speak-button--secondary" id="challengePoster" type="button" hidden>下载挑战海报</button>
+              <button class="link-button" id="challengeBackHome" type="button">进入全部训练</button>
+            </div>
+            <p class="ladder-status" id="challengeResultNote">这是初步训练段位，不是职位、职业资格或社会地位判断。</p>
+          </div>
+        </section>
+        <section class="screen" id="practiceScreen">
+          <div class="practice-grid">
+            <section class="speak-card practice-stage">
+              <button class="back-button" id="backButton" type="button">
+                ← 返回重新选题
+              </button>
+              <div class="chips">
+                <span class="speak-chip" id="modeName"></span
+                ><span class="speak-chip speak-chip--coral">第一轮</span>
+              </div>
+              <time id="timer">01:00</time>
+              <h1 id="question"></h1>
+              <p id="goal"></p>
+              <textarea
+                class="speak-input transcript"
+                id="transcript"
+                placeholder="开始浏览器转写后，识别到的文字会显示在这里；也可以直接输入或粘贴原稿。"
+              ></textarea>
+              <div class="transcript-meta">
+                <span id="transcriptState">准备开始转写</span
+                ><span id="wordCount">0 字</span><button class="clear-transcript" id="clearTranscriptButton" type="button">清空原稿</button>
+              </div>
+              <div class="capture-tools">
+                <section class="capture-tool" aria-label="浏览器转写控制">
+                  <span class="capture-label">浏览器转写</span>
+                  <div class="recording-controls">
+                    <button class="speak-button speak-button--secondary" id="recordStartButton" type="button">开始浏览器转写</button>
+                    <button class="speak-button speak-button--secondary" id="recordPauseButton" type="button" hidden>暂停转写</button>
+                    <button class="speak-button speak-button--secondary" id="recordStopButton" type="button" hidden>结束转写</button>
+                  </div>
+                </section>
+                <section class="capture-tool audio-recorder" id="audioRecorder" aria-label="本地音频录制" hidden>
+                  <span class="capture-label">本地音频录制</span>
+                  <div class="recording-controls">
+                    <button class="speak-button speak-button--secondary" id="audioStartButton" type="button">开始本地录音</button>
+                    <button class="speak-button speak-button--secondary" id="audioPauseButton" type="button" hidden>暂停录音</button>
+                    <button class="speak-button speak-button--secondary" id="audioStopButton" type="button" hidden>结束录音</button>
+                    <button class="speak-button speak-button--secondary" id="audioDownloadButton" type="button" hidden>下载 WebM 音频</button>
+                  </div>
+                  <small class="audio-status" id="audioState" aria-live="polite">点击后才请求麦克风权限；音频仅保留在当前浏览器内存中。</small>
+                </section>
+              </div>
+              <div class="practice-actions">
+                <button
+                  class="speak-button speak-button--primary"
+                  id="analyzeButton"
+                  type="button"
+                >
+                  生成训练报告
+                </button>
+              </div>
+              <p class="privacy-note">
+                浏览器转写使用浏览器语音识别；即兴表达的本地录音只在当前浏览器内存中生成，需你主动下载。AI
+                默认报告只在当前浏览器内依据原稿生成，不调用外部 AI 或 API；只有你主动启用自己的模型时才会发送确认提交的文字原稿。音频不会上传。
+              </p>
+            </section>
+            <aside class="speak-card focus-card">
+              <p class="speak-eyebrow">这轮只练一件事</p>
+              <h2 id="focus"></h2>
+              <div class="focus-list">
+                <p><b>主张</b>先把你的判断说完整。</p>
+                <p><b>边界</b>说明影响，而不是只说“我很忙”。</p>
+                <p><b>下一步</b>把优先级交回需要做决定的人。</p>
+              </div>
+            </aside>
+          </div>
+        </section>
+        <section class="screen" id="reportScreen">
+          <div class="report-wrap">
+            <div class="report-head">
+              <div>
+                <p class="speak-eyebrow">训练报告</p>
+                <small class="report-source" id="reportSource"></small>
+                <h1 id="reportTitle">你已经把重点说出来了。</h1>
+                <p id="reportSummary"></p>
+              </div>
+              <div class="report-score" id="reportScorePanel">
+                <strong id="reportScore">--</strong><span>本轮训练分</span>
+              </div>
+            </div>
+            <div class="report-stats" aria-label="本轮练习记录">
+              <div><span>训练目标</span><strong id="reportDuration">60 秒</strong></div>
+              <div><span>本轮字数</span><strong id="reportWords">0</strong></div>
+              <div><span>填充词</span><strong id="reportFillers">暂未统计</strong></div>
+            </div>
+            <section class="speak-card report-card">
+              <section class="report-priority" aria-labelledby="priorityHeading">
+                <p class="speak-eyebrow" id="priorityHeading">这次先改一处</p>
+                <h2 id="priorityLabel"></h2>
+                <blockquote id="priorityQuote"></blockquote>
+                <p id="priorityImpact"></p>
+                <p class="priority-action"><b>下一轮动作</b><span id="priorityAction"></span></p>
+              </section>
+              <h2>本轮表达罗盘</h2>
+              <div class="compass" id="compass"></div>
+              <button class="speak-button speak-button--secondary report-details-toggle" id="detailsToggle" type="button" aria-expanded="false">展开完整五维分析</button>
+              <div class="report-details" id="reportDetails" hidden></div>
+              <section class="deep-coach" id="deepCoach" hidden aria-labelledby="deepCoachTitle">
+                <p class="speak-eyebrow">用户自带 API 专属</p>
+                <h2 id="deepCoachTitle">专属深度教练</h2>
+                <blockquote id="deepCoachQuote"></blockquote>
+                <p id="deepCoachAnalysis"></p>
+                <h3>第二轮 60 秒示范</h3>
+                <blockquote id="deepCoachSecondRound"></blockquote>
+                <h3>复练验收清单</h3>
+                <ul id="deepCoachChecklist"></ul>
+              </section>
+              <div class="rewrite">
+                <p>只改这一句</p>
+                <blockquote id="rewriteText"></blockquote>
+                <small id="rewriteReason"></small>
+              </div>
+              <div class="practice-actions">
+                <button
+                  class="speak-button speak-button--primary"
+                  id="retryButton"
+                  type="button"
+                >
+                  用加强句再练 60 秒</button
+                ><button class="speak-button speak-button--secondary" id="reportAudioDownload" type="button" hidden>
+                  下载本轮本地音频</button
+                ><button class="speak-button speak-button--secondary" id="ladderSubmit" type="button" hidden>
+                  提交匿名上榜校验</button
+                ><button
+                  class="speak-button speak-button--secondary"
+                  id="reportHome"
+                  type="button"
+                >
+                  回到训练首页
+                </button>
+              </div>
+            </section>
+          </div>
+        </section>
+      </main>
+      <footer class="copyright-footer"><a href="./legal-notice.html">版权与授权</a></footer>
+      <span class="speak-watermark" aria-hidden="true">Chen Hongye</span>
+      <div class="dialog-backdrop" id="settingsDialog" hidden>
+        <section
+          class="dialog"
+          role="dialog"
+          aria-modal="true"
+          aria-labelledby="settingsTitle"
+        >
+          <header>
+            <h2 id="settingsTitle">AI 服务</h2>
+            <button data-close="settingsDialog" aria-label="关闭" type="button">
+              ×
+            </button>
+          </header>
+          <div class="settings-body">
+            <label class="model-field" for="reportMode"><span>报告生成方式</span><select id="reportMode"><option value="public">大众本地完整评估（不调用 AI）</option><option value="byok">使用我自己的模型（API Key）</option></select></label>
+            <section id="publicSettings" class="settings-section" aria-label="公共模型设置">
+              <p class="muted">所有用户默认在浏览器内获得训练分、五维罗盘和完整报告。本站不使用创作者的 API Key，也不会把原稿发送到外部模型。</p>
+              <label class="model-field" for="providerSelect" hidden><span>公共服务偏好</span><select id="providerSelect"><option value="auto">自动选择</option><option value="qwen">通义千问</option><option value="doubao">豆包</option><option value="deepseek">DeepSeek</option></select></label>
+              <ul class="provider-status" id="providerStatus" aria-label="AI 服务可用状态" hidden></ul>
+              <p class="model-status" id="quotaStatus" role="status" hidden></p>
+            </section>
+            <section id="byokSettings" class="settings-section" aria-label="用户自带模型设置" hidden>
+              <label class="model-field" for="byokProviderSelect"><span>AI 服务商</span><select id="byokProviderSelect"><option value="DeepSeek">DeepSeek</option><option value="OpenAI">OpenAI</option><option value="Custom">自定义（OpenAI 兼容）</option></select></label>
+              <label class="model-field" for="apiKey"><span>API Key</span><input id="apiKey" type="password" autocomplete="new-password" placeholder="仅用于当前浏览器会话" /></label>
+              <label class="model-field" for="modelInput"><span>模型名</span><input id="modelInput" autocomplete="off" /></label>
+              <label class="model-field" for="baseUrlInput"><span>Base URL</span><input id="baseUrlInput" type="url" inputmode="url" autocomplete="off" placeholder="https://api.example.com/v1" /></label>
+              <p class="muted">Key 只会从当前浏览器直接发送给你选择的模型服务，不会上传到讲清楚服务器；关闭浏览器后会话数据会清除。自定义接口需允许浏览器跨域。</p>
+            </section>
+            <p class="model-status" id="settingStatus" role="status"></p>
+            <div class="settings-actions"><button class="speak-button speak-button--secondary" id="testButton" type="button">刷新服务状态</button><button class="speak-button speak-button--primary" id="saveButton" type="button">保存本次偏好</button></div>
+            <p class="muted">默认路线不调用任何外部模型；你仍可保留 3.1 的自带 Key、模型名和 Base URL 设置。两条路径共用同一套训练和报告页面。</p>
+          </div>
+        </section>
+      </div>
+      <div class="dialog-backdrop" id="growthDialog" hidden>
+        <section
+          class="dialog"
+          role="dialog"
+          aria-modal="true"
+          aria-labelledby="growthTitle"
+        >
+          <header>
+            <h2 id="growthTitle">我的成长</h2>
+            <button data-close="growthDialog" aria-label="关闭" type="button">
+              ×
+            </button>
+          </header>
+          <div>
+            <p id="growthSummary">1,240 训练分 · 下一阶段：稳住边界</p>
+            <div class="badges" id="growthBadges"></div>
+            <button class="speak-button speak-button--secondary" id="growthRetest" type="button">重测初步训练段位</button>
+          </div>
+        </section>
+      </div>
+    </div>
+    <script src="./vendor/vad/ort.wasm.min.js"></script>
+    <script src="./vendor/vad/vad.bundle.min.js"></script>
+    <script type="module" src="./candidate-variant.js"></script>
+    <script type="module" src="./app.js"></script>
+  </body>
+</html>
