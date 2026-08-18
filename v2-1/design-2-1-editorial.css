@@ -1,0 +1,859 @@
+/*
+  讲清楚 2.1 的重设计外壳
+  参考：2.1 素材中的雾紫、暖纸与线稿；读完有话说 4.1 只提供低饱和纸张、阅读层级与边框节奏的旁证。
+  人物、色彩和构图主素材均来自讲清楚 2.1 已提供的视觉参考；不复制 4.1 的图片、
+  业务文案或页面结构。
+*/
+:root {
+  --ink: #57313f;
+  --ink-raised: #fffaf7;
+  --ink-soft: #7c5662;
+  --paper: #fffaf7;
+  --mist: #8d6a73;
+  --muted: #9b7880;
+  --line: #e5c4c1;
+  --acid: #ca6875;
+  --acid-ink: #fffaf7;
+  --coral: #d57b88;
+  --radius: 3px;
+  --serif-zh: Georgia, "Songti SC", "STSong", "Noto Serif SC", serif;
+}
+
+html,
+body,
+.app {
+  background: #f7dcd8;
+}
+
+body {
+  color: var(--ink);
+}
+
+button:focus-visible,
+input:focus-visible,
+textarea:focus-visible {
+  outline-color: rgba(177, 92, 112, .42);
+}
+
+.app {
+  min-height: 100vh;
+}
+
+.app-header {
+  width: min(1180px, calc(100% - 48px));
+  min-height: 78px;
+  border-bottom: 1px solid var(--line);
+}
+
+.brand {
+  gap: 10px;
+  color: var(--ink);
+  font-family: var(--serif-zh);
+}
+
+.brand-mark {
+  width: 32px;
+  height: 32px;
+  border: 1px solid #6b3c4c;
+  border-radius: 50%;
+  color: var(--paper);
+  background: #6b3c4c;
+  font-family: var(--serif-zh);
+  font-size: 16px;
+  font-weight: 700;
+}
+
+.brand small,
+.header-note {
+  color: var(--muted);
+  font-family: var(--mono);
+  font-size: 9px;
+  letter-spacing: .9px;
+}
+
+.header-note {
+  text-transform: uppercase;
+}
+
+.setup-screen {
+  width: min(1180px, calc(100% - 48px));
+  min-height: 0;
+  display: block;
+  padding: 44px 0 86px;
+}
+
+.screen:not(.active) {
+  display: none;
+}
+
+.setup-layout.candidate-shell {
+  width: 100%;
+  display: grid;
+  grid-template-columns: minmax(0, .92fr) minmax(360px, 1.08fr);
+  grid-template-areas: "copy art" "choices choices";
+  column-gap: clamp(40px, 7vw, 92px);
+  row-gap: 82px;
+  text-align: left;
+}
+
+.candidate-copy {
+  grid-area: copy;
+  align-self: center;
+  max-width: 510px;
+}
+
+.candidate-shell .eyebrow {
+  display: block;
+  margin: 0 0 17px;
+  color: #a35d6d;
+  font-family: var(--mono);
+  font-size: 10px;
+  font-weight: 800;
+  letter-spacing: 1.35px;
+}
+
+.candidate-shell h1 {
+  max-width: none;
+  margin: 0;
+  color: var(--ink);
+  font-family: var(--serif-zh);
+  font-size: clamp(56px, 5.9vw, 82px);
+  font-weight: 700;
+  line-height: 1.08;
+  letter-spacing: -.05em;
+  text-wrap: balance;
+}
+
+.candidate-shell h1 span {
+  display: block;
+  white-space: nowrap;
+}
+
+.candidate-copy > p:not(.hero-note) {
+  max-width: 430px;
+  margin: 24px 0 0;
+  color: #866771;
+  font-family: var(--serif-zh);
+  font-size: 17px;
+  line-height: 1.8;
+}
+
+.home-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+  margin-top: 28px;
+}
+
+.home-primary,
+.home-secondary {
+  min-height: 48px;
+  padding: 0 19px;
+  border-radius: 3px;
+  font-size: 14px;
+  font-weight: 800;
+}
+
+.home-primary {
+  border: 1px solid #6b3c4c;
+  color: #fffaf7;
+  background: #6b3c4c;
+  box-shadow: 0 5px 0 rgba(107, 60, 76, .14);
+}
+
+.home-primary:hover {
+  transform: translateY(-2px);
+  border-color: #8a5262;
+  color: #fffaf7;
+  background: #8a5262;
+}
+
+.home-secondary {
+  border: 1px solid var(--line);
+  color: #784c59;
+  background: rgba(255, 250, 247, .48);
+}
+
+.home-secondary:hover {
+  border-color: #b96978;
+  background: #fff2ef;
+}
+
+.hero-note {
+  margin: 16px 0 0;
+  color: #9b7880;
+  font-size: 12px;
+  line-height: 1.7;
+}
+
+.candidate-art {
+  grid-area: art;
+  min-height: 535px;
+  position: relative;
+  overflow: hidden;
+  border: 1px solid #1e1d20;
+  background: #eac7c9;
+  box-shadow: 0 22px 60px rgba(92, 49, 63, .14);
+}
+
+.candidate-art img {
+  width: 61%;
+  height: 100%;
+  position: absolute;
+  z-index: 0;
+  top: 0;
+  right: 0;
+  object-fit: contain;
+  object-position: center;
+  filter: saturate(.9) contrast(1.02);
+}
+
+/* A：从 2.1 太空职场插画中提取雾紫、粉灰与“准备开口”的张力。 */
+body[data-candidate="a"] {
+  --ink: #594656;
+  --mist: #84737f;
+  --muted: #9a8592;
+  --line: #dccccf;
+  --acid: #b7869d;
+  background: #f2ebf0;
+}
+
+body[data-candidate="a"] .app {
+  background: #f2ebf0;
+}
+
+body[data-candidate="a"] .brand-mark,
+body[data-candidate="a"] .home-primary,
+body[data-candidate="a"] .candidate-shell .start-button,
+body[data-candidate="a"] .primary-button,
+body[data-candidate="a"] .quick-menu-toggle,
+body[data-candidate="a"] .toast {
+  border-color: #745c70;
+  background: #745c70;
+}
+
+body[data-candidate="a"] .candidate-art {
+  background: #ddd3e3;
+  border-color: #514552;
+}
+
+body[data-candidate="a"] .candidate-art img {
+  width: 100%;
+  object-position: center;
+  filter: saturate(.58) contrast(.98) brightness(1.06);
+}
+
+body[data-candidate="a"] .candidate-art::after {
+  background: rgba(248, 244, 248, .16);
+}
+
+body[data-candidate="a"] .candidate-shell .text-button,
+body[data-candidate="a"] .mode-index {
+  color: #a66c86;
+}
+
+body[data-candidate="a"] .candidate-shell .mode-option.active,
+body[data-candidate="a"] .stat {
+  background: #eee1e8;
+}
+
+.candidate-art::after {
+  position: absolute;
+  z-index: 1;
+  inset: 0;
+  content: "";
+  background: rgba(248, 233, 227, .13);
+}
+
+.candidate-shell .setup-card {
+  grid-area: choices;
+  width: 100%;
+  padding: 0;
+  border: 0;
+  border-radius: 0;
+  background: transparent;
+  box-shadow: none;
+}
+
+.choice-heading {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(260px, .64fr);
+  gap: 26px;
+  padding: 0 0 22px;
+  border-bottom: 1px solid var(--line);
+}
+
+.choice-heading p {
+  margin: 0;
+  color: #9b7880;
+  font-size: 13px;
+  line-height: 1.75;
+  text-align: right;
+}
+
+.choice-heading strong {
+  color: var(--ink);
+  font-family: var(--serif-zh);
+  font-size: clamp(25px, 3vw, 36px);
+  font-weight: 700;
+  line-height: 1.35;
+}
+
+.choice-heading small {
+  display: block;
+  margin-bottom: 7px;
+  color: #c06d7c;
+  font-family: var(--mono);
+  font-size: 10px;
+  font-weight: 800;
+  letter-spacing: 1.15px;
+}
+
+.candidate-shell .setup-label,
+.candidate-shell .question-top span {
+  margin: 24px 0 10px;
+  color: #9d7981;
+  font-family: var(--mono);
+  font-size: 10px;
+  font-weight: 800;
+  letter-spacing: 1.05px;
+}
+
+.candidate-shell .mode-grid {
+  gap: 0;
+  border: 1px solid var(--line);
+  border-radius: 0;
+  overflow: hidden;
+}
+
+.candidate-shell .mode-option {
+  min-height: 150px;
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  justify-content: flex-end;
+  gap: 5px;
+  padding: 20px;
+  border: 0;
+  border-right: 1px solid var(--line);
+  border-radius: 0;
+  color: var(--ink);
+  background: #fffaf7;
+}
+
+.candidate-shell .mode-option:last-child {
+  border-right: 0;
+}
+
+.candidate-shell .mode-option:hover {
+  border-color: var(--line);
+  background: #fff1ef;
+}
+
+.candidate-shell .mode-option.active {
+  color: var(--ink);
+  border-color: var(--line);
+  background: #f9e5e3;
+  box-shadow: inset 0 -3px 0 #c97885;
+}
+
+.candidate-shell .mode-option i,
+.candidate-shell .mode-option > svg {
+  display: none;
+}
+
+.mode-index {
+  position: absolute;
+  top: 18px;
+  left: 20px;
+  color: #c97885;
+  font-family: var(--mono);
+  font-size: 10px;
+  font-weight: 800;
+  letter-spacing: 1.1px;
+}
+
+.candidate-shell .mode-option strong {
+  font-family: var(--serif-zh);
+  font-size: 22px;
+  font-weight: 700;
+}
+
+.candidate-shell .mode-option span:not(.mode-index) {
+  margin: 0;
+  color: #95737c;
+  font-size: 13px;
+}
+
+.candidate-shell .question-box {
+  margin-top: 20px;
+  padding: 22px 0 18px;
+  border-width: 1px 0;
+  border-color: var(--line);
+  border-radius: 0;
+  background: transparent;
+}
+
+.candidate-shell .question-top {
+  align-items: center;
+}
+
+.candidate-shell .question-actions {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+}
+
+.candidate-shell .question-top span {
+  margin: 0;
+}
+
+.candidate-shell .text-button {
+  padding: 0;
+  color: #9f6170;
+  font-family: var(--serif-zh);
+  font-size: 13px;
+}
+
+.candidate-shell .favorite-topic.active {
+  color: #fffaf7;
+  background: #8b5969;
+}
+
+.candidate-shell .question-input {
+  min-height: 74px;
+  color: var(--ink);
+  font-family: var(--serif-zh);
+  font-size: clamp(21px, 2.3vw, 28px);
+  font-weight: 700;
+  line-height: 1.45;
+}
+
+.candidate-shell .goal-wrap {
+  margin-top: 22px;
+}
+
+.candidate-shell .goal-chips {
+  gap: 8px;
+}
+
+.candidate-shell .goal-chip {
+  min-height: 36px;
+  border-color: var(--line);
+  border-radius: 20px;
+  color: #805c67;
+  background: rgba(255, 250, 247, .48);
+}
+
+.candidate-shell .goal-chip.active {
+  color: #fffaf7;
+  border-color: #6b3c4c;
+  background: #6b3c4c;
+}
+
+.candidate-shell .expression-pack {
+  margin-top: 19px;
+  padding-top: 17px;
+  border-color: var(--line);
+}
+
+.candidate-shell .expression-pack span {
+  color: #714d58;
+  background: #f8e9e5;
+  border-radius: 2px;
+}
+
+.candidate-shell .start-button {
+  min-height: 56px;
+  margin-top: 23px;
+  border-color: #6b3c4c;
+  border-radius: 3px;
+  color: #fffaf7;
+  background: #6b3c4c;
+}
+
+.candidate-shell .privacy-line {
+  color: #9b7880;
+}
+
+/* 训练、报告与本地记录同样使用这套纸张和低饱和色彩。 */
+.practice-screen,
+.report-screen,
+.history-screen {
+  width: min(1180px, calc(100% - 48px));
+  color: var(--ink);
+}
+
+.practice-stage,
+.report-card,
+.history-item,
+.history-empty,
+.tips-card {
+  border: 1px solid var(--line);
+  border-radius: 3px;
+  color: var(--ink);
+  background: #fffaf7;
+  box-shadow: 0 22px 60px rgba(92, 49, 63, .12);
+}
+
+.practice-stage {
+  min-height: 560px;
+}
+
+.stage-status,
+.stage-goal,
+.transcript-footer,
+.report-heading p,
+.mentor-intro,
+.report-boundary,
+.history-wrap > p {
+  color: #8d6a73;
+}
+
+.stage-timer,
+.stage-question,
+.report-heading h1,
+.history-wrap h1,
+.report-section-title,
+.mentor-card h3 {
+  color: var(--ink);
+  font-family: var(--serif-zh);
+}
+
+.timer-progress {
+  background: #f1d5d2;
+}
+
+.timer-progress span,
+.training-score {
+  background: #c97885;
+}
+
+.training-score {
+  color: #fffaf7;
+  border-radius: 3px;
+}
+
+.transcript {
+  border-color: var(--line);
+  border-radius: 3px;
+  color: var(--ink);
+  background: #fffdfb;
+}
+
+.control-button,
+.secondary-button {
+  border-color: var(--line);
+  border-radius: 3px;
+  color: #704b57;
+  background: #fff6f3;
+}
+
+.primary-button {
+  border-color: #6b3c4c;
+  border-radius: 3px;
+  color: #fffaf7;
+  background: #6b3c4c;
+}
+
+.primary-button:hover {
+  background: #8a5262;
+}
+
+.report-kicker,
+.live-copy,
+.history-score {
+  color: #b45f70;
+}
+
+.stat {
+  border-radius: 2px;
+  background: #f9e9e5;
+}
+
+.stat span,
+.stat strong,
+.mentor-card p,
+.mentor-card strong,
+.report-boundary {
+  color: var(--ink);
+}
+
+.goal-review {
+  margin: 24px 0 28px;
+  padding: 18px 19px;
+  border: 1px solid var(--line);
+  border-left: 4px solid #b45f70;
+  background: #fff6f3;
+}
+
+.goal-review.met {
+  border-left-color: #7b865d;
+  background: #f5f1e7;
+}
+
+.goal-review-head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  color: #8d5062;
+  font-family: var(--mono);
+  font-size: 10px;
+  font-weight: 800;
+  letter-spacing: .85px;
+}
+
+.goal-review.met .goal-review-head {
+  color: #66744c;
+}
+
+.goal-review-head strong {
+  padding: 4px 7px;
+  border: 1px solid currentColor;
+  font-size: 10px;
+}
+
+.goal-review h2 {
+  margin: 12px 0 7px;
+  color: var(--ink);
+  font-family: var(--serif-zh);
+  font-size: 22px;
+}
+
+.goal-review p {
+  margin: 0;
+  color: #725762;
+  font-size: 13px;
+  line-height: 1.75;
+}
+
+.goal-review small,
+.history-goal {
+  color: #95737c;
+  font-size: 11px;
+  line-height: 1.6;
+}
+
+.favorite-item-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  justify-content: flex-end;
+}
+
+.favorite-item-actions button {
+  min-height: 34px;
+  padding: 0 10px;
+  border: 1px solid var(--line);
+  border-radius: 2px;
+  color: #704b57;
+  background: #fff6f3;
+  font-size: 12px;
+  font-weight: 700;
+}
+
+.favorite-item-actions .open-favorite {
+  border-color: #6b3c4c;
+  color: #fffaf7;
+  background: #6b3c4c;
+}
+
+.favorite-item-actions .remove-favorite {
+  color: #95737c;
+}
+
+.mentor-card {
+  border-color: var(--line);
+  border-radius: 2px;
+  background: #fffdfb;
+}
+
+.mentor-card .tag {
+  color: #8d5062;
+  background: #f7e1e2;
+}
+
+.quick-menu-toggle {
+  border-color: #6b3c4c;
+  color: #fffaf7;
+  background: #6b3c4c;
+  box-shadow: 0 12px 30px rgba(92, 49, 63, .18);
+  font-size: 11px;
+  font-weight: 800;
+}
+
+.quick-menu-panel {
+  border-color: var(--line);
+  background: #fffaf7;
+  box-shadow: 0 16px 40px rgba(92, 49, 63, .16);
+}
+
+.quick-menu-panel button {
+  color: #704b57;
+  justify-content: center;
+  text-align: center;
+}
+
+.quick-menu-panel i:empty {
+  display: none;
+}
+
+.quick-menu-panel button:hover {
+  color: var(--ink);
+  background: #f8e9e5;
+}
+
+.quick-menu-panel i,
+.control-button i,
+.secondary-button i {
+  color: #b45f70;
+}
+
+.toast {
+  color: #fffaf7;
+  border-radius: 3px;
+  background: #6b3c4c;
+}
+
+/* B 保留同一系统，但用更留白、左右反转的画册构图。 */
+body[data-candidate="b"] {
+  --ink: #594943;
+  --mist: #82726a;
+  --muted: #9a847a;
+  --line: #ddcdc5;
+  --acid: #b77a7c;
+  background: #f5eee7;
+}
+
+body[data-candidate="b"] .app {
+  background: #f5eee7;
+}
+
+body[data-candidate="b"] .setup-layout.candidate-shell {
+  grid-template-columns: minmax(360px, .94fr) minmax(0, 1.06fr);
+  grid-template-areas: "art copy" "choices choices";
+}
+
+body[data-candidate="b"] .candidate-copy {
+  max-width: 550px;
+}
+
+body[data-candidate="b"] .candidate-art {
+  min-height: 510px;
+  background: #f7f1ed;
+}
+
+body[data-candidate="b"] .candidate-art img {
+  width: 100%;
+  object-position: center;
+  filter: saturate(.72) contrast(1.02);
+}
+
+body[data-candidate="b"] .candidate-art::after {
+  background: rgba(255, 250, 247, .08);
+}
+
+body[data-candidate="b"] .brand-mark,
+body[data-candidate="b"] .home-primary,
+body[data-candidate="b"] .candidate-shell .start-button,
+body[data-candidate="b"] .primary-button,
+body[data-candidate="b"] .quick-menu-toggle,
+body[data-candidate="b"] .toast {
+  border-color: #73514d;
+  background: #73514d;
+}
+
+@media (max-width: 720px) {
+  .app-header,
+  .setup-screen,
+  .practice-screen,
+  .report-screen,
+  .history-screen {
+    width: calc(100% - 32px);
+  }
+
+  .app-header {
+    min-height: 68px;
+  }
+
+  .header-note {
+    display: none;
+  }
+
+  .setup-layout.candidate-shell,
+  body[data-candidate="b"] .setup-layout.candidate-shell {
+    grid-template-columns: 1fr;
+    grid-template-areas: "copy" "art" "choices";
+    row-gap: 34px;
+  }
+
+  .candidate-shell h1 {
+    font-size: clamp(49px, 15vw, 61px);
+    line-height: 1.08;
+  }
+
+  .candidate-copy > p:not(.hero-note) {
+    margin-top: 18px;
+    font-size: 16px;
+  }
+
+  .home-actions {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 10px;
+    margin-top: 23px;
+  }
+
+  .home-primary,
+  .home-secondary {
+    width: 100%;
+  }
+
+  .candidate-art,
+  body[data-candidate="b"] .candidate-art {
+    min-height: 275px;
+  }
+
+  .choice-heading {
+    grid-template-columns: 1fr;
+    gap: 10px;
+  }
+
+  .choice-heading p {
+    text-align: left;
+  }
+
+  .candidate-shell .mode-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .candidate-shell .mode-option {
+    min-height: 102px;
+    border-right: 0;
+    border-bottom: 1px solid var(--line);
+  }
+
+  .candidate-shell .mode-option:last-child {
+    border-bottom: 0;
+  }
+
+  .candidate-shell .mode-option strong {
+    font-size: 20px;
+  }
+
+  .candidate-shell .question-top {
+    align-items: flex-start;
+    flex-direction: column;
+  }
+
+  .candidate-shell .question-actions {
+    width: 100%;
+    justify-content: space-between;
+  }
+
+  .favorite-item-actions {
+    justify-content: flex-start;
+  }
+}
